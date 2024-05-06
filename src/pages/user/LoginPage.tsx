@@ -31,13 +31,13 @@ const LoginPage = () => {
 
   
 
-  useEffect(()=>{
-    if(user){
-      console.log(user,'inside yes user');
+  // useEffect(()=>{
+  //   if(user){
+  //     console.log(user,'inside yes user');
       
-      navigate('/')
-    }
-  },[user])
+  //     navigate('/')
+  //   }
+  // },[user])
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -53,8 +53,6 @@ const LoginPage = () => {
         console.log(response)
         if(response.payload.status==="ok"){
           navigate('/')
-        }else{
-          navigate('/login')
         }
   }
   const googleSignup = async (response: string | any, status: boolean) => {
@@ -82,7 +80,7 @@ const LoginPage = () => {
     <div className="mt-4 grow flex flex-col items-center justify-around">
        <div className="mb-32">
        {isForgotPasswordModalOpen && ( <ModalIndex children={<ForgotPassword onClose={hanldeCloseModal}/>} />)}
-       <h1 className="text-4xl text-center"> Login</h1>
+       <h1 className="text-4xl text-center text-font-color-100"> Login</h1>
        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLoginSubmit} >
         <Form className="m-6 max-w-md mx-auto" action="">
             <Field type="email" name="email" placeholder="email"/>
@@ -92,7 +90,7 @@ const LoginPage = () => {
             {error && < p className="py-1 px-1 text-red-400">{error}</p>}
             <button type="submit" className="primary hover:bg-primaryTint hover:text-primaryDarkColor duration-300">Login</button>
             <div className="">Don't have an account yet?
-                <Link className="px-6 text-sm text-primaryTint hover:text-primaryColor" to={'/signup'}>Register Now</Link>
+                <Link className="px-6 text-sm text-font-color-200 hover:text-primaryColor" to={'/signup'}>Register Now</Link>
             </div>
             <p className="text-sm pt-[1px] text-primaryTint hover:text-primaryDarkColor cursor-pointer" onClick={() => setForgotPasswordModalOpen(true)}>forgot password?</p>
         </Form>

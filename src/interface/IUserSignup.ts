@@ -5,5 +5,6 @@ export interface IUserSignupData {
     password?: string| null ,
     isGoogle?: boolean | null ,
     otp?:string| null  ,
-    signupYes?:boolean | null
+    signupYes?:boolean | null,
+    role?:string |null
 }

@@ -1,6 +1,7 @@
 import { FaBedPulse } from "react-icons/fa6";
 import DropDown from "./DropDown";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +10,7 @@ const Header = () => {
       setIsOpen(!isOpen);
   };
   return (
-    <>
+    <div className="">
     <DropDown isOpen={isOpen} toggleDropDown={toggleDropDown} setIsOpen={setIsOpen} />
     <header className="flex justify-between">
 
@@ -29,6 +30,7 @@ const Header = () => {
         </svg>
       </button>
     </div>
+    <Link to={'add-property'}>Become host?</Link>
     <div onClick={toggleDropDown}  className="flex items-center gap-2 border border-gray-500  rounded-full py-2 px-2 shadow-sm shadow-gray-400">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -43,7 +45,7 @@ const Header = () => {
       </div>
     </div>
   </header>
-    </>
+    </div>
   )
 }
 

@@ -13,7 +13,7 @@ const DropDown : React.FC<DropDownProps>=({isOpen,toggleDropDown,setIsOpen}) => 
     const {user} = useAppSelector(state=>state.user)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-
+    
     const handleLogout =async ()=>{
         try {
                 console.log('inside handleLogout');

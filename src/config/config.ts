@@ -7,6 +7,7 @@ export const config ={
     withCredentials: true,
     credentials: "include"
 }
+export const ApiBaseUrl: string = "http://localhost:5000"
 
 
 export interface ApiError {

@@ -34,8 +34,8 @@ const userSlice = createSlice({
       .addCase(userSignupAction.fulfilled, (state, action) => {
         console.log(action.payload, 'action.payload??????????????????????');
 
-        const data = action.payload as IUserSignupData;
-        state.user = data;
+        // const data = action.payload as IUserSignupData;
+        // state.user = data; 
         state.loading = false;
       })
       .addCase(userSignupAction.rejected, (state, action) => {
@@ -52,7 +52,7 @@ const userSlice = createSlice({
       })
       .addCase(userLoginAction.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload as IUserSignupData
+        state.user = action.payload.data as IUserSignupData
       })
       .addCase(userLogoutAction.fulfilled, (state) => {
         state.loading = false;
@@ -82,7 +82,7 @@ const userSlice = createSlice({
       .addCase(verifyOtpAction.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.user = action.payload as IUserSignupData
+        // state.user = action.payload as IUserSignupData
       })
       .addCase(verifyOtpAction.pending, (state) => {
         state.loading = true
@@ -93,7 +93,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserData.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload as IUserSignupData
+        state.user = action.payload.data as IUserSignupData
       })
       .addCase(getUserData.pending, (state) => {
         state.loading = true

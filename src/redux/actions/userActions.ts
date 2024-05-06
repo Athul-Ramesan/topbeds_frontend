@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUserSignupData } from "../../interface/IUserSignup";
 import { AxiosError } from "axios";
-import { authInstance } from "../../config/instances";
+import {  axiosInstance } from "../../config/instances";
 import { ApiError, config, handleError } from "../../config/config";
 import { IUserLoginData } from "../../interface/IUserLogin";
 
 
 export const getUserData = createAsyncThunk('auth/get-user-data',async (_,{rejectWithValue})=>{
     try {
-        const {data} = await authInstance.get('/auth/get-user-data',config)
+        const {data} = await axiosInstance.get('/auth/get-user-data',config)
         console.log(data,'data inside get user data action');
         return data
     } catch (error:any) {
@@ -19,12 +19,12 @@ export const getUserData = createAsyncThunk('auth/get-user-data',async (_,{rejec
 export const userSignupAction = createAsyncThunk('auth/userSignup', async (userCredentials: IUserSignupData, { rejectWithValue }) => {
     try {
         if (userCredentials.isGoogle) {
-            const { data } = await authInstance.post('/auth/googleAuth', userCredentials, config)
+            const { data } = await axiosInstance.post('/auth/googleAuth', userCredentials, config)
             console.log(data, 'inside user signup action');
-
-            return data
+            
+            return data 
         }else{
-            const { data } = await authInstance.post('/auth/signup', userCredentials, config)
+            const { data } = await axiosInstance.post('/auth/signup', userCredentials, config)
             console.log(data, 'inside user signup action');
 
             return data
@@ -42,10 +42,12 @@ export const userLoginAction = createAsyncThunk(
         try {
             console.log('im at userLoginAction');
             
-            const { data } = await authInstance.post("/auth/login", userCredentials, config)
+            const { data } = await axiosInstance.post("/auth/login", userCredentials, config)
             console.log(data, 'data inside signup action');
             return data
         } catch (error: any) {
+            console.log(error);
+            
             const axiosError = error as AxiosError<ApiError>
             return handleError(axiosError, rejectWithValue);
         }
@@ -57,7 +59,7 @@ export const userLogoutAction = createAsyncThunk("auth/userLogOut", async (userC
         
         console.log('inside userLoginAction');
 
-        const { data } = await authInstance.delete("/auth/logout", config);
+        const { data } = await axiosInstance.delete("/auth/logout", config);
 
         console.log(data);
 
@@ -71,7 +73,7 @@ export const userLogoutAction = createAsyncThunk("auth/userLogOut", async (userC
 export const sendOtpAction = createAsyncThunk('auth/verify-account/send-otp',async (userCredentials:IUserSignupData, {rejectWithValue})=>{
 
     try {
-        const { data } = await authInstance.post('/auth/verify-account/send-otp', userCredentials, config)
+        const { data } = await axiosInstance.post('/auth/verify-account/send-otp', userCredentials, config)
         console.log(data,"data inside sendotp action");
         
         return data
@@ -82,7 +84,7 @@ export const sendOtpAction = createAsyncThunk('auth/verify-account/send-otp',asy
 })
 export const verifyOtpAction = createAsyncThunk("auth/verify-account",async (userCredentials:IUserSignupData, {rejectWithValue})=>{
     try {
-        const {data} = await authInstance.post('auth/verify-account',userCredentials,config)
+        const {data} = await axiosInstance.post('auth/verify-account',userCredentials,config)
         console.log(data,'data inside verifyotpaction');
         return data
     } catch (error) {

@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik'
 import * as Yup from "yup"
 import { setErrorDisable } from '../../redux/reducers/user/userSlice'
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 // import { IUserSignupData } from '../../interface/IUserSignup'
 
 interface Props {
@@ -28,7 +29,8 @@ const VerificationModal: FC<Props> = ({ isOpen, onClose, user, onSubmit }: Props
     const action = await dispatch(verifyOtpAction({ otp, ...user }));
     console.log(action, "response inside verifyotp modal");
     if (action.type === "auth/verify-account/fulfilled") {
-      navigate('/')
+      toast.success('Registered, Please Login')
+      navigate('/login')
       onClose()
     } else {
       navigate('/signup')
