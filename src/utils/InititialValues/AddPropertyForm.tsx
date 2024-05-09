@@ -16,5 +16,6 @@ export const addPropertyInitialValues = {
     bathrooms: 2,
     maxGuests: 2, 
     checkIn:'',
-    checkOut:''
+    checkOut:'',
+    images:[]
 }

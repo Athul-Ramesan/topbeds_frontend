@@ -11,3 +11,7 @@ button{
 button.primary{
     @apply bg-primaryColor p-2 w-full text-white rounded-2xl
 }
+
+.background-div {
+    @apply bg-white p-5 rounded-lg mb-5;
+}
