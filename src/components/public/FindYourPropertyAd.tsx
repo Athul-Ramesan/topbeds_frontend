@@ -10,7 +10,7 @@ const FindYourPropertyAd = () => {
             <button className="hover:text-white hover:bg-primaryColor transition duration-500 h-10 rounded-lg my-5">Discover homes</button>
         </div>
         <div className="w-2/5">
-            <img className="p-6" src="public/cat-sleeping-indexPage.png" alt="" />
+            <img className="p-6" src="/cat-sleeping-indexPage.png" alt="" />
         </div>
     </div>
   )

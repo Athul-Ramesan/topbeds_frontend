@@ -19,7 +19,10 @@ export default {
         "font-color-300":"#3f3c2e",
         "font-accent":"#4D4733",
         "bg-minimal":"hsl(46 28.3% 82% / 1)",
-        "darkWithBrown" :"#342b32"
+        "darkWithBrown" :"#342b32",
+        "olivGreen":"#31352E",
+        "oliv": "#778A35",
+        "sageGreen" : "#D1E2C4"
       }
     },
     

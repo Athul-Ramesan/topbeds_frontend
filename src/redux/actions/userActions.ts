@@ -58,7 +58,7 @@ export const userLogoutAction = createAsyncThunk("auth/userLogOut", async (userC
         console.log(userCredentials);
         
         console.log('inside userLoginAction');
-
+        
         const { data } = await axiosInstance.delete("/auth/logout", config);
 
         console.log(data);

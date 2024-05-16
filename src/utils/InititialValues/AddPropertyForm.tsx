@@ -1,6 +1,6 @@
 
 export const addPropertyInitialValues = {
-    title: 'Athul Rameshan',
+    title: 'Elegant home stay',
     description: '',
     address: '',
     // location: {

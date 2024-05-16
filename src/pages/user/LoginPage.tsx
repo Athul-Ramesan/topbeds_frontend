@@ -31,13 +31,13 @@ const LoginPage = () => {
 
   
 
-  // useEffect(()=>{
-  //   if(user){
-  //     console.log(user,'inside yes user');
+  useEffect(()=>{
+    if(user){
+      console.log(user,'inside yes user');
       
-  //     navigate('/')
-  //   }
-  // },[user])
+      navigate('/index')
+    }
+  },[user])
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -90,7 +90,7 @@ const LoginPage = () => {
             {error && < p className="py-1 px-1 text-red-400">{error}</p>}
             <button type="submit" className="primary hover:bg-primaryTint hover:text-primaryDarkColor duration-300">Login</button>
             <div className="">Don't have an account yet?
-                <Link className="px-6 text-sm text-font-color-200 hover:text-primaryColor" to={'/signup'}>Register Now</Link>
+                <Link className="px-6 text-sm text-font-color-200 hover:text-primaryColor" to={'/auth/signup'}>Register Now</Link>
             </div>
             <p className="text-sm pt-[1px] text-primaryTint hover:text-primaryDarkColor cursor-pointer" onClick={() => setForgotPasswordModalOpen(true)}>forgot password?</p>
         </Form>

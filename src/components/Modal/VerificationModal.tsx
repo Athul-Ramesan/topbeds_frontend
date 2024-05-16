@@ -30,10 +30,10 @@ const VerificationModal: FC<Props> = ({ isOpen, onClose, user, onSubmit }: Props
     console.log(action, "response inside verifyotp modal");
     if (action.type === "auth/verify-account/fulfilled") {
       toast.success('Registered, Please Login')
-      navigate('/login')
+      navigate('/auth/login')
       onClose()
     } else {
-      navigate('/signup')
+      navigate('/signup') 
     }
   }
   

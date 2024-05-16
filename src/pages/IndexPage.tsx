@@ -22,12 +22,12 @@ const IndexPage = () => {
 " />
       </div>
       <div className="flex items-center justify-center px-36 gap-8">
-        <DummyArt text="Search through 5 million properties in just a few seconds." image="public/indexPage-searching.svg" header="Search simply" />
-        <DummyArt text="Compare prices from 100s of sites with us." image="public/indexPage-compare.svg" header="Compare confidently" />
-        <DummyArt text="Discover a great deal to book on our sites." image="public/IndexPage-SaveMoney.svg" header="Save big" />
+        <DummyArt text="Search through 5 million properties in just a few seconds." image="/indexPage-searching.svg" header="Search simply" />
+        <DummyArt text="Compare prices from 100s of sites with us." image="/indexPage-compare.svg" header="Compare confidently" />
+        <DummyArt text="Discover a great deal to book on our sites." image="/IndexPage-SaveMoney.svg" header="Save big" />
       </div>
       <div className="relative m-20 ">
-        <img className="rounded-xl" src="public/discoverBestTime.png" alt="" />
+        <img className="rounded-xl" src="/discoverBestTime.png" alt="" />
         <p className="text-black shadow-md shadow-black
        absolute left-16 right-36 text-center top-4 text-3xl font-semibold">Discover the best time to book your next stay</p>
         <SearchByCalender />

@@ -1,4 +1,5 @@
 import { AiOutlineSave, AiOutlineClose } from "react-icons/ai";
+import { PulseLoader } from "react-spinners"
 
 import { ErrorMessage, Field, FieldArray, Form, Formik, insert } from "formik"
 import { useState } from "react"
@@ -12,40 +13,113 @@ import { axiosInstance } from "../../config/instances"
 import { config } from "../../config/config"
 import { useNavigate, useRoutes } from "react-router-dom";
 import CustomSingleFileInput from "../../components/host/CustomSingleFileInput";
-import CustomFileInput from "./CustomFileInput";
+import CustomFileInput from "../../components/host/CustomFileInput";
+import toast from "react-hot-toast";
 
+interface IProperty {
+    address: string;
+    amenities: string[];
+    bathrooms: number;
+    bedrooms: number;
+    checkIn: string;
+    checkOut: string;
+    description: string;
+    houseRules: string;
+    images: string[];
+    maxGuests: number;
+    price: string;
+    title: string;
+}
+
+interface FileWithUrl {
+    url: string;
+}
 const AddProperty = () => {
+    const [moreImageUrl, setMoreImageUrl] = useState<string[]>([])
+    const [images, setImages] = useState<string[]>([])
+    const [formData, setFormdata] = useState({})
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
-    const addPropertySubmit = async (values: IAddPropertyFormValues) => {
+
+    const handleImageUpload = () => {
+
+    }
+    const handleMultipleImageStoring = (files: any) => {
+        const uniqueFiles = new Set([...images, ...files])
+        setImages([...uniqueFiles])
+    }
+
+    console.log("🚀 ~ handleMultipleImageStoring ~ Images:", images)
+    const handleMultipleImageUpload = async () => {
+        console.log("🚀 ~ handleMultipleImageUpload ~ files:", images);
+    
+        const urlPromises = images.map((file:any) => {
+          return new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              if (reader.result !== null) {
+                resolve(reader.result.toString());
+              } else {
+                reject(new Error("Failed to read file"));
+              }
+            };
+            reader.onerror = () => {
+              reject(new Error("Failed to read file"));
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+
+        console.log(urlPromises,'😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️');
+    
         try {
-            console.log(values);
-            const response = await axiosInstance.post('property/add-property', values, config)
-            console.log(response);
-
-        } catch (error: any) {
-            console.log(error.message);
-
+          const imageUrls = await Promise.all(urlPromises);
+          setMoreImageUrl((prevImageUrls) =>{
+            return [...prevImageUrls, ...imageUrls]
+          }
+        //   return imageUrls
+        );
+        return imageUrls
+        } catch (error) {
+          console.log("🚀 ~ handleMultipleImageUpload ~ error:", error);
+          throw error; // Propagate the error to be handled in the calling function
         }
-    }
-    function inputHeader(text: string) {
-        return (
-            <h2 className="text-xl mt-4">{text}</h2>
-        )
-    }
-    function inputDescription(text: string) {
-        return (
-            <p className="text-gray-500 text-sm">{text}</p>
-        )
-    }
-    function preInput(header: string, description: string) {
-        return (
-            <>
-                {inputHeader(header)}
-                {inputDescription(description)}
-            </>
-        )
-    }
+      };
+    
+      const addPropertySubmit = async (values:any) => {
+        console.log("🚀 ~ addPropertySubmit ~ values:", values);
+        setIsLoading(true);
+    
+        try {
+         const imageUrls= await handleMultipleImageUpload(); // Wait for image upload to complete
+          console.log("🚀 ~ addPropertySubmit ~ imageUrls:", imageUrls)
+          const formValues = { ...values, images: imageUrls };
+          console.log("🚀 ~ addPropertySubmit ~ formValues:", formValues);
+          setFormdata(values);
+          console.log(formData, 'form datatatat');
+    
+          const response = await axiosInstance.post('property/add-property', formValues, config);
+          console.log("🚀 ~ addPropertySubmit ~ response:", response);
+          if (response.statusText === "OK") {
+            toast.success("Property added successfully");
+            navigate('/host');
+          }
+        } catch (error) {
+          console.log("🚀 ~ addPropertySubmit ~ error:", error);
+        } finally {
+          setIsLoading(false); // Ensure loading state is cleared after API call
+        }
+      };
 
+    if(isLoading){
+        return(
+            <>
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+            <PulseLoader color="#36d7b7" />
+            </div>
+            </>
+        ) 
+    }
     return (
         <div className="p-5 w-full text-sm">
 
@@ -62,10 +136,10 @@ const AddProperty = () => {
                         <AiOutlineClose />
                         cancel
                     </button>
-                    <button className=" bg-gray-200 text-primaryColor flex items-center">
+                    {/* <button className=" bg-gray-200 text-primaryColor flex items-center">
                         <AiOutlineSave />
                         save
-                    </button>
+                    </button> */}
                 </div>
             </div>
             {/* place adding section */}
@@ -84,7 +158,8 @@ const AddProperty = () => {
 
                                         <div className="lg:w-1/3 mb-3 lg:mb-0">
                                             <h1 className="font-bold mb-3">Place thumbnail</h1>
-                                            <CustomSingleFileInput name={"file"}
+                                            <CustomSingleFileInput
+                                                onChange={handleImageUpload}
                                             //  handleChangeHere
                                             />
                                         </div>
@@ -202,22 +277,25 @@ const AddProperty = () => {
 
                                 </div>
                                 <div className="flex justify-between gap-4">
-                                        <FieldWithHead header="Bedrooms" description="Show your perspective " name="bedrooms" placeholder="How many bedrooms?" />
-                                   
-                                        <FieldWithHead header="Bathrooms" description="Be clean" name="bathrooms" placeholder="" />
+                                    <FieldWithHead header="Bedrooms" description="Show your perspective " name="bedrooms" placeholder="How many bedrooms?" />
+
+                                    <FieldWithHead header="Bathrooms" description="Be clean" name="bathrooms" placeholder="" />
                                 </div>
 
-                                {/* <button type="submit" className="primary my-4 hover:bg-primaryTint" >Save</button> */}
                             </div>
                         </div>
                         <div className="">
-                                   <div className="background-div">
-                                    <h1 className="font-bold">Property Images</h1>
-                                    <p className="background-div"> Drop Here</p>
-                                    <CustomFileInput />
-                                    </div>         
+                            <div className="background-div">
+                                <h1 className="font-bold">Property Images</h1>
+                                <p className="background-div"> Drop Here</p>
+                                <CustomFileInput
+                                    onChange={handleMultipleImageStoring}
+                                    setImages={setImages}
+                                />
+                            </div>
                         </div>
 
+                                <button type="submit" className="primary my-4 hover:bg-primaryTint" >Save</button>
 
 
 

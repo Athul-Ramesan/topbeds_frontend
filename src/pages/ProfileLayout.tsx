@@ -6,7 +6,6 @@ import Header from "../components/Header"
 const ProfileLayout = () => {
   return (
     <div className="p-4 min-h-screen">
-        <Header/>
         <SidebarIndex/>
         <Outlet/>
     </div>

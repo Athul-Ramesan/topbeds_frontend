@@ -67,7 +67,7 @@ const RegisterPage = () => {
                 const googleSignupData: any = await dispatch(userSignupAction(credentials))
                 console.log(googleSignupData, "inside google Signup data");
                 if (googleSignupData.type === 'auth/userSignup/fulfilled') {
-                    navigate('/')
+                    navigate('/index')
                     toast.success("Registered Successfully! Please Login.")
                 } else {
                     navigate('/signup')
@@ -121,7 +121,7 @@ const RegisterPage = () => {
                         {error && <p className="py-1 px-1 text-red-400">{error}</p>}
                         <button type="submit" className="primary hover:bg-primaryTint hover:text-primaryDarkColor duration-300">Register</button>
                         <div className="flex">have an account?
-                            <Link className="px-6 text-sm text-primaryTint hover:text-primaryColor" to={'/login'}>Login Here</Link>
+                            <Link className="px-6 text-sm text-primaryTint hover:text-primaryColor" to={'/auth/login'}>Login Here</Link>
                            
                         </div>
 

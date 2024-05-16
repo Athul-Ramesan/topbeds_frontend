@@ -1,17 +1,24 @@
-import { useRef, useState } from "react";
-import ImageUploadIcon from "../../components/host/ImageUploadIcon";
+import { SetStateAction, useRef, useState } from "react";
+import ImageUploadIcon from "./ImageUploadIcon";
+import { Dispatch } from "@reduxjs/toolkit";
 
 interface CustomFileInputProps {
-  name: string;
   onChange: (files: File[]) => void;
+  setImages: React.Dispatch<React.SetStateAction<string[]>>
+  maxFiles?: number;
+  maxSizeInBytes?:number;
+  acceptedFileTypes?:string
 }
 
-const CustomFileInput: React.FC<CustomFileInputProps> = ({ name, onChange }) => {
+const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) => {
   const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  
+  console.log("🚀 ~ droppedFiles:", droppedFiles)
+  
+  const handleDragOver = 
+  (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(true);
@@ -33,7 +40,8 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ name, onChange }) => 
     onChange([...droppedFiles, ...files]);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e) => {
+    e.preventDefault()
     fileInputRef.current?.click();
   };
 
@@ -46,9 +54,12 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ name, onChange }) => 
 
   const handleClearFiles = () => {
     setDroppedFiles([]);
+    setImages([])
     onChange([]);
   };
+  const handleFileDropingAndUploading =()=>{
 
+  }
   return (
     <div
       className="border-dashed border-2 p-8 rounded-lg text-center"
@@ -71,7 +82,7 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ name, onChange }) => 
       <input
         type="file"
         multiple
-        name={name}
+        accept="image/*"
         ref={fileInputRef}
         onChange={handleFileChange}
         className="hidden"

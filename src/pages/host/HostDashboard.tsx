@@ -2,7 +2,7 @@
 const HostDashboard = () => {
   return (
     <div>
-      host dashboard
+      
     </div>
   )
 }
