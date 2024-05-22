@@ -9,7 +9,8 @@ import { IUserLoginData } from "../../interface/IUserLogin";
 export const getUserData = createAsyncThunk('auth/get-user-data',async (_,{rejectWithValue})=>{
     try {
         const {data} = await axiosInstance.get('/auth/get-user-data',config)
-        console.log(data,'data inside get user data action');
+        console.log("🚀 ~ getUserData ~ data:", data)
+        
         return data
     } catch (error:any) {
         const axiosError = error as AxiosError<ApiError>

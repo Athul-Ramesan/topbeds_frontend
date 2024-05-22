@@ -24,6 +24,7 @@ import { IUserSignupData } from "./interface/IUserSignup";
 import PublicLayout from "./pages/public/PublicLayout";
 import AuthLayout from "./pages/auth/AuthLayout";
 import AllProperties from "./pages/public/AllProperties";
+import ManageListing from "./components/host/ManageListing";
 
 interface IRoles {
   [key: string]: string
@@ -146,7 +147,7 @@ const HostRoutes: FC = () => {
       <Route path="/" element={<HostLayout />} >
         <Route index element={<Navigate to="/host/dashboard" />} />
         <Route path="/dashboard" element={<HostDashboard />} />
-        <Route path="/manage-listing" element={<ListingManagement />} />
+        <Route path="/manage-listing" element={<ManageListing />} />
         <Route path="/reservations" element={""} />
         <Route path="/inbox" element={""} />
         <Route path="/reviews" element={""} />

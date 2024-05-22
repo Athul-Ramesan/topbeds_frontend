@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IUserSignupData } from "../../../interface/IUserSignup";
 import { getUserData, sendOtpAction, userLoginAction, userLogoutAction, userSignupAction, verifyOtpAction } from "../../actions/userActions";
+import { becomeHostAction } from "../../actions/userActions/becomeHost";
+import { IUserData } from "../../../interface/IUserSlice";
 
 interface initialState {
   user: IUserSignupData | null,
@@ -100,6 +102,19 @@ const userSlice = createSlice({
       })
       .addCase(getUserData.rejected, (state)=>{
         state.loading = false;
+      })
+      //become host cases
+      .addCase(becomeHostAction.fulfilled,(state,action)=>{
+        state.loading = false;
+        console.log(action.payload.data,'action >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        state.user = action.payload.data as IUserSignupData
+      })
+      .addCase(becomeHostAction.rejected,(state,action)=>{
+        state.loading = false;
+        state.error = action.payload as string
+      })
+      .addCase(becomeHostAction.pending,(state)=>{
+        state.loading = true;
       })
   }
 })

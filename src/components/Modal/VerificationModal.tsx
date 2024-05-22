@@ -33,7 +33,7 @@ const VerificationModal: FC<Props> = ({ isOpen, onClose, user, onSubmit }: Props
       navigate('/auth/login')
       onClose()
     } else {
-      navigate('/signup') 
+      navigate('/auth/signup') 
     }
   }
   

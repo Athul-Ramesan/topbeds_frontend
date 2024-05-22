@@ -39,6 +39,7 @@ const AddProperty = () => {
     const [images, setImages] = useState<string[]>([])
     const [formData, setFormdata] = useState({})
     const [isLoading, setIsLoading] = useState(false)
+    const [errorMessage,setErrorMessage] = useState('')
     const navigate = useNavigate()
 
     const handleImageUpload = () => {
@@ -47,78 +48,87 @@ const AddProperty = () => {
     const handleMultipleImageStoring = (files: any) => {
         const uniqueFiles = new Set([...images, ...files])
         setImages([...uniqueFiles])
+        
     }
 
     console.log("🚀 ~ handleMultipleImageStoring ~ Images:", images)
     const handleMultipleImageUpload = async () => {
         console.log("🚀 ~ handleMultipleImageUpload ~ files:", images);
-    
-        const urlPromises = images.map((file:any) => {
-          return new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-              if (reader.result !== null) {
-                resolve(reader.result.toString());
-              } else {
-                reject(new Error("Failed to read file"));
-              }
-            };
-            reader.onerror = () => {
-              reject(new Error("Failed to read file"));
-            };
-            reader.readAsDataURL(file);
-          });
+
+        const urlPromises = images.map((file: any) => {
+            return new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    if (reader.result !== null) {
+                        resolve(reader.result.toString());
+                    } else {
+                        reject(new Error("Failed to read file"));
+                    }
+                };
+                reader.onerror = () => {
+                    reject(new Error("Failed to read file"));
+                };
+                reader.readAsDataURL(file);
+            });
         });
 
-        console.log(urlPromises,'😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️');
-    
+        console.log(urlPromises, '😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️');
+
         try {
-          const imageUrls = await Promise.all(urlPromises);
-          setMoreImageUrl((prevImageUrls) =>{
-            return [...prevImageUrls, ...imageUrls]
-          }
-        //   return imageUrls
-        );
-        return imageUrls
+            const imageUrls = await Promise.all(urlPromises);
+            setMoreImageUrl((prevImageUrls) => {
+                return [...prevImageUrls, ...imageUrls]
+            }
+                //   return imageUrls
+            );
+            return imageUrls
         } catch (error) {
-          console.log("🚀 ~ handleMultipleImageUpload ~ error:", error);
-          throw error; // Propagate the error to be handled in the calling function
+            console.log("🚀 ~ handleMultipleImageUpload ~ error:", error);
+            throw error; // Propagate the error to be handled in the calling function
         }
-      };
-    
-      const addPropertySubmit = async (values:any) => {
+    };
+
+    const addPropertySubmit = async (values: any) => {
+        console.log("images~~" ,images)
+        if(!images || images.length === 0){
+            console.log('inside no image')
+            setErrorMessage("Atleast one image required")
+            return
+        }
         console.log("🚀 ~ addPropertySubmit ~ values:", values);
         setIsLoading(true);
-    
-        try {
-         const imageUrls= await handleMultipleImageUpload(); // Wait for image upload to complete
-          console.log("🚀 ~ addPropertySubmit ~ imageUrls:", imageUrls)
-          const formValues = { ...values, images: imageUrls };
-          console.log("🚀 ~ addPropertySubmit ~ formValues:", formValues);
-          setFormdata(values);
-          console.log(formData, 'form datatatat');
-    
-          const response = await axiosInstance.post('property/add-property', formValues, config);
-          console.log("🚀 ~ addPropertySubmit ~ response:", response);
-          if (response.statusText === "OK") {
-            toast.success("Property added successfully");
-            navigate('/host');
-          }
-        } catch (error) {
-          console.log("🚀 ~ addPropertySubmit ~ error:", error);
-        } finally {
-          setIsLoading(false); // Ensure loading state is cleared after API call
-        }
-      };
 
-    if(isLoading){
-        return(
+        try {
+            
+            const imageUrls = await handleMultipleImageUpload(); // Wait for image upload to complete
+           
+            console.log("🚀 ~ addPropertySubmit ~ imageUrls:", imageUrls)
+            const formValues = { ...values, images: imageUrls };
+            console.log("🚀 ~ addPropertySubmit ~ formValues:", formValues);
+            setFormdata(values);
+            console.log(formData, 'form datatatat');
+
+            const response = await axiosInstance.post('property/add-property', formValues, config);
+            console.log("🚀 ~ addPropertySubmit ~ response:", response);
+            if (response.statusText === "OK") {
+                toast.success("Property added successfully");
+                navigate('/host');
+            }
+        } catch (error) {
+            console.log("🚀 ~ addPropertySubmit ~ error:", error);
+        } finally {
+            setIsLoading(false); // Ensure loading state is cleared after API call
+        }
+    };
+
+    if (isLoading) {
+        return (
             <>
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
-            <PulseLoader color="#36d7b7" />
-            </div>
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+                    <PulseLoader color="#36d7b7" />
+                </div>
             </>
-        ) 
+        )
     }
     return (
         <div className="p-5 w-full text-sm">
@@ -292,10 +302,13 @@ const AddProperty = () => {
                                     onChange={handleMultipleImageStoring}
                                     setImages={setImages}
                                 />
+                                {errorMessage && (
+                                    <p className="text-red-500 flex justify-center">{errorMessage}</p>
+                                )}
                             </div>
                         </div>
 
-                                <button type="submit" className="primary my-4 hover:bg-primaryTint" >Save</button>
+                        <button type="submit" className="primary my-4 hover:bg-primaryTint" >Save</button>
 
 
 

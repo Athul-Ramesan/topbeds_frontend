@@ -14,6 +14,7 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
   const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [errorMessage,setErrorMessage] = useState('')
   
   console.log("🚀 ~ droppedFiles:", droppedFiles)
   
@@ -34,6 +35,7 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
+    setErrorMessage("")
     const files = Array.from(e.dataTransfer.files);
     console.log("🚀 ~ handleDrop ~ files:", files);
     setDroppedFiles([...droppedFiles, ...files]);
@@ -46,7 +48,19 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setErrorMessage('')
     const files = Array.from(e.target.files || []);
+    
+    for(const file of files){
+      if(!file){
+        setErrorMessage('There should be atleast one image')
+        
+      }
+      if(!file.name.match(/\.(jpg|jpeg|png)$/)){
+        setErrorMessage('The file should be a valid image file(jpg/jpeg/png)')
+        return
+      }
+    }
     console.log("🚀 ~ handleFileChange ~ files:", files);
     setDroppedFiles([...droppedFiles, ...files]);
     onChange([...droppedFiles, ...files]);
@@ -55,7 +69,7 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
   const handleClearFiles = () => {
     setDroppedFiles([]);
     setImages([])
-    onChange([]);
+    
   };
   const handleFileDropingAndUploading =()=>{
 
@@ -87,6 +101,9 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
         onChange={handleFileChange}
         className="hidden"
       />
+      {errorMessage && (
+        <p className="text-red-500 text-sm">{errorMessage}</p>
+      )}
       {droppedFiles.length > 0 && (
         <div className="mt-4">
           <div className="flex gap-5 justify-center flex-wrap">

@@ -38,7 +38,12 @@ const validationSchema = Yup.object({
         .email("Invalid Email")
         .required("Email required"),
     password: Yup.string()
-        .required("required"),
+        .required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[0-9]/, 'Password must contain at least one digit')
+        .matches(/[@$!%*?&#]/, 'Password must contain at least one special character'),
     confPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'Passwords must match')
         .required("required")
@@ -50,9 +55,12 @@ const RegisterPage = () => {
     const [formValues, setFormValues] = useState<FormValues>(initialValues)
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
-    const { error } = useAppSelector((state) => state?.user)
+    const { user,error } = useAppSelector((state) => state?.user)
 
     useEffect(() => {
+        if(user){
+            navigate('/index')
+        }
         return () => {
             dispatch(setErrorDisable());
         };
@@ -69,9 +77,7 @@ const RegisterPage = () => {
                 if (googleSignupData.type === 'auth/userSignup/fulfilled') {
                     navigate('/index')
                     toast.success("Registered Successfully! Please Login.")
-                } else {
-                    navigate('/signup')
-                }
+                } 
             } catch (error: any | { message?: string }) {
                 toast.error(error.message)
             }

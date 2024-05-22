@@ -9,7 +9,7 @@ interface SideBarNavProps{
 const SideBarNav:FC<SideBarNavProps> = ({navItem,icon}) => {
   return (
     <div>
-      <NavLink to="/host"  className="side-nav-link-sp border-y-2 border-primaryColor rounded-xl my-2">
+      <NavLink to="/host/manage-listing"  className="side-nav-link-sp border-y-2 border-primaryColor rounded-xl my-2">
         {icon}
       {navItem}
       </NavLink>

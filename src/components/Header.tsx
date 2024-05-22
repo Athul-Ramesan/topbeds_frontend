@@ -4,11 +4,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import TopbedsLogo from "./TopbedsLogo";
 import { useAppDispatch, useAppSelector } from "../redux/store";
+import BecomeHostModal from "./host/BecomeHostModal";
 
 const Header = () => {
+  const [openBecomeHostModal,setOpenBecomeHostModal] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAppSelector(state => state.user)
-
+  const becomeHostHandle =()=>{
+    setOpenBecomeHostModal(true)
+  }
+  const handleCloseBecomeHostModal = ()=>{
+    setOpenBecomeHostModal(false)
+  }
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
@@ -32,9 +39,17 @@ const Header = () => {
         </div>
         {user && (
           <>
-            <Link to={'/user/become-host'}>Become host?</Link>
-            <Link to={"/host/dashboard"}>Host Profile</Link>
+          <p className="cursor-pointer hover:text-primaryColor "
+          onClick={becomeHostHandle}
+          >become host?</p>
+        
+          <BecomeHostModal open={openBecomeHostModal} handleClose={handleCloseBecomeHostModal}/>
+        
           </>
+          // <>
+          //   <Link to={'/user/become-host'}>Become host?</Link>
+          //   <Link to={"/host/dashboard"}>Host Profile</Link>
+          // </>
         )}
 
         {!user && (

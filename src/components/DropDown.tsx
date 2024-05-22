@@ -23,7 +23,7 @@ const DropDown: React.FC<DropDownProps> = ({ isOpen, toggleDropDown, setIsOpen }
 
             if (response.type === "auth/userLogOut/fulfilled") {
                 setIsOpen(false)
-                navigate('/')
+                navigate('/index')
             }
 
         } catch (error: any) {

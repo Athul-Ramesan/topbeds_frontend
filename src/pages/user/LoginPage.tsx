@@ -52,7 +52,7 @@ const LoginPage = () => {
       const response = await dispatch(userLoginAction(values))
         console.log(response)
         if(response.payload.status==="ok"){
-          navigate('/')
+          navigate('/index')
         }
   }
   const googleSignup = async (response: string | any, status: boolean) => {

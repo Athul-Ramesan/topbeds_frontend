@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { axiosInstance } from "../../config/instances"
 import ImageCard from "../../components/public/ImageCard"
+import CategoryBar from "../../components/public/CategoryBar"
+import LoadMoreComponent from "../testpages/LoadMoreComponent"
+import InfiniteScrollComponent from "../testpages/InfiniteScrollComponent"
 
 const AllProperties = () => {
     const [properties, setProperties] = useState([])
@@ -21,7 +24,9 @@ const AllProperties = () => {
     
   return (
     <div className="mt-10">
-    <ImageCard properties={properties}/>
+    <CategoryBar/>
+    <InfiniteScrollComponent/>
+    {/* <ImageCard properties={properties}/> */}
     </div>
   )
 }

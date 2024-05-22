@@ -1,73 +1,56 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import FieldWithHead from '../Forms/FieldWithHead';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import BecomeHostForm from './BecomeHostForm';
 
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-    '& .MuiDialogContent-root': {
-        padding: theme.spacing(2),
-    },
-    '& .MuiDialogActions-root': {
-        padding: theme.spacing(1),
-    },
-}));
+interface Props {
+    open: boolean;
+    handleClose: () => void;
+}
 
-export default function BecomeHostModal({element}) {
-    const [open, setOpen] = React.useState(false);
+export default function BecomeHostModal({ open, handleClose }: Props) {
+    const [isBecomeHostFormOpen, setIsBecomeHostFormOpen] = React.useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleAgree = () => {
+        setIsBecomeHostFormOpen(true);
+        handleClose();
     };
-    const handleClose = () => {
-        setOpen(false);
+
+    const handleCloseForm = () => {
+        setIsBecomeHostFormOpen(false);
     };
 
     return (
-        <>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open dialog
-            </Button>
+        <React.Fragment>
+            <BecomeHostForm handleClose={handleCloseForm} open={isBecomeHostFormOpen} />
 
-            <BootstrapDialog
-
-                onClose={handleClose}
-                aria-labelledby="customized-dialog-title"
+            <Dialog
                 open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
-                <DialogTitle sx={{ m: 0, p: 2 }}
-                    id="customized-dialog-title"
-                    className='lg:w-[500px]'>
-                    Modal title
-                </DialogTitle>
-                <IconButton
-                    aria-label="close"
-                    onClick={handleClose}
-                    sx={{
-                        position: 'absolute',
-                        right: 8,
-                        top: 8,
-                        color: (theme) => theme.palette.grey[500],
-                    }}
-                >
-                    <CloseIcon />
-                </IconButton>
-                <DialogContent dividers className='w-full'>
-                    {element}
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleClose}>
-                        Save changes
-                    </Button>
-                </DialogActions>
-            </BootstrapDialog>
-
-        </>
+                <div className='bg-blue-100 rounded-3xl'>
+                    <DialogTitle id="alert-dialog-title" className='bg-bgaccent'>
+                        {"  Congratulations on taking the first step to becoming a host!"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            By clicking "I Agree," you acknowledge that you have read, understood, and agree to abide by our hosting guidelines, community standards, and all applicable local laws and regulations. You also agree to provide accurate information and maintain a safe and welcoming environment for guests.
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Disagree</Button>
+                        <Button onClick={handleAgree} autoFocus>
+                            Agree
+                        </Button>
+                    </DialogActions>
+                </div>
+            </Dialog>
+        </React.Fragment>
     );
 }
