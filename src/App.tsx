@@ -31,29 +31,36 @@ interface IRoles {
 }
 interface IRoleBasedRedirectProps {
   roles: IRoles,
-  user: IUserSignupData
+  user: IUserSignupData | null
 }
 
 function App() {
   const dispatch = useAppDispatch()
   const { user } = useAppSelector(state => state.user)
   console.log("🚀 ~ App ~ user:", user)
-
-  const RoleBasedRedirect: FC<IRoles> = ({ roles, user }) => {
-    if (user && roles[user.role]) {
-      return <Navigate to={roles[user.role]} replace />
-    }
-    return <Navigate to="/index" replace />
-  }
-
-
-
   useEffect(() => {
     if (!user) {
       dispatch(getUserData())
     }
-
+  
   }, [user])
+  
+  const RoleBasedRedirect: FC<IRoleBasedRedirectProps> = ({ roles, user }) => {
+    if (user && roles[user.role!]) {
+      return <Navigate to={roles[user.role!]} replace />
+    }
+    
+    return <Navigate to="/index" replace />
+  }
+
+  const ProtectHostRoute = ({element}) => {
+    console.log("🚀 ~ ProtectHostRoute ~ element:", element)
+    
+    console.log("🚀 ~ ProtectHostRoute ~ user:", user)
+    
+    return user && user?.role==='host' ? element : <Navigate to ="/index" replace />
+  }
+
   const ProtectedRoute = ({ element }) => {
     const { user } = useAppSelector((state) => state.user)
     return user ? element : <Navigate to="/index" />;
@@ -107,7 +114,15 @@ function App() {
   return (
     <Router >
       <Routes>
-        <Route path="/" index />
+        <Route path="/" 
+        element={
+          <RoleBasedRedirect roles={{
+            admin: '/admin'
+          }}
+          user={user} />}
+          >
+        <Route path="/admin/*" element={<ProtectedRoute element={<AdminRoutes />} />} />
+        </Route>
 
         {/* Auth pages */}
         <Route path="/auth/*" element={<AuthRoutes />} />
@@ -116,15 +131,13 @@ function App() {
         <Route path="/index/*" element={<PublicRoutes />} />
 
         {/* Host Routes */}
-        <Route path="/host/*" element={<ProtectedRoute element={<HostRoutes />} />} />
+        <Route path="/host/*" element={<ProtectHostRoute element={<HostRoutes />} />} />
 
         {/* Admin routes */}
-        <Route path="/admin/*" element={<ProtectedRoute element={<AdminRoutes />} />} />
 
         {/* User Routes */}
         {/* <Route path="/user/*" element={<ProtectedRoute element={<UserRoutes/>} />} /> */}
         <Route path="/user/*" element={<ProtectedRoute element={<UserRoutes />} />} />
-
       </Routes>
     </Router>
   )
@@ -146,6 +159,7 @@ const HostRoutes: FC = () => {
     <Routes>
       <Route path="/" element={<HostLayout />} >
         <Route index element={<Navigate to="/host/dashboard" />} />
+        <Route path="/add-property" element={<AddProperty />} />
         <Route path="/dashboard" element={<HostDashboard />} />
         <Route path="/manage-listing" element={<ManageListing />} />
         <Route path="/reservations" element={""} />
@@ -162,7 +176,6 @@ const UserRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<UserLayout />} >
-        <Route path="/become-host" element={<AddProperty />} />
         <Route path="/profile"  element={<ProfileLayout />}>
           {/* <Route path="/dashboard" element={<UserDashboard />} /> */}
         </Route>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import TopbedsLogo from "./TopbedsLogo";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import BecomeHostModal from "./host/BecomeHostModal";
+import { Globe } from "lucide-react";
 
 const Header = () => {
   const [openBecomeHostModal,setOpenBecomeHostModal] = useState(false)
@@ -37,7 +38,7 @@ const Header = () => {
             </svg>
           </button>
         </div>
-        {user && (
+        {user && user.role==="user" ? (
           <>
           <p className="cursor-pointer hover:text-primaryColor "
           onClick={becomeHostHandle}
@@ -50,7 +51,21 @@ const Header = () => {
           //   <Link to={'/user/become-host'}>Become host?</Link>
           //   <Link to={"/host/dashboard"}>Host Profile</Link>
           // </>
-        )}
+        )
+      : ""
+      }
+      {user && user.role==="host" ? (
+          <>
+          <Link to={'/host/dashboard'} className="flex gap-2 justify-center items-center">
+          <p className="cursor-pointer hover:text-primaryColor "
+          >Switch to hosting</p>
+        <Globe />
+          </Link>
+          </>
+          
+        )
+      : ""
+      }
 
         {!user && (
           <>

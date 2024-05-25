@@ -11,7 +11,9 @@ import BecomeHostFormInput from '../Forms/BecomeHostFormInput';
 import { axiosInstance } from '../../config/instances';
 import { config } from '../../config/config';
 import { useAppDispatch } from '../../redux/store';
-import { becomeHostAction } from '../../redux/actions/userActions/becomeHost';
+import { becomeHostAction } from '../../redux/actions/userAction/becomeHost';
+import InformationModal from '../Modal/InformationModal';
+import { Link } from 'react-router-dom';
 
 interface FormValues {
     street: string;
@@ -38,6 +40,7 @@ const AddressSchema = Yup.object().shape({
 });
 
 const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
+    const [isInformationModalOpen,setIsInformationModalOpen] = React.useState(false)
     const dispatch = useAppDispatch();
     const initialValues: FormValues = {
         street: "",
@@ -54,7 +57,10 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
             
             const response = await dispatch(becomeHostAction(values))
             console.log("🚀 ~ handleSubmit ~ response:", response)
-            
+            if(response.type ==="user/become-host/fulfilled"){
+                handleClose()
+                setIsInformationModalOpen(true)
+            }
             // const response = await axiosInstance.post('user/add-address', values ,config)
         } catch (error: any) {
             console.log("🚀 ~ handleSubmit ~ error:", error)
@@ -64,6 +70,21 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
 
     return (
         <React.Fragment>
+            <InformationModal 
+            handleClose={()=> setIsInformationModalOpen(false)}
+            open={isInformationModalOpen}
+            buttonText={`I'll do it later`}
+            cancelButtonText = {""}
+            title='Welcome to the host community'
+            content={<>
+            You can now build your profile by adding properties,
+            <Link className='underline px-2' to={'/host/add-property'}>click here</Link> 
+            to add new property or you can do it later from the profile tab
+            </>
+            }
+            
+
+             />
             <Dialog
                 open={open}
                 onClose={handleClose}

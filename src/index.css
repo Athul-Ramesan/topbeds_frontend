@@ -21,10 +21,13 @@ button.primary{
   }
 
   .side-nav-link-sp {
+    @apply flex px-6 py-3.5 items-center gap-12 hover:text-primaryColor hover:bg-gray-300;
+  }
+
+  .side-nav-link-sp-on-active {
     @apply flex px-6 py-3.5 items-center gap-12 active:bg-gray-200 hover:text-primaryColor hover:bg-gray-300;
   }
 
-  
 .side-navbar-host {
     transition: transform 0.3s ease-in-out; /* Animation transition property */
     transform: translateX(-100%); /* Initially move the sidebar off-screen */
@@ -35,4 +38,6 @@ button.primary{
       0
     ); /* Move the sidebar back on-screen when the 'show' class is applied */
   }
-  
+  .active {
+    @apply bg-gray-200;
+  }

@@ -9,8 +9,8 @@ const SmallDeviceNavnbar = () => {
         setShowSideNavbar(!showSideNavbar)
     }
   return (
-    <div className="lg:hidden p-5 shadow-lg z-10 flex items-center justify-between">
-        <div className="flex cursor-pointer opacity-70 hover:opacity-100">
+    <div className="lg:hidden bg-bg-minimal h-20 p-5 shadow-lg z-10 flex items-center justify-between">
+        <div className="flex  cursor-pointer opacity-70 hover:opacity-100">
         <TopbedsLogo/>
         </div>
         <div className=" text-xl text-gray-500 active:text-black"

@@ -131,8 +131,8 @@ const AddProperty = () => {
         )
     }
     return (
-        <div className="p-5 w-full text-sm">
-
+        <div className="p-5 w-full text-sm  min-h-screen">
+            
             {/* top bar */}
             <div className="flex justify-between items-center font-semibold">
                 <h1 className="text-2xl font-bold">Add a new place</h1>
@@ -166,13 +166,7 @@ const AddProperty = () => {
                                     {/*divided section div */}
                                     <div className=" lg:flex gap-5 ">
 
-                                        <div className="lg:w-1/3 mb-3 lg:mb-0">
-                                            <h1 className="font-bold mb-3">Place thumbnail</h1>
-                                            <CustomSingleFileInput
-                                                onChange={handleImageUpload}
-                                            //  handleChangeHere
-                                            />
-                                        </div>
+                                        
 
                                         <div className="lg:w-full  mb-3 lg:mb-0">
                                             <h1 className="font-bold">Product Information</h1>
@@ -294,7 +288,7 @@ const AddProperty = () => {
 
                             </div>
                         </div>
-                        <div className="">
+                        <div className="bg-green-100">
                             <div className="background-div">
                                 <h1 className="font-bold">Property Images</h1>
                                 <p className="background-div"> Drop Here</p>

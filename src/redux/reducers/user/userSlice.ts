@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IUserSignupData } from "../../../interface/IUserSignup";
 import { getUserData, sendOtpAction, userLoginAction, userLogoutAction, userSignupAction, verifyOtpAction } from "../../actions/userActions";
-import { becomeHostAction } from "../../actions/userActions/becomeHost";
+import { becomeHostAction } from "../../actions/userAction/becomeHost";
 import { IUserData } from "../../../interface/IUserSlice";
 
 interface initialState {
