@@ -6,7 +6,7 @@ import AccountPage from "./pages/user/AccountPage";
 import { Toaster } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import EmailVerification from "./pages/EmailVerification";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { getUserData } from "./redux/actions/userActions";
 import ProfileLayout from "./pages/ProfileLayout";
 import LandingPageMain from "./pages/public/LandingPage";
@@ -25,6 +25,11 @@ import PublicLayout from "./pages/public/PublicLayout";
 import AuthLayout from "./pages/auth/AuthLayout";
 import AllProperties from "./pages/public/AllProperties";
 import ManageListing from "./components/host/ManageListing";
+import LoadingSpinner from "./pages/LoadingSpinner";
+import SinglePropertyDetailedLayout from "./pages/host/SinglePropertyDetailedLayout";
+import HostPropertyDetail from "./pages/host/HostPropertyDetail";
+import ArrivalGuidlines from "./pages/host/ArrivalGuidlines";
+import ShowPhotosHostProperty from "./pages/host/ShowPhotosHostProperty";
 
 interface IRoles {
   [key: string]: string
@@ -37,34 +42,42 @@ interface IRoleBasedRedirectProps {
 function App() {
   const dispatch = useAppDispatch()
   const { user } = useAppSelector(state => state.user)
+  const [loading, setLoading] = useState(true);
   console.log("🚀 ~ App ~ user:", user)
   useEffect(() => {
-    if (!user) {
-      dispatch(getUserData())
+    const fetchUserData = async () => {
+      if (!user) {
+        await dispatch(getUserData())
+      }
+      setLoading(false);
     }
-  
+
+    fetchUserData()
   }, [user])
-  
+
   const RoleBasedRedirect: FC<IRoleBasedRedirectProps> = ({ roles, user }) => {
     if (user && roles[user.role!]) {
       return <Navigate to={roles[user.role!]} replace />
     }
-    
+
     return <Navigate to="/index" replace />
   }
-
-  const ProtectHostRoute = ({element}) => {
+  if (loading) {
+    return <LoadingSpinner />
+  }
+  const ProtectHostRoute = ({ element }) => {
     console.log("🚀 ~ ProtectHostRoute ~ element:", element)
-    
+
     console.log("🚀 ~ ProtectHostRoute ~ user:", user)
-    
-    return user && user?.role==='host' ? element : <Navigate to ="/index" replace />
+
+    return user && user?.role === 'host' ? element : <Navigate to="/index" replace />
   }
 
   const ProtectedRoute = ({ element }) => {
     const { user } = useAppSelector((state) => state.user)
     return user ? element : <Navigate to="/index" />;
   }
+
   // const preventAccess = ({element})=>{
   //   const {user} = useAppSelector((state)=> state.user)
   //   return 
@@ -114,14 +127,14 @@ function App() {
   return (
     <Router >
       <Routes>
-        <Route path="/" 
-        element={
-          <RoleBasedRedirect roles={{
-            admin: '/admin'
-          }}
-          user={user} />}
-          >
-        <Route path="/admin/*" element={<ProtectedRoute element={<AdminRoutes />} />} />
+        <Route path="/"
+          element={
+            <RoleBasedRedirect roles={{
+              admin: '/admin'
+            }}
+              user={user} />}
+        >
+          <Route path="/admin/*" element={<ProtectedRoute element={<AdminRoutes />} />} />
         </Route>
 
         {/* Auth pages */}
@@ -161,7 +174,26 @@ const HostRoutes: FC = () => {
         <Route index element={<Navigate to="/host/dashboard" />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/dashboard" element={<HostDashboard />} />
+
         <Route path="/manage-listing" element={<ManageListing />} />
+        <Route path="/manage-listing/:propertyId" element={<SinglePropertyDetailedLayout />}>
+          <Route index element={<Navigate to="photos" />}  />
+            <Route path="photos" element={<ShowPhotosHostProperty />} />
+            <Route path="title" element={""} />
+            <Route path="description" element={""} />
+            <Route path="price" element={""} />
+            <Route path="amenities" element={""} />
+            <Route path="bathrooms" element={""} />
+            <Route path="bedrooms" element={""} />
+            <Route path="max-guests" element={""} />
+            <Route path="bedrooms" element={""} />
+            <Route path="house-rules" element={""} />
+
+
+          {/* <Route path="details" element={<HostPropertyDetail />} >
+          </Route> */}
+          {/* <Route path="arrival" element={<ArrivalGuidlines />} /> */}
+        </Route>
         <Route path="/reservations" element={""} />
         <Route path="/inbox" element={""} />
         <Route path="/reviews" element={""} />
@@ -176,7 +208,7 @@ const UserRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<UserLayout />} >
-        <Route path="/profile"  element={<ProfileLayout />}>
+        <Route path="/profile" element={<ProfileLayout />}>
           {/* <Route path="/dashboard" element={<UserDashboard />} /> */}
         </Route>
       </Route>

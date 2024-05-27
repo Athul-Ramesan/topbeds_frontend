@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 import HostSideBar from "../../components/host/HostSideBar"
 import SmallDeviceNavnbar from "../../components/host/SmallDeviceNavnbar"
 import HostPropertiesProvider from "../../context/HostPropertiesContext"
+import HostPropertySingleProvider from "../../context/HostPropertySingleContext"
 
 
 const HostLayout = () => {
@@ -9,6 +10,7 @@ const HostLayout = () => {
     <div>
       {/* small device  */}
     <HostPropertiesProvider>
+    <HostPropertySingleProvider>
     <div className="flex lg:flex-row flex-col  relative">
       <SmallDeviceNavnbar/>
       {/* side bar here */}
@@ -18,6 +20,7 @@ const HostLayout = () => {
       </div>
       <Outlet/>
     </div>
+    </HostPropertySingleProvider>
     </HostPropertiesProvider>
     </div>
   )

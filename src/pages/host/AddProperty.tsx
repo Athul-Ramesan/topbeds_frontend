@@ -15,6 +15,7 @@ import { useNavigate, useRoutes } from "react-router-dom";
 import CustomSingleFileInput from "../../components/host/CustomSingleFileInput";
 import CustomFileInput from "../../components/host/CustomFileInput";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface IProperty {
     address: string;
@@ -123,11 +124,7 @@ const AddProperty = () => {
 
     if (isLoading) {
         return (
-            <>
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
-                    <PulseLoader color="#36d7b7" />
-                </div>
-            </>
+            <LoadingSpinner/>
         )
     }
     return (
