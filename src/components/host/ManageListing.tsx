@@ -1,49 +1,42 @@
-import { useContext, useEffect, useState } from "react";
-import { useAppSelector } from "../../redux/store";
-import { axiosInstance } from "../../config/instances";
-import { IProperty } from "../../interface/IProperty";
+import { useContext, useState } from "react";
 import PropertyList from "./PropertyList";
 import { HostPropertiesContext } from "../../context/HostPropertiesContext";
 import { useNavigate } from "react-router-dom";
 import { BiFilter} from "react-icons/bi";
 import ToolTipAtBottom from "../ToolTipBottom";
 import { MdAdd } from "react-icons/md";
+import EmptyItemMessage from "./EmptyItemMessage";
 
 
 // c
 
 const ManageListing = () => {
-  const { user } = useAppSelector(state => state.user)
-  const [properties, setProperties] = useState<IProperty[]>([])
-  const { hostProperties, setHostProperties } = useContext(HostPropertiesContext)
+  
+  const { hostProperties } = useContext(HostPropertiesContext)
   const [showFilterToolTip,setShowFilterToolTip] = useState(false)
   const [showAddToolTip,setShowAddToolTip] = useState(false)
 
   const navigate = useNavigate()
   console.log("🚀 ~ ManageListing ~ hostProperties:", hostProperties)
 
-  console.log("🚀 ~ ManageListing ~ properties:", properties)
 
-  console.log("🚀 ~ ManageListing ~ user:", user)
-  const userId = user?._id
-  //need to change the userId to hostId
-  useEffect(() => {
-    axiosInstance.get(`/property/get-host-properties/${userId}`)
-      .then(data => {
-        setProperties(data.data)
-        setHostProperties(data.data)
-        console.log("🚀 ~ useEffect ~ data:", data)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, [])
+
+  
 
   const handleClickAddIcon =()=>{
     navigate('/host/add-property')
   }
   const handleClickFilterIcon = ()=>{
     
+  }
+  if(!hostProperties || hostProperties.length===0){
+    return (
+      <>
+      <div className="flex justify-center items-center w-full m-20">
+      <EmptyItemMessage/>
+      </div>
+      </>
+    )
   }
   return (
     <div className="w-full p-4">
@@ -86,7 +79,7 @@ const ManageListing = () => {
           onClick={handleClickAddIcon}
           />
           <ToolTipAtBottom
-          toolTipText="add property"
+          toolTipText="add"
           showToolTip={showAddToolTip}
           />
          </div>
@@ -101,7 +94,7 @@ const ManageListing = () => {
       <h2 className="text-2xl font-bold mb-4">Manage Listings</h2>
 
       {/* Listings Cards */}
-      <PropertyList properties={properties} />
+      <PropertyList properties={hostProperties} />
     </div>
   );
 };

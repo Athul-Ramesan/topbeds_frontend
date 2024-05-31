@@ -26,9 +26,9 @@ export default function InformationModal({
      title }: Props) {
 
         const handleSubmit = handleSubmitModal || handleClose
- 
+        
     return (
-        <React.Fragment>
+        <>
 
             <Dialog className='rounded-lg '
                 open={open}
@@ -53,6 +53,6 @@ export default function InformationModal({
                     </DialogActions>
                 </div>
             </Dialog>
-        </React.Fragment>
+        </>
     );
 }

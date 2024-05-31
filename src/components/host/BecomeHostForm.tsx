@@ -58,8 +58,8 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
             const response = await dispatch(becomeHostAction(values))
             console.log("🚀 ~ handleSubmit ~ response:", response)
             if(response.type ==="user/become-host/fulfilled"){
-                handleClose()
                 setIsInformationModalOpen(true)
+                handleClose()
             }
             // const response = await axiosInstance.post('user/add-address', values ,config)
         } catch (error: any) {

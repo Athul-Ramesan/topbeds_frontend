@@ -6,7 +6,7 @@ import AccountPage from "./pages/user/AccountPage";
 import { Toaster } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import EmailVerification from "./pages/EmailVerification";
-import { FC, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { getUserData } from "./redux/actions/userActions";
 import ProfileLayout from "./pages/ProfileLayout";
 import LandingPageMain from "./pages/public/LandingPage";
@@ -30,6 +30,17 @@ import SinglePropertyDetailedLayout from "./pages/host/SinglePropertyDetailedLay
 import HostPropertyDetail from "./pages/host/HostPropertyDetail";
 import ArrivalGuidlines from "./pages/host/ArrivalGuidlines";
 import ShowPhotosHostProperty from "./pages/host/ShowPhotosHostProperty";
+import ShowTitleHostProperty from "./pages/host/ShowTitleHostProperty";
+import ShowDescriptionHostProperty from "./pages/host/ShowDescriptionHostProperty";
+import ShowPriceHostProperty from "./pages/host/ShowPriceHostProperty";
+import SingleProperty from "./pages/public/SingleProperty/SingleProperty";
+import Index from "./pages/public/PropertyDetails/Index";
+
+import ForgotPasswordNewPage from "./pages/auth/ForgotPasswordNewPage";
+import ResetPassword from "./pages/auth/ResetPassword";
+import ShowAmenitiesHostProperty from "./pages/host/ShowAmenitiesHostProperty";
+import ShowbedroomsHostProperty from "./pages/host/ShowBedroomsHostProperty";
+import ShowbathroomsHostProperty from "./pages/host/ShowBathroomsHostProperty";
 
 interface IRoles {
   [key: string]: string
@@ -179,12 +190,12 @@ const HostRoutes: FC = () => {
         <Route path="/manage-listing/:propertyId" element={<SinglePropertyDetailedLayout />}>
           <Route index element={<Navigate to="photos" />}  />
             <Route path="photos" element={<ShowPhotosHostProperty />} />
-            <Route path="title" element={""} />
-            <Route path="description" element={""} />
-            <Route path="price" element={""} />
-            <Route path="amenities" element={""} />
+            <Route path="title" element={<ShowTitleHostProperty/>} />
+            <Route path="description" element={<ShowDescriptionHostProperty/>} />
+            <Route path="price" element={<ShowPriceHostProperty/>} />
+            <Route path="amenities" element={<ShowAmenitiesHostProperty/>} />
             <Route path="bathrooms" element={""} />
-            <Route path="bedrooms" element={""} />
+            <Route path="bedrooms" element={<ShowbedroomsHostProperty/>} />
             <Route path="max-guests" element={""} />
             <Route path="bedrooms" element={""} />
             <Route path="house-rules" element={""} />
@@ -223,6 +234,7 @@ const PublicRoutes: FC = () => {
         <Route index element={<Navigate to="/index/home" replace />} />
         <Route path="/home" element={<IndexPage />} />
         <Route path="/properties" element={<AllProperties />} />
+        <Route path="/properties/:propertyId" element={<Index/>} />
         <Route path="/about" element={<AboutPage />} />
       </Route>
     </Routes>
@@ -235,7 +247,8 @@ const AuthRoutes: FC = () => {
       <Route path="/" element={<AuthLayout />} >
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={""} />
+        <Route path="/forgot-password" element={<ForgotPasswordNewPage/>} />
+        <Route path="/reset-password/:token" element={<ResetPassword/>}/>
         <Route path="/verify-account" element={<EmailVerification />} />
       </Route>
     </Routes>

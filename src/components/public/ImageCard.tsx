@@ -1,34 +1,38 @@
 // ImageCard.js
-import React, { FC, useState } from 'react';
+import React, { FC, useContext, useState } from 'react';
 import SinglePropertyCard from './SinglePropertyCard';
+import SinglePropertyDetailsProvider, { SinglePropertyDetailsContext } from '../../context/SinglePropertyDetails';
+import { IProperty } from '../../interface/IProperty';
+import { Link, useNavigate } from 'react-router-dom';
 
-// const images = [
-//   '/8af23dac-2701-4fc0-ab1c-c8a244f53fc2.jpg', // Replace with your image URLs
-//   '/34374315-96d9-49da-b69b-d5ec1361b5fd.jpg',
-//   '/public/fa59a6ec-0859-4fc2-a2de-2da88e9666f5.jpg'
-// ];
 
-interface Property {
-    _id: number;
-    title: string;
-    description: string;
-    images: string[];
-  }
-interface ImageCardProps{
-    properties: Property[];
+interface ImageCardProps {
+  properties: IProperty[];
 }
 
-const ImageCard:FC<ImageCardProps> = ({properties}) => {
+const ImageCard: FC<ImageCardProps> = ({ properties }) => {
+  const {setSingleProperty} = useContext(SinglePropertyDetailsContext)
+  const navigate = useNavigate()
   console.log("🚀 ~ properties:", properties)
-  
-    
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-    {properties && properties?.map((property) => (
-      <SinglePropertyCard key={property._id} property={property} />
-    ))}
-  </div>
-    
+    <div
+
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {properties && properties?.map((property) => (
+        <div 
+        
+        key={property._id}
+          onClick={()=>{
+            setSingleProperty(property)
+            navigate(`/index/properties/${property._id}`)
+          }} 
+          >
+          <SinglePropertyCard key={property._id} property={property} />
+        </div>
+      ))}
+    </div>
+
   )
 };
 

@@ -19,7 +19,7 @@ const HostPropertySingleDetail:FC <HostPropertySingleDetailProps> = ({contentHea
         <p className="text-xl font-semibold text-font-accent">{contentHead}</p>
         <IoIosArrowForward  size={25} className="text-font-accent"/>
         </div>
-        <p className="px-4">{contentText} {contentHead === "Description" || contentHead === "Title" ||  contentHead === "Price" ||  contentHead === "House Rules" ? "" : contentHead.toLowerCase()}</p>
+        <p className="px-4">{contentText} {contentHead === "Description" || contentHead === "Title" ||  contentHead === "Price" ||  contentHead === "House Rules" || contentHead === "Amenities" ? "" : contentHead.toLowerCase()}</p>
       </NavLink>
       </div>
   )

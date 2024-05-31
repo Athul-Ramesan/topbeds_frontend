@@ -79,7 +79,7 @@ const LoginPage = () => {
   return (
     <div className="mt-4 grow flex flex-col items-center justify-around">
        <div className="mb-32">
-       {isForgotPasswordModalOpen && ( <ModalIndex children={<ForgotPassword onClose={hanldeCloseModal}/>} />)}
+       {/* {isForgotPasswordModalOpen && ( <ModalIndex children={<ForgotPassword onClose={hanldeCloseModal}/>} />)} */}
        <h1 className="text-4xl text-center text-font-color-100"> Login</h1>
        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleLoginSubmit} >
         <Form className="m-6 max-w-md mx-auto" action="">
@@ -92,7 +92,9 @@ const LoginPage = () => {
             <div className="">Don't have an account yet?
                 <Link className="px-6 text-sm text-font-color-200 hover:text-primaryColor" to={'/auth/signup'}>Register Now</Link>
             </div>
-            <p className="text-sm pt-[1px] text-primaryTint hover:text-primaryDarkColor cursor-pointer" onClick={() => setForgotPasswordModalOpen(true)}>forgot password?</p>
+            <p className="text-sm pt-[1px] text-primaryTint hover:text-primaryDarkColor cursor-pointer" 
+            onClick={() => navigate('/auth/forgot-password')}
+            >forgot password?</p>
         </Form>
        </Formik>
        <div className="px-16 pt-6">

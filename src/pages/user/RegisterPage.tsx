@@ -77,8 +77,12 @@ const RegisterPage = () => {
                 if (googleSignupData.type === 'auth/userSignup/fulfilled') {
                     navigate('/index')
                     toast.success("Registered Successfully! Please Login.")
-                } 
+                }else if(googleSignupData.type === 'auth/userSignup/rejected'){
+                    toast.error("User exists")
+                    dispatch(setErrorDisable());
+                }
             } catch (error: any | { message?: string }) {
+               
                 toast.error(error.message)
             }
         }
@@ -97,7 +101,6 @@ const RegisterPage = () => {
             setModalOpen(true)
         }
         console.log(action, 'action in onsubmit');
-
 
     }
     const hanldeCloseModal = () => {

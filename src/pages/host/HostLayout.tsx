@@ -5,7 +5,9 @@ import HostPropertiesProvider from "../../context/HostPropertiesContext"
 import HostPropertySingleProvider from "../../context/HostPropertySingleContext"
 
 
+
 const HostLayout = () => {
+  
   return (
     <div>
       {/* small device  */}

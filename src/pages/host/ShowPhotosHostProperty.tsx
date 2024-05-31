@@ -14,13 +14,18 @@ const ShowPhotosHostProperty = () => {
     }, 1500)
     return () => clearTimeout(timer)
   }, [])
+  const handleAddPhotoClick = ()=>{
+
+  }
   return (
-    <div className=" h-[525px] overflow-y-scroll">
+    <div className=" h-[525px] overflow-y-scroll ">
 
       <div className="flex gap-4 justify-between items-center">
         <p className="text-3xl font-semibold text-font-accent m-1">Showcase your photos</p>
-        <div className="inline-block bg-gray-200 rounded-full p-2 m-1 ">
-          <Plus />
+        <div className="inline-block bg-gray-200 rounded-full p-2 m-1 hover:scale-110 hover:cursor-pointer transition-transform duration-500">
+          <Plus 
+          onClick={handleAddPhotoClick}
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 m-4">
