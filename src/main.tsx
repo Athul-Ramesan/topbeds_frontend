@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { store } from './redux/store.ts'
 import { Toaster } from 'react-hot-toast'
 import SinglePropertyDetailsProvider from './context/SinglePropertyDetails.tsx'
+import HostPropertySingleProvider from './context/HostPropertySingleContext.tsx'
 // import dotenv from "dotenv"
 // dotenv.config()
 
@@ -15,10 +16,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}> 
     <Toaster/>
+    <HostPropertySingleProvider >
     <SinglePropertyDetailsProvider>
     <App />
     </SinglePropertyDetailsProvider>
-
+    </HostPropertySingleProvider>
     </Provider>
   </React.StrictMode>
     </GoogleOAuthProvider>

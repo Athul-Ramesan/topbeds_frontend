@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react"
+import { ChangeEvent, FC, useContext, useState } from "react"
 import { FaLightbulb } from "react-icons/fa6"
 import CancelButton from "../../components/Buttons/CancelButton"
 import SaveButton from "../../components/Buttons/SaveButton"
@@ -9,6 +9,7 @@ const ShowPriceHostProperty = () => {
   const [value, setValue] = useState(hostProperty.price)
   const [isAnyChange, setIsAnyChange] = useState(false)
   const handleOnChange = (e:ChangeEvent<HTMLInputElement>) => {
+    
     e.preventDefault()
     setValue(e.target.value)
 

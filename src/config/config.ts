@@ -7,6 +7,11 @@ export const config ={
     withCredentials: true,
     credentials: "include"
 }
+export const multiplefileConfig= {
+  headers: {
+    "Content-Type": "multipart/form-data",
+    },
+}
 export const ApiBaseUrl: string = "http://localhost:5000"
 
 

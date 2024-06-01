@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 
 interface ImageDivProps{
     image: string;
-    width: string
+    width?: string
 }
 const ImageDiv:FC<ImageDivProps> = ({width,image}) => {
   const [isMouseEnter,setIsMouseEnter] = useState(false)

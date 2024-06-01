@@ -1,25 +1,19 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import LoginPage from "./pages/user/LoginPage";
-import Layout from "./Layout";
 import RegisterPage from "./pages/user/RegisterPage";
-import AccountPage from "./pages/user/AccountPage";
-import { Toaster } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import EmailVerification from "./pages/EmailVerification";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useContext, useEffect, useState } from "react";
 import { getUserData } from "./redux/actions/userActions";
 import ProfileLayout from "./pages/ProfileLayout";
-import LandingPageMain from "./pages/public/LandingPage";
 import AddProperty from "./pages/host/AddProperty";
 import "./App.css"
 import IndexPage from "./pages/IndexPage";
 import HostDashboard from "./pages/host/HostDashboard";
 import HostLayout from "./pages/host/HostLayout";
 import AdminLayout from "./pages/admin/AdminLayout";
-import UserDashboard from "./pages/user/UserDashboard";
 import UserLayout from "./pages/user/UserLayout";
 import AboutPage from "./pages/public/AboutPage";
-import ListingManagement from "./pages/host/ListingManagement";
 import { IUserSignupData } from "./interface/IUserSignup";
 import PublicLayout from "./pages/public/PublicLayout";
 import AuthLayout from "./pages/auth/AuthLayout";
@@ -27,20 +21,18 @@ import AllProperties from "./pages/public/AllProperties";
 import ManageListing from "./components/host/ManageListing";
 import LoadingSpinner from "./pages/LoadingSpinner";
 import SinglePropertyDetailedLayout from "./pages/host/SinglePropertyDetailedLayout";
-import HostPropertyDetail from "./pages/host/HostPropertyDetail";
-import ArrivalGuidlines from "./pages/host/ArrivalGuidlines";
 import ShowPhotosHostProperty from "./pages/host/ShowPhotosHostProperty";
 import ShowTitleHostProperty from "./pages/host/ShowTitleHostProperty";
 import ShowDescriptionHostProperty from "./pages/host/ShowDescriptionHostProperty";
 import ShowPriceHostProperty from "./pages/host/ShowPriceHostProperty";
-import SingleProperty from "./pages/public/SingleProperty/SingleProperty";
 import Index from "./pages/public/PropertyDetails/Index";
 
 import ForgotPasswordNewPage from "./pages/auth/ForgotPasswordNewPage";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ShowAmenitiesHostProperty from "./pages/host/ShowAmenitiesHostProperty";
 import ShowbedroomsHostProperty from "./pages/host/ShowBedroomsHostProperty";
-import ShowbathroomsHostProperty from "./pages/host/ShowBathroomsHostProperty";
+import SinglePropertyDetailsProvider from "./context/SinglePropertyDetails";
+import { HostPropertySingleContext } from "./context/HostPropertySingleContext";
 
 interface IRoles {
   [key: string]: string
@@ -54,6 +46,7 @@ function App() {
   const dispatch = useAppDispatch()
   const { user } = useAppSelector(state => state.user)
   const [loading, setLoading] = useState(true);
+  const {hostProperty} = useContext(HostPropertySingleContext)
   console.log("🚀 ~ App ~ user:", user)
   useEffect(() => {
     const fetchUserData = async () => {
@@ -181,6 +174,7 @@ const AdminRoutes: FC = () => {
 const HostRoutes: FC = () => {
   return (
     <Routes>
+
       <Route path="/" element={<HostLayout />} >
         <Route index element={<Navigate to="/host/dashboard" />} />
         <Route path="/add-property" element={<AddProperty />} />
@@ -188,18 +182,17 @@ const HostRoutes: FC = () => {
 
         <Route path="/manage-listing" element={<ManageListing />} />
         <Route path="/manage-listing/:propertyId" element={<SinglePropertyDetailedLayout />}>
-          <Route index element={<Navigate to="photos" />}  />
-            <Route path="photos" element={<ShowPhotosHostProperty />} />
-            <Route path="title" element={<ShowTitleHostProperty/>} />
-            <Route path="description" element={<ShowDescriptionHostProperty/>} />
-            <Route path="price" element={<ShowPriceHostProperty/>} />
-            <Route path="amenities" element={<ShowAmenitiesHostProperty/>} />
-            <Route path="bathrooms" element={""} />
-            <Route path="bedrooms" element={<ShowbedroomsHostProperty/>} />
-            <Route path="max-guests" element={""} />
-            <Route path="bedrooms" element={""} />
-            <Route path="house-rules" element={""} />
-
+          <Route index element={<Navigate to="photos" />} />
+          <Route path="photos" element={<ShowPhotosHostProperty />} />
+          <Route path="title" element={<ShowTitleHostProperty />} />
+          <Route path="description" element={<ShowDescriptionHostProperty />}/>
+          <Route path="price" element={<ShowPriceHostProperty />} />
+          <Route path="amenities" element={<ShowAmenitiesHostProperty />} />
+          <Route path="bathrooms" element={""} />
+          <Route path="bedrooms" element={<ShowbedroomsHostProperty />} />
+          <Route path="max-guests" element={""} />
+          <Route path="bedrooms" element={""} />
+          <Route path="house-rules" element={""} />
 
           {/* <Route path="details" element={<HostPropertyDetail />} >
           </Route> */}
@@ -234,7 +227,7 @@ const PublicRoutes: FC = () => {
         <Route index element={<Navigate to="/index/home" replace />} />
         <Route path="/home" element={<IndexPage />} />
         <Route path="/properties" element={<AllProperties />} />
-        <Route path="/properties/:propertyId" element={<Index/>} />
+        <Route path="/properties/:propertyId" element={<Index />} />
         <Route path="/about" element={<AboutPage />} />
       </Route>
     </Routes>
@@ -244,13 +237,13 @@ const PublicRoutes: FC = () => {
 const AuthRoutes: FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<AuthLayout />} >
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<RegisterPage />} />
-        <Route path="/forgot-password" element={<ForgotPasswordNewPage/>} />
-        <Route path="/reset-password/:token" element={<ResetPassword/>}/>
-        <Route path="/verify-account" element={<EmailVerification />} />
-      </Route>
+        <Route path="/" element={<AuthLayout />} >
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordNewPage />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/verify-account" element={<EmailVerification />} />
+        </Route>
     </Routes>
   )
 }

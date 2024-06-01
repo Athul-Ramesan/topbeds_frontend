@@ -20,9 +20,6 @@ const ManageListing = () => {
   console.log("🚀 ~ ManageListing ~ hostProperties:", hostProperties)
 
 
-
-  
-
   const handleClickAddIcon =()=>{
     navigate('/host/add-property')
   }
