@@ -2,7 +2,6 @@
 import { useContext } from "react";
 import { HostPropertySingleContext } from "../../context/HostPropertySingleContext";
 import HostPropertySingleDetail from "../../components/host/HostPropertySingleDetail";
-import { Outlet } from "react-router-dom";
 
 const HostPropertyDetail = () => {
     const{hostProperty } = useContext(HostPropertySingleContext)
@@ -19,7 +18,7 @@ const HostPropertyDetail = () => {
       <HostPropertySingleDetail contentHead="Bathrooms" contentText={`${hostProperty.bathrooms}`} />
       <HostPropertySingleDetail contentHead="Bedrooms" contentText={`${hostProperty.bedrooms}`} />
       <HostPropertySingleDetail contentHead="Max-guests" contentText={`${hostProperty.maxGuests}`} />
-      <HostPropertySingleDetail contentHead="Bedrooms" contentText={`${hostProperty.maxGuests}`} />
+      {/* <HostPropertySingleDetail contentHead="Bedrooms" contentText={`${hostProperty.maxGuests}`} /> */}
     </div>
     </>
   )

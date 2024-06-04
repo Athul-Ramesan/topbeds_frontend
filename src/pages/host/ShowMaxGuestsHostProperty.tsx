@@ -7,41 +7,41 @@ import { config } from "../../config/config"
 import { axiosInstance } from "../../config/instances"
 import CancelButton from "../../components/Buttons/CancelButton"
 import SaveButton from "../../components/Buttons/SaveButton"
+import { validateMaxGuests } from "../../utils/validationSchema/validateMaxGuest"
 
-const ShowPriceHostProperty = () => {
+const ShowMaxGuestsHostProperty = () => {
   const { hostProperty } = useContext(HostPropertySingleContext)
-  const [price, setPrice] = useState(String(hostProperty.price))
+  const [maxGuests, setMaxGuests] = useState(String(hostProperty.maxGuests))
   const [isAnyChange, setIsAnyChange] = useState(false)
   const {setHostProperty} = useContext(HostPropertySingleContext)
   const handleOnChange = (e:ChangeEvent<HTMLInputElement>) => {
     
     e.preventDefault()
-    setPrice(e.target.value)
+    setMaxGuests(String(e.target.value))
 
-    if (price !== String(hostProperty.price)) {
+    if (maxGuests !== String(hostProperty.price)) {
       setIsAnyChange(true)
     }
   }
   const HandleCancelClick = ()=>{
     setIsAnyChange(false)
-    setPrice(String(hostProperty.price))
+    setMaxGuests(String(hostProperty.maxGuests))
   }
   const HandleSaveClick = async (event:React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     console.log('button clicked save')
-    const {value , error} = validatePrice.validate({price})
+    const {value , error} = validateMaxGuests.validate({maxGuests})
     
-
     if(error){
       toast.error(error.message)
       return
     }
-    const numericValue = {...value, price: Number(value.price)}
+    const numericValue = {...value, maxGuests: Number(value.maxGuests)}
 
     const response = await axiosInstance.post(`/property/update-property/${hostProperty._id}`, numericValue , config)
     if (response.statusText === "OK") {
       setIsAnyChange(false)
-      toast.success("Price updated successfully")
+      toast.success("Guest count updated successfully")
       setHostProperty(response.data.updatedProperty)
     }
 
@@ -49,10 +49,10 @@ const ShowPriceHostProperty = () => {
   return (
     <div className=' h-[525px] '>
       <div className='flex justify-center'>
-        <p className="text-4xl font-semibold text-font-accent m-4">Price</p>
+        <p className="text-4xl font-semibold text-font-accent m-4">Maximum guests</p>
       </div>
       <div className='mx-4 flex items-center mt-40'>
-        <input type="text" className='w-full p-0 bg-transparent border-none focus:ring-0 focus:outline-none text-font-color-300 text-3xl font-extrabold' placeholder='Type here...' value={price}
+        <input type="text" className='w-full p-0 bg-transparent border-none focus:ring-0 focus:outline-none text-font-color-300 text-3xl font-extrabold' placeholder='Type here...' value={maxGuests}
           onChange={handleOnChange}
         />
       </div>
@@ -71,4 +71,4 @@ const ShowPriceHostProperty = () => {
   )
 }
 
-export default ShowPriceHostProperty
+export default ShowMaxGuestsHostProperty

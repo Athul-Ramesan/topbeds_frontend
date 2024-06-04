@@ -1,5 +1,4 @@
-import { FC, useContext } from "react"
-import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
+import { FC } from "react"
 import {  NavLink, useParams } from "react-router-dom"
 import { IoIosArrowForward } from "react-icons/io"
 

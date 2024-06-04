@@ -6,11 +6,13 @@ import SkeletonImageDiv from "../../components/SkeletonImageDiv"
 import ModalIndex from "../../components/Modal/ModalIndex"
 import AddNewPhotoComponent from "../../components/AddNewPhotoComponent"
 import { axiosInstance } from "../../config/instances"
-import { multiplefileConfig } from "../../config/config"
+import { config } from "../../config/config"
+import toast from "react-hot-toast"
 
 const ShowPhotosHostProperty = () => {
-  const { hostProperty } = useContext(HostPropertySingleContext)
+  const { hostProperty ,setHostProperty} = useContext(HostPropertySingleContext)
   const [loading, setLoading] = useState(true)
+  const [imageUploadingLoading,setImageUploadingLoading] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,30 +24,43 @@ const ShowPhotosHostProperty = () => {
     setOpenModal(true)
   }
   const handleDeletePhoto = ()=>{
-
+    
   }
   const handleCloseModal = ()=>{
     setOpenModal(false)
   }
-  const handleAddPhotoSubmit= async(imageUrls:string[])=>{
-
+  const handleAddPhotoSubmit= async(imageUrls:string[]) => {
+   console.log("🚀 ~ handleAddPhotoSubmit ~ imageUrls:", imageUrls)
+   setImageUploadingLoading(true)
     try {
-      const formData = new FormData()
-      imageUrls.forEach((imageUrl,index)=>{
-        formData.append(`images[${index}]`, imageUrl)
-      })
+      console.log(hostProperty._id)
       
-      console.log("🚀 ~ handleAddPhotoSubmit ~ formData:", formData)
-      const response = await axiosInstance.post(`/property/upload-images/${hostProperty._id}`,formData,multiplefileConfig)
+      const response = await axiosInstance.post(`/property/upload-images/${hostProperty._id}`,{imageUrls},config)
       
       console.log("🚀 ~ handleAddPhotoSubmit ~ response:", response)
+      if(response.statusText==="OK"){
+        setHostProperty(response.data.updatedProperty)
+        setImageUploadingLoading(false)
+        toast.success('Photos added')
+        setOpenModal(false)
+      }
     } catch (error:any) {
+      setImageUploadingLoading(false)
       console.error('Error uploading images:', error);
     }
   }
   return (
     <div className=" h-[525px] overflow-y-scroll ">
-      <ModalIndex handleClose={handleCloseModal} open={openModal} children={<AddNewPhotoComponent handleSubmit={handleAddPhotoSubmit}/>} />
+      {openModal && (
+        <ModalIndex
+       handleClose={handleCloseModal} 
+       open={openModal} 
+       children={<AddNewPhotoComponent 
+      handleSubmit={handleAddPhotoSubmit}  
+      isLoading={imageUploadingLoading}
+      />} />
+      )}
+      
       <div className="flex gap-4 justify-between items-center">
         <p className="text-3xl font-semibold text-font-accent m-1">Showcase your photos</p>
         <div className=" relative inline-block bg-gray-200 rounded-full p-2 m-1 hover:scale-110 hover:cursor-pointer transition-transform duration-500">

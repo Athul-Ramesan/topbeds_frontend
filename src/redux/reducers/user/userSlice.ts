@@ -24,6 +24,9 @@ const userSlice = createSlice({
     },
     setUserNull :(state:initialState)=>{
       state.user=null
+  },
+  setLoadingFalse: (state:initialState)=>{
+    state.loading= false
   }
   },
   extraReducers: (builder) => {

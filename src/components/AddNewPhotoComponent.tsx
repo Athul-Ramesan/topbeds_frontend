@@ -4,9 +4,10 @@ import { convertImageToBase64 } from "../utils/helpers/convertImage";
 
 interface AddNewPhotosProps{
     handleSubmit: (imageUrls:string[]) => void
+    isLoading: boolean
 }
 
-const AddNewPhotoComponent: FC<AddNewPhotosProps> = ({handleSubmit}) => {
+const AddNewPhotoComponent: FC<AddNewPhotosProps> = ({handleSubmit,isLoading}) => {
     const [selectedFiles, setSelectedFiles] = useState<File[] >([])
     const inputRef = useRef<HTMLInputElement|null>(null)
 
@@ -77,9 +78,14 @@ const AddNewPhotoComponent: FC<AddNewPhotosProps> = ({handleSubmit}) => {
       onChange={handleFileChange}
       className="mb-4 hidden"
       />
+      {isLoading? (
       <button
       onClick={handleSubmitButtonClick}
-      className="rounded bg-gray-300 p-1" >Submit</button>
+      className="rounded bg-gray-300 p-1 spinner"></button>
+      ): (<button
+      onClick={handleSubmitButtonClick}
+      className="rounded bg-gray-300 p-1" >Submit</button>)
+      }
       </div>
     </div>
   )

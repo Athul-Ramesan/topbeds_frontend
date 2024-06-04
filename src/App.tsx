@@ -3,7 +3,7 @@ import LoginPage from "./pages/user/LoginPage";
 import RegisterPage from "./pages/user/RegisterPage";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import EmailVerification from "./pages/EmailVerification";
-import { FC, ReactNode, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { getUserData } from "./redux/actions/userActions";
 import ProfileLayout from "./pages/ProfileLayout";
 import AddProperty from "./pages/host/AddProperty";
@@ -20,9 +20,6 @@ import AuthLayout from "./pages/auth/AuthLayout";
 import AllProperties from "./pages/public/AllProperties";
 import ManageListing from "./components/host/ManageListing";
 import LoadingSpinner from "./pages/LoadingSpinner";
-import SinglePropertyDetailedLayout from "./pages/host/SinglePropertyDetailedLayout";
-import ShowPhotosHostProperty from "./pages/host/ShowPhotosHostProperty";
-import ShowTitleHostProperty from "./pages/host/ShowTitleHostProperty";
 import ShowDescriptionHostProperty from "./pages/host/ShowDescriptionHostProperty";
 import ShowPriceHostProperty from "./pages/host/ShowPriceHostProperty";
 import Index from "./pages/public/PropertyDetails/Index";
@@ -31,8 +28,12 @@ import ForgotPasswordNewPage from "./pages/auth/ForgotPasswordNewPage";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ShowAmenitiesHostProperty from "./pages/host/ShowAmenitiesHostProperty";
 import ShowbedroomsHostProperty from "./pages/host/ShowBedroomsHostProperty";
-import SinglePropertyDetailsProvider from "./context/SinglePropertyDetails";
 import { HostPropertySingleContext } from "./context/HostPropertySingleContext";
+import ShowbathroomsHostProperty from "./pages/host/ShowBathroomsHostProperty";
+import SinglePropertyDetailedLayout from "./pages/host/SinglePropertyDetailedLayout";
+import ShowPhotosHostProperty from "./pages/host/ShowPhotosHostProperty";
+import ShowTitleHostProperty from "./pages/host/ShowTitleHostProperty";
+import ShowMaxGuestsHostProperty from "./pages/host/ShowMaxGuestsHostProperty";
 
 interface IRoles {
   [key: string]: string
@@ -188,10 +189,9 @@ const HostRoutes: FC = () => {
           <Route path="description" element={<ShowDescriptionHostProperty />}/>
           <Route path="price" element={<ShowPriceHostProperty />} />
           <Route path="amenities" element={<ShowAmenitiesHostProperty />} />
-          <Route path="bathrooms" element={""} />
+          <Route path="bathrooms" element={<ShowbathroomsHostProperty/>} />
           <Route path="bedrooms" element={<ShowbedroomsHostProperty />} />
-          <Route path="max-guests" element={""} />
-          <Route path="bedrooms" element={""} />
+          <Route path="max-guests" element={<ShowMaxGuestsHostProperty/>} />
           <Route path="house-rules" element={""} />
 
           {/* <Route path="details" element={<HostPropertyDetail />} >

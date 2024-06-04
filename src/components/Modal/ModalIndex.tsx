@@ -18,7 +18,7 @@ const ModalIndex: FC<ModalIndexProps> = ({ children, open, handleClose }) => {
 
   return (
     <div
-      className=" w-auto h-96 max-w-screen-sm max-h-screen mx-auto my-auto  rounded-xl  bg-black inset-0 fixed z-20 bg-opacity-80"
+      className={" w-auto h-auto max-w-screen-sm max-h-96 mx-auto my-auto  rounded-xl  bg-black inset-0 fixed z-20 bg-opacity-80"}
     > 
       <div className="mx-auto my-auto  max-w-full max-h-full  overflow-hidden p-4">
         <div className="flex justify-end ">

@@ -9,9 +9,10 @@ const CancelButton :FC<CancelButtonProps>= ({onClick,isAnyChange}) => {
     <>
             <button
             onClick={onClick}
-            disabled={!isAnyChange}
-            className='w-32 rounded-lg bg-gray-300 text-gray-400 mx-8 mt-4 py-4'>
-                <p className={`hover:scale-110 ${isAnyChange ? 'opacity-100' : "opacity-50 cursor-not-allowed" } duration-500 hover:text-black`}>Cancel</p>
+            className={`w-32 rounded-lg bg-gray-300 text-gray-400 mx-8 mt-4 py-4
+            ${isAnyChange ? '' : "hidden" }
+            `}>
+                <p className={`hover:scale-110 duration-500 hover:text-black`}>Cancel</p>
             </button>
         </>
   )

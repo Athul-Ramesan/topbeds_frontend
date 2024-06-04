@@ -1,13 +1,10 @@
 import { FaArrowLeft } from "react-icons/fa6";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import SmallNav from "../../components/host/SmallNav";
-import HostPropertySingleDetail from "../../components/host/HostPropertySingleDetail";
 import HostPropertyDetail from "./HostPropertyDetail";
-import { useContext, useEffect } from "react";
-import { HostPropertySingleContext } from "../../context/HostPropertySingleContext";
+
 
 const SinglePropertyDetailedLayout = () => {
-    const { propertyId } = useParams()
     
     return (
         <>

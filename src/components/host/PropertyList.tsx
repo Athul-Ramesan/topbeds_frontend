@@ -1,11 +1,12 @@
-import React, { FC, useContext, useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import HostPropertySingleProvider, { HostPropertySingleContext } from '../../context/HostPropertySingleContext'
+import  { FC, useContext, useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
+import  { HostPropertySingleContext } from '../../context/HostPropertySingleContext'
 import { IProperty } from '../../interface/IProperty'
 
 interface PropertyListProps{
   properties: IProperty[]
 }
+
 const   PropertyList:FC<PropertyListProps> = ({ properties}) => {
   const {propertyId} = useParams()
   console.log("🚀 ~ PropertyList ~ propertyId:", propertyId)

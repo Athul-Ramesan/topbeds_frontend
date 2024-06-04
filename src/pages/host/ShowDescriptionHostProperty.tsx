@@ -1,27 +1,49 @@
 import { ChangeEvent, useContext, useState } from "react"
 import { FaLightbulb } from "react-icons/fa6"
+import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
+import { validateDescription } from "../../utils/validationSchema/validateDescription"
+import toast from "react-hot-toast"
+import { axiosInstance } from "../../config/instances"
+import { config } from "../../config/config"
 import CancelButton from "../../components/Buttons/CancelButton"
 import SaveButton from "../../components/Buttons/SaveButton"
-import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
+
 
 const ShowDescriptionHostProperty = () => {
   const { hostProperty } = useContext(HostPropertySingleContext)
-  const [value, setValue] = useState(hostProperty.description)
+  const [description , setDescription] = useState(hostProperty.description)
   const [isAnyChange, setIsAnyChange] = useState(false)
+  const {setHostProperty} = useContext(HostPropertySingleContext)
   const handleOnChange = (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setValue(e.target.value)
+    setDescription(e.target.value)
 
-    console.log("🚀 ~ handleOnChange ~ value:", value)
-    if (value !== hostProperty.description) {
+    console.log("🚀 ~ handleOnChange ~ value:", description)
+    if (description !== hostProperty.description) {
       setIsAnyChange(true)
     }
   }
   const HandleCancelClick = ()=>{
     setIsAnyChange(false)
-    setValue(hostProperty.description)
+    setDescription(hostProperty.description)
   }
-  const HandleSaveClick = ()=>{
+  const HandleSaveClick = async (event:React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    console.log('button clicked save')
+    const {value , error} = validateDescription.validate({description})
+    console.log("🚀 ~ HandleSaveClick ~ value:", value)
+   
+    if(error){
+      toast.error(error.message)
+      return
+    }
+
+    const response = await axiosInstance.post(`/property/update-property/${hostProperty._id}`, value , config)
+    if (response.statusText === "OK") {
+      setIsAnyChange(false)
+      toast.success("Description updated successfully")
+      setHostProperty(response.data.updatedProperty)
+    }
 
   }
   return (
@@ -30,7 +52,7 @@ const ShowDescriptionHostProperty = () => {
         <p className="text-4xl font-semibold text-font-accent m-4">Description</p>
       </div>
       <div className='mx-4 flex items-center mt-40'>
-        <input type="text" className='w-full p-0 bg-transparent border-none focus:ring-0 focus:outline-none text-font-color-300 text-3xl font-extrabold' placeholder='Type here...' value={value}
+        <input type="text" className='w-full p-0 bg-transparent border-none focus:ring-0 focus:outline-none text-font-color-300 text-3xl font-extrabold' placeholder='Type here...' value={description}
           onChange={handleOnChange}
         />
       </div>
