@@ -1,3 +1,4 @@
+import { IUserSignupData } from "./IUserSignup";
 
 export interface IProperty {
     _id:string;
@@ -13,7 +14,7 @@ export interface IProperty {
       lng: number;
     };
   };
-  hostId: string;
+  hostId?: IUserSignupData
   reviews?: string[];
   availability?: {
     startDate: Date;

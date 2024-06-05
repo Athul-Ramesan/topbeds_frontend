@@ -18,13 +18,14 @@ const categories: Category[] = [
 
 ];
 interface SearchInterfaceProps {
-    setCategory: (category:string) => void;
-    setPriceRange: (priceRange:string) => void;
-    setLocation: (location:string) => void;
-    setGuestCount: (guestCount:string) => void;
-    setSortOption: (sortOption:string) =>void
+    setCategory: (category: string) => void;
+    setPriceRange: (priceRange: string) => void;
+    setLocation: (location: string) => void;
+    setGuestCount: (guestCount: string) => void;
+    setSortOption: (sortOption: string) => void
+    searchQuery: string
 }
-const SearchInterface: React.FC<SearchInterfaceProps> = ({setCategory,setGuestCount,setLocation,setPriceRange,setSortOption}) => {
+const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuestCount, setLocation, setPriceRange, setSortOption, searchQuery }) => {
     const [isFilter, setIsFilter] = useState(true)
 
     const handleFilterClick = () => {
@@ -33,13 +34,22 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({setCategory,setGuestCo
     const handleCategoryClick = () => {
         setIsFilter(false)
     }
-    const handleSortChange = (e:ChangeEvent<HTMLSelectElement>)=>{
+    const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSortOption(e.target.value)
     }
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-4">
-                <span className='text-lg font-semibold'>Search Result for: </span>
+                {searchQuery ? (
+
+                    <span className='text-lg font-semibold'>Search Result for:
+                        <span className='text-font-color-200 text-md px-4'> {searchQuery}</span>
+                    </span>
+                )
+                    :
+                    (
+                        <span className='text-lg font-semibold'> </span>
+                    )}
                 <div className='flex justify-end items-center gap-4'>
                     <FaSortAmountDown />
                     <span className=''>Sort by :</span>

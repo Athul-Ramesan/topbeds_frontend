@@ -34,6 +34,7 @@ import SinglePropertyDetailedLayout from "./pages/host/SinglePropertyDetailedLay
 import ShowPhotosHostProperty from "./pages/host/ShowPhotosHostProperty";
 import ShowTitleHostProperty from "./pages/host/ShowTitleHostProperty";
 import ShowMaxGuestsHostProperty from "./pages/host/ShowMaxGuestsHostProperty";
+import UserProfilePage from "./pages/user/UserProfilePage";
 
 interface IRoles {
   [key: string]: string
@@ -212,7 +213,7 @@ const UserRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<UserLayout />} >
-        <Route path="/profile" element={<ProfileLayout />}>
+        <Route path="/profile" element={<UserProfilePage/>}>
           {/* <Route path="/dashboard" element={<UserDashboard />} /> */}
         </Route>
       </Route>

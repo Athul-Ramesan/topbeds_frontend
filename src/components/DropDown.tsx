@@ -38,7 +38,7 @@ const DropDown: React.FC<DropDownProps> = ({ isOpen, toggleDropDown, setIsOpen }
                     {user ?
                         <ul>
                             <li className="p-2 hover:bg-gray-100 cursor-pointer">
-                                <li onClick={() => navigate('/profile')}>
+                                <li onClick={() => navigate('/user/profile')}>
                                     Profile
                                 </li>
                             </li>

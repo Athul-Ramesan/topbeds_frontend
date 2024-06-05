@@ -97,6 +97,7 @@ const AllProperties = () => {
             setGuestCount={setGuestCount}
             setPriceRange={setPriceRange}
             setLocation={setLocation}
+            searchQuery={searchQuery}
           />
         </div>
         <div className="my-4">

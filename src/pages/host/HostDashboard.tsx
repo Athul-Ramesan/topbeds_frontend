@@ -10,7 +10,7 @@ const HostDashboard = () => {
     useEffect(() => {
       axiosInstance.get(`/property/get-host-properties/${user?._id}`)
         .then(data => {
-          setHostProperties(data.data)
+          setHostProperties(data.data.reverse())
           console.log("🚀 ~ useEffect ~ data:", data)
         })
         .catch(err => {
