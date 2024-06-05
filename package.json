@@ -34,7 +34,10 @@
     "react-router-dom": "^6.22.3",
     "react-spinners": "^0.13.8",
     "react-tailwindcss-datepicker": "^1.6.6",
+    "react-tsparticles": "^2.12.2",
     "styled-components": "^6.1.9",
+    "tsparticles": "^3.4.0",
+    "tsparticles-slim": "^2.12.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
