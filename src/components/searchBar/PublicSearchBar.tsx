@@ -1,8 +1,19 @@
+import { ChangeEvent, FC } from "react";
 
-const PublicSearchBar = () => {
+
+interface PublicSearchBarProps{
+    setSearchQuery:(searchQuery:string) =>void
+}
+const PublicSearchBar:FC<PublicSearchBarProps> = ({setSearchQuery}) => {
+    const handleSearchChange = (e:ChangeEvent<HTMLInputElement>)=>{
+        setSearchQuery(e.target.value)
+        
+        console.log("🚀 ~ handleSearchChange ~ target:", e.target.value)
+    }
   return (
     <div className="relative">
       <input
+        onChange={handleSearchChange}
         type="text"
         placeholder="Search..."
         className="w-full py-2 pl-4 pr-10 border-b border-gray-400 focus:outline-none focus:border-blue-500"

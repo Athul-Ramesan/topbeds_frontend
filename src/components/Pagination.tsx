@@ -11,8 +11,10 @@ const Pagination:FC<PaginationProps> = ({currentPage,handlePageChange,itemsPerPa
     <>
     <div className='flex gap-2'>
         <button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage == 1}
+          onClick={() => {
+            console.log("🚀 ~ currentPage🔥🔥🔥🔥🔥🔥🔥🔥🔥:", currentPage)
+            handlePageChange(currentPage - 1)}}
           className='px-2 bg-primaryColor rounded-sm text-white'
         >
           Prev
@@ -21,8 +23,10 @@ const Pagination:FC<PaginationProps> = ({currentPage,handlePageChange,itemsPerPa
           Page {currentPage} of {Math.ceil(totalItems / itemsPerPage)}
         </span>
         <button
-          disabled={currentPage === Math.ceil(totalItems / itemsPerPage)}
-          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage == Math.ceil(totalItems / itemsPerPage)}
+          onClick={() => {
+            console.log("🚀 ~ currentPage🔥🔥🔥🔥🔥🔥🔥🔥🔥:", currentPage)
+            handlePageChange(currentPage + 1)}}
           className='px-2 bg-primaryColor rounded-sm text-white'
         >
           Next

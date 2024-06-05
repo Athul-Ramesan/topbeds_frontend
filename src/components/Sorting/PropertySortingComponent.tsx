@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 const PropertySortingComponent = () => {
   const [sortOption, setSortOption] = useState('');
 
-  const handleSort = (option) => {
+  const handleSort = (option:string) => {
     setSortOption(option);
     // Implement your sorting logic here based on the selected option
   };

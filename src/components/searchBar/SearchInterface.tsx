@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import DropDownCommon from '../DropDownCommon';
 import { FaSortAmountDown } from "react-icons/fa";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
@@ -22,8 +22,9 @@ interface SearchInterfaceProps {
     setPriceRange: (priceRange:string) => void;
     setLocation: (location:string) => void;
     setGuestCount: (guestCount:string) => void;
+    setSortOption: (sortOption:string) =>void
 }
-const SearchInterface: React.FC<SearchInterfaceProps> = ({setCategory,setGuestCount,setLocation,setPriceRange}) => {
+const SearchInterface: React.FC<SearchInterfaceProps> = ({setCategory,setGuestCount,setLocation,setPriceRange,setSortOption}) => {
     const [isFilter, setIsFilter] = useState(true)
 
     const handleFilterClick = () => {
@@ -32,6 +33,9 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({setCategory,setGuestCo
     const handleCategoryClick = () => {
         setIsFilter(false)
     }
+    const handleSortChange = (e:ChangeEvent<HTMLSelectElement>)=>{
+        setSortOption(e.target.value)
+    }
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="flex justify-between items-center mb-4">
@@ -39,11 +43,11 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({setCategory,setGuestCo
                 <div className='flex justify-end items-center gap-4'>
                     <FaSortAmountDown />
                     <span className=''>Sort by :</span>
-                    <select className='px-2' name="" id="">
+                    <select className='px-2' name="" id="" onChange={handleSortChange} >
                         <option className='' value="">Popularity</option>
-                        <option value="">Rating</option>
-                        <option value="">Price Low to High</option>
-                        <option value="">Price High to Low</option>
+                        <option value="rating">Rating</option>
+                        <option value="price_asc">Price Low to High</option>
+                        <option value="price_desc">Price High to Low</option>
                     </select>
                 </div>
             </div>

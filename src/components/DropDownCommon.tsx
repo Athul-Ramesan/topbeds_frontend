@@ -14,6 +14,8 @@ const DropDownCommon:FC<DropDownCommonProps> = ({heading,list,setItem}) => {
     const handleChange = (event: SelectChangeEvent) => {
       setSelectedItem(event.target.value);
       setItem(event.target.value)
+      console.log(event.target.value,'🔢🔢🔢🔢🔢')
+      console.log('inside handle change dropdown')
     };
     const capitalisedHeading = capitalizeFirstLetter(heading)
     return (
