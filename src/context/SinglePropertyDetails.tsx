@@ -1,4 +1,4 @@
-import React, { FC, createContext, useState } from 'react';
+import React, { FC, createContext } from 'react';
 import { IProperty } from '../interface/IProperty';
 import useLocalStorage from '../hooks/useLocalStorage';
 // import { IProperty } from '../interface/IProperty';
@@ -24,7 +24,7 @@ const defaultValue: SinglePropertyDetailsContextType = {
           lng: 0,
         },
       },
-      hostId: "",
+      hostId: {},
       reviews: [""],
       availability: [{
         startDate: new Date(),
