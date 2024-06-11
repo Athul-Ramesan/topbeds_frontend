@@ -35,6 +35,8 @@ import ShowPhotosHostProperty from "./pages/host/ShowPhotosHostProperty";
 import ShowTitleHostProperty from "./pages/host/ShowTitleHostProperty";
 import ShowMaxGuestsHostProperty from "./pages/host/ShowMaxGuestsHostProperty";
 import UserProfilePage from "./pages/user/UserProfilePage";
+import Dashboard from "./pages/admin/Dashboard";
+import Users from "./pages/admin/Components/Users";
 
 interface IRoles {
   [key: string]: string
@@ -62,7 +64,9 @@ function App() {
   }, [user])
 
   const RoleBasedRedirect: FC<IRoleBasedRedirectProps> = ({ roles, user }) => {
+    console.log('inside rolebased redirect routes🥶🥶')
     if (user && roles[user.role!]) {
+      console.log('inside rolebased redirect iiiiiiiffffffff routes🥶🥶')
       return <Navigate to={roles[user.role!]} replace />
     }
 
@@ -79,7 +83,19 @@ function App() {
     return user && user?.role === 'host' ? element : <Navigate to="/index" replace />
   }
 
+  const ProtectedAdminRoute = ({ element }) => {
+    console.log('inside protect routes🥶🥶')
+    const { user } = useAppSelector((state) => state.user)
+    return user && user?.role==='admin' ? element : <Navigate to="/index" />;
+  }
+  const isAdminRoute = ({ element }) => {
+    console.log('inside protect routes🥶🥶')
+    const { user } = useAppSelector((state) => state.user)
+    return user && user?.role==='admin' ? element : <Navigate to="/index" />;
+  }
+  
   const ProtectedRoute = ({ element }) => {
+    console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
     return user ? element : <Navigate to="/index" />;
   }
@@ -139,9 +155,9 @@ function App() {
               admin: '/admin'
             }}
               user={user} />}
-        >
-          <Route path="/admin/*" element={<ProtectedRoute element={<AdminRoutes />} />} />
-        </Route>
+        />
+          <Route path="/admin/*" element={<ProtectedAdminRoute element={<AdminRoutes />} />} />
+        {/* </Route> */}
 
         {/* Auth pages */}
         <Route path="/auth/*" element={<AuthRoutes />} />
@@ -165,9 +181,16 @@ function App() {
 
 export default App;
 const AdminRoutes: FC = () => {
+  console.log('inside admin routes')
   return (
     <Routes>
-      <Route path="/" element={<AdminLayout />} >
+      <Route path="/" element={<Dashboard />} >
+        {/* <Route path="listing" element={<Listing/>} /> */}
+        {/* <Route path="hosts" element={<Hosts/>} /> */}
+        <Route path="users" element={<Users />} />
+        {/* <Route path="" element={<Customers/>} /> */}
+        {/* <Route path="" element={<Payments/>} /> */}
+
       </Route>
     </Routes>
   )
@@ -181,6 +204,7 @@ const HostRoutes: FC = () => {
         <Route index element={<Navigate to="/host/dashboard" />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/dashboard" element={<HostDashboard />} />
+        
 
         <Route path="/manage-listing" element={<ManageListing />} />
         <Route path="/manage-listing/:propertyId" element={<SinglePropertyDetailedLayout />}>
@@ -222,6 +246,10 @@ const UserRoutes: FC = () => {
 }
 
 const PublicRoutes: FC = () => {
+  const {user} = useAppSelector(state=> state.user)
+  if(user?.role==='admin'){
+    return <Navigate to={'/admin'} />
+  }
   return (
     <Routes>
       <Route path="/" element={<PublicLayout />} >
@@ -230,6 +258,8 @@ const PublicRoutes: FC = () => {
         <Route path="/properties" element={<AllProperties />} />
         <Route path="/properties/:propertyId" element={<Index />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/admin" element={<Dashboard />} />
+
       </Route>
     </Routes>
   )

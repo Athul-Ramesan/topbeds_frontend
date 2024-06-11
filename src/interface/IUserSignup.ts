@@ -16,5 +16,7 @@ export interface IUserSignupData {
     isGoogle?: boolean | null ,
     otp?:string| null  ,
     signupYes?:boolean | null,
-    role?:string | null
+    role?:string | null,
+    profileImage?:string | null,
+    isBlocked?: boolean | null
 }

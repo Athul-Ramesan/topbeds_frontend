@@ -28,6 +28,9 @@ button.primary {
 .side-nav-link-sp {
   @apply flex px-6 py-3.5 items-center gap-12 hover:text-primaryColor hover:bg-gray-300;
 }
+.side-nav-link-sp-admin{
+  @apply flex px-4 py-3 rounded items-center gap-4 active:bg-gray-200 hover:text-primaryColor hover:bg-gray-300;
+}
 
 .side-nav-link-sp-on-active {
   @apply flex px-6 py-3.5 items-center gap-12 active:bg-gray-200 hover:text-primaryColor hover:bg-gray-300;

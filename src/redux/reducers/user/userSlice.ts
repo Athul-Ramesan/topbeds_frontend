@@ -3,6 +3,7 @@ import { IUserSignupData } from "../../../interface/IUserSignup";
 import { getUserData, sendOtpAction, userLoginAction, userLogoutAction, userSignupAction, verifyOtpAction } from "../../actions/userActions";
 import { becomeHostAction } from "../../actions/userAction/becomeHost";
 import { IUserData } from "../../../interface/IUserSlice";
+import { updateProfileImage } from "../../actions/userAction/updateProfileImage";
 
 interface initialState {
   user: IUserSignupData | null,
@@ -59,6 +60,7 @@ const userSlice = createSlice({
         state.loading = false;
         state.user = action.payload.data as IUserSignupData
       })
+      /// user-logout
       .addCase(userLogoutAction.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
@@ -72,6 +74,7 @@ const userSlice = createSlice({
       .addCase(userLogoutAction.pending, (state) => {
         state.loading = true;
       })
+      //send-otp
       .addCase(sendOtpAction.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
@@ -84,6 +87,7 @@ const userSlice = createSlice({
       .addCase(sendOtpAction.pending, (state) => {
         state.loading = true;
       })
+      //verify otp
       .addCase(verifyOtpAction.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
@@ -96,6 +100,7 @@ const userSlice = createSlice({
         state.error = action.payload as string;
         state.loading = false;
       })
+      //getting user data
       .addCase(getUserData.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.data as IUserSignupData
@@ -109,7 +114,6 @@ const userSlice = createSlice({
       //become host cases
       .addCase(becomeHostAction.fulfilled,(state,action)=>{
         state.loading = false;
-        console.log(action.payload.data,'action >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         state.user = action.payload.data as IUserSignupData
       })
       .addCase(becomeHostAction.rejected,(state,action)=>{
@@ -118,6 +122,18 @@ const userSlice = createSlice({
       })
       .addCase(becomeHostAction.pending,(state)=>{
         state.loading = true;
+      })
+      //updating profile picture
+      .addCase(updateProfileImage.fulfilled, (state,action)=>{
+        state.loading = false;
+        state.user = action.payload.data as IUserSignupData
+      })
+      .addCase(updateProfileImage.pending, (state)=>{
+        state.loading = true;
+      })
+      .addCase(updateProfileImage.rejected, (state,action)=>{
+        state.loading = false;
+        state.error = action.error as string
       })
   }
 })
