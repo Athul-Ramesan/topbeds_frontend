@@ -35,6 +35,7 @@ const Users: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log(search ,"👉👉👉👉search query")
     setQuery({
       page: currentPage,
       limit: itemsPerPage,
@@ -51,7 +52,7 @@ const Users: React.FC = () => {
       }
     };
     getAllUsers();
-  }, [dispatch, query]);
+  }, [dispatch, currentPage,itemsPerPage,search]);
 
   const handlePageChange = (currentPageNumber: number) => {
     setCurrentPage(currentPageNumber);
@@ -62,8 +63,8 @@ const Users: React.FC = () => {
 
     try {
       const response = await axiosInstance.patch(
-        `/user/${userId}/status`,
-        { isBlocked: !isBlocked },
+        `/user/status-update/${userId}`,
+        { isBlocked: isBlocked },
         { withCredentials: true }
       );
       if (response.status === 200) {
@@ -111,7 +112,7 @@ const Users: React.FC = () => {
                   <Button
                     variant="contained"
                     color={user.isBlocked ? "primary" : "secondary"}
-                    onClick={() => handleBlockUnblock(user._id, user.isBlocked)}
+                    onClick={() => handleBlockUnblock(String(user._id), user.isBlocked!)}
                   >
                     {user.isBlocked ? "Unblock" : "Block"}
                   </Button>

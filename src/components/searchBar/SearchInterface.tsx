@@ -81,7 +81,7 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuest
                     {isFilter ? (
 
                         <div className='md:px-6 px-2 grid grid-cols-2 md:grid-cols-4'>
-                            <DropDownCommon setItem={setCategory} heading='categories' list={["Apartments", "Resorts", "House", "Cabin"]} />
+                            <DropDownCommon setItem={setCategory} heading='categories' list={["Apartment", "Resort", "House", "Cabin"]} />
                             <DropDownCommon setItem={setPriceRange} heading='price-range' list={["500-1500", '1500-2500', "2500-3500", "3500 and Above"]} />
                             <DropDownCommon setItem={setLocation} heading='location' list={['']} />
                             <DropDownCommon setItem={setGuestCount} heading='No of guests' list={['1', '2', '3', '4', '5', '6', '7', '8', '9']} />

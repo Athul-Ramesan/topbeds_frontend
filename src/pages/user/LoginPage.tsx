@@ -61,12 +61,14 @@ const LoginPage = () => {
         const credentials: any /*need to change this  type later*/ = jwtDecode(response.credential)
         console.log(credentials, 'credentials');
         credentials.isGoogle = true
-        const googleSignupData :any = await dispatch(userSignupAction(credentials))
+        console.log("🚀 ~ googleSignup ~ credentials:", credentials)
+        
+        const googleSignupData :any = await dispatch(userLoginAction(credentials))
         console.log(googleSignupData,"inside google Signup data");
         if(googleSignupData.type==='auth/userSignup/fulfilled'){
-            navigate('/')
+            navigate('/index/home')
         }else{
-            navigate('/signup')
+            navigate('/auth/login')
         }
        } catch (error:any |{message?: string}) {
             toast.error(error.message)
@@ -99,7 +101,7 @@ const LoginPage = () => {
        </Formik>
        <div className="px-16 pt-6">
                     < GoogleLogin
-                        text="signup_with"
+                        text="signin_with"
                         shape="circle"
                         onSuccess={CredentialResponse => {
                             console.log(CredentialResponse);

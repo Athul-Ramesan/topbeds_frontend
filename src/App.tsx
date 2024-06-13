@@ -37,6 +37,7 @@ import ShowMaxGuestsHostProperty from "./pages/host/ShowMaxGuestsHostProperty";
 import UserProfilePage from "./pages/user/UserProfilePage";
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Components/Users";
+import Hosts from "./pages/admin/Hosts";
 
 interface IRoles {
   [key: string]: string
@@ -186,7 +187,7 @@ const AdminRoutes: FC = () => {
     <Routes>
       <Route path="/" element={<Dashboard />} >
         {/* <Route path="listing" element={<Listing/>} /> */}
-        {/* <Route path="hosts" element={<Hosts/>} /> */}
+        <Route path="hosts" element={<Hosts/>} />
         <Route path="users" element={<Users />} />
         {/* <Route path="" element={<Customers/>} /> */}
         {/* <Route path="" element={<Payments/>} /> */}

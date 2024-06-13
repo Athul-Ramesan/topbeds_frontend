@@ -3,8 +3,10 @@ import React from 'react';
 import { FaUserPlus } from 'react-icons/fa';
 import ProfileImage from './ProfileImage';
 import 'react-image-crop/dist/ReactCrop.css'
+import { useAppSelector } from '../../redux/store';
 
 const UserProfileHeader: React.FC = () => {
+    const {user} = useAppSelector(state=>state.user)
     const handleProfileImageChange = () => {
 
     }
@@ -16,17 +18,13 @@ const UserProfileHeader: React.FC = () => {
                 className="w-full h-48 object-cover"
             />
             <div className="absolute bottom-0 left-4 flex items-center space-x-4 ">
-                {/* <img
-                    src="/1.jpg"
-                    alt="Profile"
-                    className="w-16 h-16 rounded-full border-4  border-white"
-                /> */}
                 <div className='w-24 h-24 rounded-full border-4  border-white'>
                     <ProfileImage />
                 </div>
-                <div>
-                    <h2 className="text-2xl font-bold text-white">Alisa Noory</h2>
-                    <p className="text-white">Chamber Company</p>
+                <div className='bg-black p-2'>
+                    <h2 className="text-2xl font-bold bg-black text-white">{user?.firstName}  {user?.lastName}</h2>
+
+                    <p className="text-white">{user?.email}</p>
                 </div>
                 {/* <button className="ml-auto bg-blue-500 text-white px-4 py-2 rounded-md flex items-center space-x-2">
                     <FaUserPlus />
