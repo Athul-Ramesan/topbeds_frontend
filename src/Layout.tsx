@@ -8,7 +8,7 @@ const Layout = () => {
       <Header/>
       
     </div>
-    <div className='pt-16 overflow-hidden px-10'>
+    <div className='pt-16 overflow-hidden'>
       <Outlet/>
     </div>
     </>

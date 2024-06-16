@@ -9,7 +9,6 @@ import ReactCrop, {
 import setCanvasPreview from "./setCanvasPreview";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { updateProfileImage } from "../../../redux/actions/userAction/updateProfileImage";
-import LoadingSpinner from "../../../pages/LoadingSpinner";
 
 
 

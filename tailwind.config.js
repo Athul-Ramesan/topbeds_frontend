@@ -22,7 +22,13 @@ export default {
         "darkWithBrown" :"#342b32",
         "olivGreen":"#31352E",
         "oliv": "#778A35",
-        "sageGreen" : "#D1E2C4"
+        "sageGreen" : "#D1E2C4",
+        "leafGreen":"#3a4f27",
+        "leafBackground-200":"#eaeaea",
+        "leafBackground-300":'#d7d7d6',
+        "leafBackground-400":"#a8afa2",
+        "leafGreenMinimal":"#718c5c",
+
       }
     },
     

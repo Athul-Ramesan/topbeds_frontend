@@ -12,11 +12,11 @@ const UserProfilePage: React.FC = () => {
             <div className="flex flex-col lg:flex-row">
                 <div className="w-full lg:w-3/4 p-4">
                     <UserProfileHeader />
-                    <UserInfo />
-                    <Listings />
+                    {/* <UserInfo /> */}
+                    {/* <Listings /> */}
+                    <UserContacts />
                 </div>
                 <div className="w-full lg:w-1/4 p-4">
-                    <UserContacts />
                     <GetInTouch />
                 </div>
             </div>

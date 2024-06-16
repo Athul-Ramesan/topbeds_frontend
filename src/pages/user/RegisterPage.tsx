@@ -10,6 +10,7 @@ import toast from "react-hot-toast"
 import { useEffect, useState } from "react"
 import VerificationModal from "../../components/Modal/VerificationModal"
 import { setErrorDisable } from "../../redux/reducers/user/userSlice"
+import DynamicText from "../../components/public/DynamicText"
 // import LoadingSpinner from "../LoadingSpinner"
 
 interface FormValues {
@@ -55,10 +56,10 @@ const RegisterPage = () => {
     const [formValues, setFormValues] = useState<FormValues>(initialValues)
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
-    const { user,error } = useAppSelector((state) => state?.user)
+    const { user, error } = useAppSelector((state) => state?.user)
 
     useEffect(() => {
-        if(user){
+        if (user) {
             navigate('/index')
         }
         return () => {
@@ -77,12 +78,12 @@ const RegisterPage = () => {
                 if (googleSignupData.type === 'auth/userSignup/fulfilled') {
                     navigate('/index')
                     toast.success("Registered Successfully! Please Login.")
-                }else if(googleSignupData.type === 'auth/userSignup/rejected'){
+                } else if (googleSignupData.type === 'auth/userSignup/rejected') {
                     toast.error("User exists")
                     dispatch(setErrorDisable());
                 }
             } catch (error: any | { message?: string }) {
-               
+
                 toast.error(error.message)
             }
         }
@@ -96,7 +97,7 @@ const RegisterPage = () => {
             signup: true
         }
         console.log(formValues, '>>>>>>>>>form values');
-        const action = await dispatch(sendOtpAction({...signupYes,...restValues}))
+        const action = await dispatch(sendOtpAction({ ...signupYes, ...restValues }))
         if (action.type === "auth/verify-account/send-otp/fulfilled") {
             setModalOpen(true)
         }
@@ -110,43 +111,67 @@ const RegisterPage = () => {
 
 
     return (
-        <div className="mt-4 grow flex flex-col items-center justify-around">
-            <VerificationModal isOpen={isModalOpen} onClose={hanldeCloseModal} onSubmit={onSubmit} user={formValues} />
-           
-            <div className="mb-8">
-                <h1 className="text-4xl text-center"> Register</h1>
-                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                    <Form className="m-6 max-w-md mx-auto">
-                        <Field type="text" placeholder="First name" name="firstName" id="firstName" />
-                        <ErrorMessage component="div" className="text-red-900" name="firstName" />
-                        <Field type="text" placeholder="Last name" name="lastName" id="lastName" />
-                        <ErrorMessage component="div" className="text-red-900" name="lastName" />
-                        <Field type="email" placeholder="Email" name="email" />
-                        <ErrorMessage component="div" className="text-red-900" name="email" />
-                        <Field type="password" placeholder="password" name="password" id="password" />
-                        <ErrorMessage component="div" className="text-red-900" name="password" />
-                        <Field type="password" placeholder="Confirm password" name="confPassword" id="confPassword" />
-                        <ErrorMessage component="div" className="text-red-900" name="confPassword" />
-                        {error && <p className="py-1 px-1 text-red-400">{error}</p>}
-                        <button type="submit" className="primary hover:bg-primaryTint hover:text-primaryDarkColor duration-300">Register</button>
-                        <div className="flex">have an account?
-                            <Link className="px-6 text-sm text-primaryTint hover:text-primaryColor" to={'/auth/login'}>Login Here</Link>
-                           
-                        </div>
+        <div className="flex bg-cover bg-center h-screen " style={{ backgroundImage: "url('/login-cover.jpg')" }}>
+            <div className="p-8 opacity-30 bg-gradient-to-r from-black via-gray-800 to-gray-500 rounded-lg w-2/5 border-r border-none">
+            <h1 className="text-4xl font-bold mb-4 text-green-700">Register</h1>
+            <DynamicText texts={
+                [
+                    "Welcome to TopBeds!",
+                    "Please sign in to continue.",
+                    "Experience the best service.",
+                    "Secure and easy login.",
+                    "Your journey starts here."
+                  ]
+            }/>
+            </div>
+            <div className="mt-4 grow flex flex-col items-center justify-around">
+                <VerificationModal isOpen={isModalOpen} onClose={hanldeCloseModal} onSubmit={onSubmit} user={formValues} />
 
-                    </Form>
-                </Formik>
-                < hr />
-                <div className="px-16 pt-6">
-                    < GoogleLogin
-                        text="signup_with"
-                        shape="circle"
-                        onSuccess={CredentialResponse => {
-                            console.log(CredentialResponse);
-                            googleSignup(CredentialResponse, true)
-                        }}
-                    >
-                    </GoogleLogin>
+                <div className="mb-8">
+                  
+                    <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                        <Form className="m-6 max-w-md mx-auto">
+                            <Field type="text" 
+                            className="placeholder-green-700 focus:outline-none"
+                            placeholder="First name" name="firstName" id="firstName" />
+                            <ErrorMessage component="div" className="text-red-900" name="firstName" />
+                            <Field type="text" placeholder="Last name" 
+                            className="placeholder-green-700 focus:outline-none"
+                            name="lastName" id="lastName" />
+                            <ErrorMessage component="div" className="text-red-900" name="lastName" />
+                            <Field type="email" 
+                            className="placeholder-green-700 focus:outline-none"
+                            placeholder="Email" name="email" />
+                            <ErrorMessage component="div" className="text-red-900" name="email" />
+                            <Field type="password" placeholder="password" 
+                            className="placeholder-green-700 focus:outline-none"
+                            name="password" id="password" />
+                            <ErrorMessage component="div" className="text-red-900" name="password" />
+                            <Field type="password" 
+                            className="placeholder-green-700 focus:outline-none"
+                            placeholder="Confirm password" name="confPassword" id="confPassword" />
+                            <ErrorMessage component="div" className="text-red-900" name="confPassword" />
+                            {error && <p className="py-1 px-1 text-red-400">{error}</p>}
+                            <button type="submit" className="primary hover:bg-leafGreen duration-300">Register</button>
+                            <div className="flex">have an account?
+                                <Link className="px-6 text-sm text-primaryTint hover:text-primaryColor" to={'/auth/login'}>Login Here</Link>
+
+                            </div>
+
+                        </Form>
+                    </Formik>
+                    < hr />
+                    <div className="px-16 pt-6">
+                        < GoogleLogin
+                            text="signup_with"
+                            shape="circle"
+                            onSuccess={CredentialResponse => {
+                                console.log(CredentialResponse);
+                                googleSignup(CredentialResponse, true)
+                            }}
+                        >
+                        </GoogleLogin>
+                    </div>
                 </div>
             </div>
         </div>

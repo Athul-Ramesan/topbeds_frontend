@@ -26,7 +26,9 @@ export default function InformationModal({
      title }: Props) {
 
         const handleSubmit = handleSubmitModal || handleClose
-        
+        if(!open){
+            return 
+        }
     return (
         <>
 

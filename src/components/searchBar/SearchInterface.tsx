@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import DropDownCommon from '../DropDownCommon';
 import { FaSortAmountDown } from "react-icons/fa";
 import { HiAdjustmentsHorizontal } from "react-icons/hi2";
 import { MdOutlineCollectionsBookmark } from "react-icons/md";
+import getCityByCountry from '../../utils/locationAPI/getCityByCountry';
 
 
 
@@ -25,9 +26,40 @@ interface SearchInterfaceProps {
     setSortOption: (sortOption: string) => void
     searchQuery: string
 }
+export interface ICitiesWithId {
+    id: number;
+    name: string;
+}
+
+
 const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuestCount, setLocation, setPriceRange, setSortOption, searchQuery }) => {
     const [isFilter, setIsFilter] = useState(true)
+    const [cities,setCities] = useState<string[]>([])
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>('')
+    const [selectedValue,setSelectedValue] = useState('')
 
+    useEffect(() => {
+
+        const getCities = async () => {
+            setLoading(true)
+            setError('')
+            try {
+                const ArrayOfcities = await getCityByCountry()
+                const result =  ArrayOfcities.map(item=> item.name)
+                setCities(result)
+            } catch (error: any) {
+                setError('Failed to fetch cities');
+                console.error('Error fetching cities:', error);
+            }finally{
+                setLoading(false)
+            }
+        }
+
+        getCities()
+
+
+    }, [])
     const handleFilterClick = () => {
         setIsFilter(true)
     }
@@ -37,8 +69,12 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuest
     const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setSortOption(e.target.value)
     }
+    const handleSetLocation = (e:ChangeEvent<HTMLSelectElement>)=>{
+        setLocation(e.target.value)
+        setSelectedValue(e.target.value)
+    }
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 bg-blue-300">
             <div className="flex justify-between items-center mb-4">
                 {searchQuery ? (
 
@@ -83,7 +119,25 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuest
                         <div className='md:px-6 px-2 grid grid-cols-2 md:grid-cols-4'>
                             <DropDownCommon setItem={setCategory} heading='categories' list={["Apartment", "Resort", "House", "Cabin"]} />
                             <DropDownCommon setItem={setPriceRange} heading='price-range' list={["500-1500", '1500-2500', "2500-3500", "3500 and Above"]} />
-                            <DropDownCommon setItem={setLocation} heading='location' list={['']} />
+                            {loading ? (
+                                <div>
+                                    ....loading cities
+                                </div>
+                            ):(
+                                <>
+
+                                <select className='bg-leafBackground-200 border-b-[1px] border-black focus:border-none h-14' onChange={handleSetLocation} value={selectedValue}>
+                                    <option value="">
+                                        Location
+                                    </option>
+                                        {cities.map((city,index)=>(
+                                            <option key={index} value={city}>{city}</option>
+                                            ))}
+                                </select>
+                                    </>
+                              
+                            )
+                        }
                             <DropDownCommon setItem={setGuestCount} heading='No of guests' list={['1', '2', '3', '4', '5', '6', '7', '8', '9']} />
                         </div>
                     )

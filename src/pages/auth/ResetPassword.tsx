@@ -9,7 +9,7 @@ const ResetPassword: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const [buttonLoading,setButtonLoading] = useState(false)
+  const [buttonLoading, setButtonLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,23 +22,25 @@ const ResetPassword: React.FC = () => {
     }
     const result = validatePassword(password)
     if (result !== 'Password is valid') {
-        setError(`Password validation failed: ${result}`)
-        return;
-      } 
+      setError(`Password validation failed: ${result}`)
+      return;
+    }
     setButtonLoading(true)
     try {
-      const response = await axiosInstance.post(`/auth/reset-password/${token}`, { password});
+      const response = await axiosInstance.post(`/auth/reset-password/${token}`, { password });
       setMessage(response.data.message);
       console.log("🚀 ~ handleSubmit ~ response:", response)
       setError('');
-      if(response.data.message==="password reset successfully"){
+      if (response.data.message === "password reset successfully") {
 
-          setButtonLoading(false)
-          setTimeout(() => {
-              navigate('/auth/login')
-          }, 2000);
+        setButtonLoading(false)
+
+        
+        setTimeout(() => {
+          navigate('/auth/login')
+        }, 3000);
       }
-    } catch (err:any) {
+    } catch (err: any) {
       setError(err.response.data.error);
       setMessage('');
       setButtonLoading(false)
@@ -46,46 +48,52 @@ const ResetPassword: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="bg-white rounded-lg shadow-md p-8 w-[450px]">
-        <h2 className="text-2xl font-bold mb-6 text-font-accent flex justify-center">Reset Password</h2>
-        {message && <p className="text-green-800 mb-4">{message}</p>}
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="password" className="block font-bold mb-2">
-              New Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-md py-2 px-3"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block font-bold mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-md py-2 px-3"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-primaryColor w-full rounded-xl hover:bg-primaryTint hover:text-black text-white font-bold  py-2 px-4 "
-          >
-            {buttonLoading ? 'Loading...' : 'Submit'}
+    <div className="flex bg-cover bg-center h-screen " style={{ backgroundImage: "url('/login-cover.jpg')" }}>
+      <div className="p-8 opacity-30 bg-gradient-to-r from-black via-gray-800 to-gray-500 rounded-lg w-2/5 border-r border-none">
+        <h1 className="text-4xl font-bold mb-4 text-green-700">Reset Password</h1>
+      </div>
+      <div className="grow flex w-3/5 justify-end px-10 pt-44">
+      <div className="rounded-lg shadow-md p-8 w-[500px] h-[250px]">
+         
+          {message && <p className="text-green-800 mb-4">{message}</p>}
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="password" className="block font-bold mb-2">
+              
+              </label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder='Type new password here..'
+                className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none placeholder-green-600 text-green-600"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="confirmPassword" className="block font-bold mb-2">
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                 placeholder='Confirm your password..'
+                className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none placeholder-green-600 text-green-600"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-primaryColor w-full rounded-xl hover:bg-leafGreen duration-500 text-white font-bold  py-2 px-4 "
+            >
+              {buttonLoading ? 'Loading...' : 'Submit'}
 
-          </button>
-        </form>
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

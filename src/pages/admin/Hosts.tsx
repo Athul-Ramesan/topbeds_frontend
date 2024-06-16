@@ -16,50 +16,36 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
+import { axiosInstance } from '../../config/instances';
+import { config } from '../../config/config';
+import { IUserSignupData } from '../../interface/IUserSignup';
 
-// Interface for host data
-interface Host {
-  id: string;
-  name: string;
-  email: string;
-  numListings: number;
-  status: 'accepted' | 'rejected' | 'pending';
-  // Add any other relevant properties
-}
 
 const Hosts: React.FC = () => {
-  const [hosts, setHosts] = useState<Host[]>([]);
-  const [selectedHost, setSelectedHost] = useState<Host | null>(null);
+  const [hosts, setHosts] = useState<IUserSignupData[]>([]);
+  const [selectedHost, setSelectedHost] = useState<IUserSignupData | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [tabValue, setTabValue] = useState(0);
 
-  // Fetch hosts data from your API or data source
   useEffect(() => {
     fetchHosts();
+    console.log(hosts,'hostasdfjhskldjfh')
   }, []);
 
   const fetchHosts = async () => {
-    // Implement your logic to fetch hosts data from the backend
-    const hostsData: Host[] = [
-      // Sample data
-      {
-        id: '1',
-        name: 'John Doe',
-        email: 'john@example.com',
-        numListings: 3,
-        status: 'accepted',
-      },
-      // Add more sample data as needed
-    ];
-    setHosts(hostsData);
+    const response = await axiosInstance.get('/user/get-all-hosts', config)
+    console.log("🚀 ~ fetchHosts ~ response:", response.data)
+    if(response.data){
+      setHosts(response.data.hosts);
+    }
   };
 
-  const handleAcceptReject = (host: Host, action: 'accept' | 'reject') => {
+  const handleAcceptReject = (host: IUserSignupData, action: 'accept' | 'reject') => {
     // Implement your logic to accept or reject a host request
-    console.log(`${action} host with ID: ${host.id}`);
+    console.log(`${action} host with ID: ${host._id}`);
   };
 
-  const handleHostClick = (host: Host) => {
+  const handleHostClick = (host: IUserSignupData) => {
     setSelectedHost(host);
     setModalOpen(true);
   };
@@ -73,8 +59,14 @@ const Hosts: React.FC = () => {
     setTabValue(newValue);
   };
 
-  const getHostsByStatus = (status: Host['status']) => {
-    return hosts.filter((host) => host.status === status);
+  const getHostsByStatus = (status:IUserSignupData['hostStatus']) => {
+    console.log("🚀 ~ getHostsByStatus ~ status:", status)
+    const validHosts = hosts || []
+    console.log("🚀 ~ getHostsByStatus ~ validHosts:", validHosts)
+    return validHosts.filter((host) =>{ 
+      console.log(host,"host🔢🔢🔢🔢🔢🔢🔢🔢🔢🔢")
+
+      return host.hostStatus === status});
   };
 
   return (
@@ -102,26 +94,26 @@ const Hosts: React.FC = () => {
                   <TableCell>Sl. No.</TableCell>
                   <TableCell>Host</TableCell>
                   <TableCell>Email</TableCell>
-                  <TableCell>No. of Listings</TableCell>
+                  {/* <TableCell>No. of Listings</TableCell> */}
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {getHostsByStatus(
-                  tabValue === 0 ? 'accepted' : tabValue === 1 ? 'rejected' : 'pending'
+                  tabValue === 0 ? 'accepted' : tabValue === 1 ? 'rejected' : 'requested'
                 ).map((host, index) => (
-                  <TableRow key={host.id} hover onClick={() => handleHostClick(host)}>
+                  <TableRow key={host._id} hover onClick={() => handleHostClick(host)}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>
                       <Box display="flex" alignItems="center">
-                        <Avatar>{host.name.charAt(0)}</Avatar>
-                        <Typography marginLeft={3}>{host.name}</Typography>
+                        <Avatar>{host.firstName!.charAt(0)}</Avatar>
+                        <Typography marginLeft={3}>{host.firstName}</Typography>
                       </Box>
                     </TableCell>
                     <TableCell>{host.email}</TableCell>
-                    <TableCell>{host.numListings}</TableCell>
+                    {/* <TableCell>{host.numListings}</TableCell> */}
                     <TableCell>
-                      {host.status === 'pending' ? (
+                      {host.hostStatus === 'requested' ? (
                         <>
                           <Button
                             variant="contained"
@@ -142,7 +134,7 @@ const Hosts: React.FC = () => {
                           </Button>
                         </>
                       ) : (
-                        <Typography>{host.status}</Typography>
+                        <Typography>{host.hostStatus}</Typography>
                       )}
                     </TableCell>
                   </TableRow>
@@ -161,11 +153,11 @@ const Hosts: React.FC = () => {
                   Host Details
                 </Typography>
                 <Box display="flex" alignItems="center" marginBottom={2}>
-                  <Avatar>{selectedHost.name.charAt(0)}</Avatar>
-                  <Typography marginLeft={1}>{selectedHost.name}</Typography>
+                  <Avatar>{selectedHost?.firstName!.charAt(0)}</Avatar>
+                  <Typography marginLeft={1}>{selectedHost.firstName}</Typography>
                 </Box>
                 <Typography>Email: {selectedHost.email}</Typography>
-                <Typography>No. of Listings: {selectedHost.numListings}</Typography>
+                {/* <Typography>No. of Listings: {selectedHost.numListings}</Typography> */}
                 {/* Add any other relevant details */}
               </>
             )}

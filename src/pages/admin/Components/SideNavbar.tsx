@@ -8,19 +8,20 @@ import { BsCardChecklist, BsCreditCard } from "react-icons/bs";
 import { AiOutlineTags } from "react-icons/ai";
 import { FaUsersCog, FaUsers } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { useAppSelector } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 // import { userLogoutAction } from "../../../redux/actions/userActions";
 import TopbedsLogo from "../../../components/TopbedsLogo";
+import { userLogoutAction } from "../../../redux/actions/userActions";
 
 const SideNavbar = () => {
   const { user } = useAppSelector((state) => state.user);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogout = () => {
-    // dispatch(userLogoutAction());
-    navigate("/");
+    dispatch(userLogoutAction());
+    navigate("/auth/login");
   };
 
   return (

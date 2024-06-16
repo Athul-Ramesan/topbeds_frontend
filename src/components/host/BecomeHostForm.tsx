@@ -41,6 +41,7 @@ const AddressSchema = Yup.object().shape({
 
 const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
     const [isInformationModalOpen,setIsInformationModalOpen] = React.useState(false)
+    const [messageModal, setMessageModal] = React.useState(false)
     const dispatch = useAppDispatch();
     const initialValues: FormValues = {
         street: "",
@@ -58,8 +59,9 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
             const response = await dispatch(becomeHostAction(values))
             console.log("🚀 ~ handleSubmit ~ response:", response)
             if(response.type ==="user/become-host/fulfilled"){
+                console.log('inside response of become host🥶🥶🥶🥶🥶🥶🥶🥶🥶🥶')
+                // handleClose()
                 setIsInformationModalOpen(true)
-                handleClose()
             }
             // const response = await axiosInstance.post('user/add-address', values ,config)
         } catch (error: any) {
@@ -70,21 +72,22 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
 
     return (
         <React.Fragment>
+           {isInformationModalOpen && 
+           (
             <InformationModal 
             handleClose={()=> setIsInformationModalOpen(false)}
             open={isInformationModalOpen}
             buttonText={`I'll do it later`}
             cancelButtonText = {""}
-            title='Welcome to the host community'
+            title='Congrats, Your request has been submitted'
             content={<>
-            You can now build your profile by adding properties,
-            <Link className='underline px-2' to={'/host/add-property'}>click here</Link> 
-            to add new property or you can do it later from the profile tab
+             We will reach you after checking your request. You can check status later.
             </>
             }
             
 
              />
+           )}
             <Dialog
                 open={open}
                 onClose={handleClose}

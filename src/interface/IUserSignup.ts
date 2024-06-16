@@ -17,6 +17,7 @@ export interface IUserSignupData {
     otp?:string| null  ,
     signupYes?:boolean | null,
     role?:string | null,
+    hostStatus?:string,
     profileImage?:string | null,
     isBlocked?: boolean | null
 }
