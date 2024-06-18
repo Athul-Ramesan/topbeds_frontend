@@ -18,7 +18,7 @@ const ImageCard: FC<ImageCardProps> = ({ properties }) => {
   return (
     <div
 
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 px-6">
       {properties && properties?.map((property) => (
         <div 
         

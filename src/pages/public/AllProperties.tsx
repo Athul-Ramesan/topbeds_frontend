@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react"
 import { axiosInstance } from "../../config/instances"
 import ImageCard from "../../components/public/ImageCard"
-import CategoryBar from "../../components/public/CategoryBar"
-import LoadMoreComponent from "../testpages/LoadMoreComponent"
-import InfiniteScrollComponent from "../testpages/InfiniteScrollComponent"
 import LoadingSpinner from "../LoadingSpinner"
 import Pagination from "../../components/Pagination"
 import PublicSearchBar from "../../components/searchBar/PublicSearchBar"
-import PropertySortingComponent from "../../components/Sorting/PropertySortingComponent"
 import SearchInterface from "../../components/searchBar/SearchInterface"
 const AllProperties = () => {
   // const [properties, setProperties] = useState([])
@@ -100,10 +96,10 @@ const AllProperties = () => {
             searchQuery={searchQuery}
           />
         </div>
-        <div className="my-4">
+        <div className="my-4 px-6">
           <PublicSearchBar setSearchQuery={setSearchQuery}/>
         </div>
-        <ImageCard properties={currentProperties} />
+        <ImageCard properties={currentProperties}/>
       </div>
       <div className="flex justify-center m-8">
 

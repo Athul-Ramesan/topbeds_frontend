@@ -28,7 +28,7 @@ const IndexPage = () => {
     });
   }, []);
   return (
-    <>
+    <div className="px-10">
       
       <div className='h-auto  bg-blue'>
         <div className=''>
@@ -107,7 +107,7 @@ const IndexPage = () => {
             }}
             className='particles' />
         </div>
-        <div className=" w-full flex m-10 items-center gap-4 bg-primaryTint rounded-xl p-4">
+        <div className=" w-full flex m-10 items-center gap-4 bg-primaryTint rounded-xl p-4 px-10">
           <h6 className="text-xl font-semibold"> Find and book your perfect stay</h6>
           <CardWithIconAndDescription icon={<FaMoon />} text="Earn rewards on every night you stay" />
           <CardWithIconAndDescription icon={<FaTag />} text="Save more with Member Prices
@@ -138,7 +138,7 @@ const IndexPage = () => {
           <FindYourPropertyAd />
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

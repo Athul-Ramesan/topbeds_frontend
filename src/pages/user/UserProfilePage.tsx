@@ -4,6 +4,7 @@ import UserInfo from '../../components/User/UserInfo';
 import Listings from '../../components/User/Listings';
 import UserContacts from '../../components/User/UserContacts';
 import GetInTouch from '../../components/User/GetInTouch';
+import SecuritySection from '../../components/User/SecuritySection';
 
 
 const UserProfilePage: React.FC = () => {
@@ -15,6 +16,7 @@ const UserProfilePage: React.FC = () => {
                     {/* <UserInfo /> */}
                     {/* <Listings /> */}
                     <UserContacts />
+                    <SecuritySection/>
                 </div>
                 <div className="w-full lg:w-1/4 p-4">
                     <GetInTouch />

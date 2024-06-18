@@ -4,6 +4,7 @@ import { getUserData, sendOtpAction, userLoginAction, userLogoutAction, userSign
 import { becomeHostAction } from "../../actions/userAction/becomeHost";
 import { IUserData } from "../../../interface/IUserSlice";
 import { updateProfileImage } from "../../actions/userAction/updateProfileImage";
+import { UpdatePasswordAction } from "../../actions/userAction/updatePassword";
 
 interface initialState {
   user: IUserSignupData | null,
@@ -124,14 +125,14 @@ const userSlice = createSlice({
         state.loading = true;
       })
       //updating profile picture
-      .addCase(updateProfileImage.fulfilled, (state,action)=>{
+      .addCase(UpdatePasswordAction.fulfilled, (state,action)=>{
         state.loading = false;
         state.user = action.payload.data as IUserSignupData
       })
-      .addCase(updateProfileImage.pending, (state)=>{
+      .addCase(UpdatePasswordAction.pending, (state)=>{
         state.loading = true;
       })
-      .addCase(updateProfileImage.rejected, (state,action)=>{
+      .addCase(UpdatePasswordAction.rejected, (state,action)=>{
         state.loading = false;
         state.error = action.error as string
       })
