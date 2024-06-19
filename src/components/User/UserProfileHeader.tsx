@@ -22,9 +22,7 @@ const UserProfileHeader: React.FC = () => {
                     <ProfileImage />
                 </div>
                 <div className='bg-black p-2'>
-                    <h2 className="text-2xl font-bold bg-black text-white">{user?.firstName}  {user?.lastName}</h2>
-
-                    <p className="text-white">{user?.email}</p>
+                    <p className="text-white ">{user?.email}</p>
                 </div>
                 {/* <button className="ml-auto bg-blue-500 text-white px-4 py-2 rounded-md flex items-center space-x-2">
                     <FaUserPlus />
