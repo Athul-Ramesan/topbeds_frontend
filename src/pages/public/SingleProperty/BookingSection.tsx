@@ -1,9 +1,14 @@
 import React, { useContext } from 'react';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
+import {loadStripe} from '@stripe/stripe-js'
 
 const BookingSection: React.FC = () => {
   const {singleProperty} = useContext(SinglePropertyDetailsContext)
 
+  const handleReserveClick = ()=>{
+    
+  }
+  
   return (
     <div className="p-4 bg-white shadow-lg rounded-lg">
       <div className="flex justify-between items-center">
@@ -11,7 +16,9 @@ const BookingSection: React.FC = () => {
           <span className="text-2xl font-bold">₹ {singleProperty.price} /night</span>
         </div>
         <div>
-          <button className="bg-red-500 text-white px-4 py-2 rounded">Reserve</button>
+          <button 
+          onClick={handleReserveClick}
+          className="bg-red-500 text-white px-4 py-2 rounded">Reserve</button>
         </div>
       </div>
       <div>

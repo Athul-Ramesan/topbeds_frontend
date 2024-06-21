@@ -33,7 +33,7 @@ const PropertyInfo: React.FC = () => {
         </div>
       </div>
       
-      <BookingComponent price={17933} serviceFee={14705} nights={5} />
+      <BookingComponent />
     </div>
   );
 };

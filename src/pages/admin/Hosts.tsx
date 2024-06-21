@@ -64,7 +64,6 @@ const Hosts: React.FC = () => {
     const validHosts = hosts || []
     console.log("🚀 ~ getHostsByStatus ~ validHosts:", validHosts)
     return validHosts.filter((host) =>{ 
-      console.log(host,"host🔢🔢🔢🔢🔢🔢🔢🔢🔢🔢")
 
       return host.hostStatus === status});
   };
@@ -87,14 +86,13 @@ const Hosts: React.FC = () => {
             <Tab label="Pending" />
           </Tabs>
 
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper}  style={{height:"80%", width: "100%", marginBottom: "1rem" }}>
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell>Sl. No.</TableCell>
                   <TableCell>Host</TableCell>
                   <TableCell>Email</TableCell>
-                  {/* <TableCell>No. of Listings</TableCell> */}
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>

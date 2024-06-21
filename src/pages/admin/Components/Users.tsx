@@ -11,6 +11,8 @@ import {
   TextField,
   Box,
   Container,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { getAllUsersAction } from "../../../redux/actions/adminActions/users";
@@ -25,6 +27,10 @@ const Users: React.FC = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
   const [search, setSearch] = useState("");
+  const [tabValue,setTabValue] = useState(0)
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number)=>{
+    setTabValue(newValue)
+  }
   const [query, setQuery] = useState({
     page: 1,
     limit: 10,
@@ -90,6 +96,11 @@ const Users: React.FC = () => {
           style={{ width: "300px" }}
         />
       </Box>
+      <Tabs value={tabValue} onChange={handleTabChange}>
+            <Tab label="Accepted" />
+            <Tab label="Blocked" />
+          
+          </Tabs>
       <TableContainer component={Paper} style={{height:"80%", width: "100%", marginBottom: "1rem" }}>
         <Table>
           <TableHead>

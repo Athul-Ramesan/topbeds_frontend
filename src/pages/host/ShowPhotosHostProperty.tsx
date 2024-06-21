@@ -47,6 +47,7 @@ const ShowPhotosHostProperty = () => {
     } catch (error:any) {
       setImageUploadingLoading(false)
       console.error('Error uploading images:', error);
+      toast.error('Error uploading images please try again')
     }
   }
   return (

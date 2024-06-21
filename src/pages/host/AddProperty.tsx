@@ -1,21 +1,20 @@
-import { AiOutlineSave, AiOutlineClose } from "react-icons/ai";
-import { PulseLoader } from "react-spinners"
+import { AiOutlineClose } from "react-icons/ai";
 
-import { ErrorMessage, Field, FieldArray, Form, Formik, insert } from "formik"
-import { useState } from "react"
+import { ErrorMessage, Field, Form, Formik } from "formik"
+import { ChangeEvent, useEffect, useState } from "react"
 import { addPropertyInitialValues } from "../../utils/InititialValues/AddPropertyForm"
-import { IAddPropertyFormValues } from "../../utils/Interfaces/IAddPropertyFormValues"
 import { addPropertyValidationSchema } from "../../utils/validationSchema/addPropertyValidationSchema"
 import FieldWithHead from "../../components/Forms/FieldWithHead"
 import FieldHeadOnly from "../../components/Forms/FieldHeadOnly"
 import CheckBoxField from "../../components/Forms/CheckBoxField"
 import { axiosInstance } from "../../config/instances"
 import { config } from "../../config/config"
-import { useNavigate, useRoutes } from "react-router-dom";
-import CustomSingleFileInput from "../../components/host/CustomSingleFileInput";
+import { useNavigate } from "react-router-dom";
 import CustomFileInput from "../../components/host/CustomFileInput";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../LoadingSpinner";
+import getCityByCountry from "../../utils/locationAPI/getCityByCountry";
+import { ICitiesWithId } from "../../components/searchBar/SearchInterface";
 
 interface IProperty {
     address: string;
@@ -36,100 +35,114 @@ interface FileWithUrl {
     url: string;
 }
 const AddProperty = () => {
-    const [moreImageUrl, setMoreImageUrl] = useState<string[]>([])
-    const [images, setImages] = useState<string[]>([])
-    const [formData, setFormdata] = useState({})
-    const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage,setErrorMessage] = useState('')
-    const navigate = useNavigate()
+    const [moreImageUrl, setMoreImageUrl] = useState<string[]>([]);
+    const [images, setImages] = useState<string[]>([]);
+    const [formData, setFormdata] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [cities, setCities] = useState<string[]>([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredCities, setFilteredCities] = useState<string[]>([]);
+    const [sliceValue, setSliceValue] = useState(20);
+    const [selectedLocation, setSelectedLocation] = useState('');
+    const navigate = useNavigate();
 
-    const handleImageUpload = () => {
-
-    }
-    const handleMultipleImageStoring = (files: any) => {
-        const uniqueFiles = new Set([...images, ...files])
-        setImages([...uniqueFiles])
-        
-    }
-
-    console.log("🚀 ~ handleMultipleImageStoring ~ Images:", images)
-    const handleMultipleImageUpload = async () => {
-        console.log("🚀 ~ handleMultipleImageUpload ~ files:", images);
-
-        const urlPromises = images.map((file: any) => {
-            return new Promise<string>((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    if (reader.result !== null) {
-                        resolve(reader.result.toString());
-                    } else {
-                        reject(new Error("Failed to read file"));
-                    }
-                };
-                reader.onerror = () => {
-                    reject(new Error("Failed to read file"));
-                };
-                reader.readAsDataURL(file);
-            });
-        });
-
-        console.log(urlPromises, '😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️😶‍🌫️');
-
-        try {
-            const imageUrls = await Promise.all(urlPromises);
-            setMoreImageUrl((prevImageUrls) => {
-                return [...prevImageUrls, ...imageUrls]
+    // useEffect for fetching cities based on searchQuery and sliceValue
+    useEffect(() => {
+        const getLocation = async () => {
+            try {
+                const citiesArray = await getCityByCountry();
+                const cities = citiesArray.map(city => city.name);
+                const lowerCaseSearchQuery = searchQuery.toLowerCase();
+                const citiesBySearch = cities.filter(city => city.toLowerCase().includes(lowerCaseSearchQuery));
+                setFilteredCities(citiesBySearch);
+                const limitedCities = citiesBySearch.slice(0, sliceValue);
+                setCities(limitedCities);
+            } catch (error: any) {
+                console.log("Error fetching cities:", error);
             }
-                //   return imageUrls
-            );
-            return imageUrls
+        };
+        getLocation();
+    }, [searchQuery, sliceValue]);
+
+    // handleSearchQueryChange and handleLocationChange functions
+    const handleSearchQueryChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleLocationChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        setSelectedLocation(e.target.value);
+    };
+
+    // handleMultipleImageStoring and handleMultipleImageUpload functions
+    const handleMultipleImageStoring = (files: any) => {
+        const uniqueFiles = new Set([...images, ...files]);
+        setImages([...uniqueFiles]);
+    };
+
+    const handleMultipleImageUpload = async () => {
+        try {
+            const urlPromises = images.map((file: any) => {
+                return new Promise<string>((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        if (reader.result !== null) {
+                            resolve(reader.result.toString());
+                        } else {
+                            reject(new Error("Failed to read file"));
+                        }
+                    };
+                    reader.onerror = () => {
+                        reject(new Error("Failed to read file"));
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            const imageUrls = await Promise.all(urlPromises);
+            setMoreImageUrl((prevImageUrls) => [...prevImageUrls, ...imageUrls]);
+            return imageUrls;
         } catch (error) {
-            console.log("🚀 ~ handleMultipleImageUpload ~ error:", error);
-            throw error; // Propagate the error to be handled in the calling function
+            console.log("Error uploading images:", error);
+            throw error;
         }
     };
 
+    // addPropertySubmit function
     const addPropertySubmit = async (values: any) => {
-        console.log("images~~" ,images)
-        if(!images || images.length === 0){
-            console.log('inside no image')
-            setErrorMessage("Atleast one image required")
-            return
-        }
-        console.log("🚀 ~ addPropertySubmit ~ values:", values);
-        setIsLoading(true);
-
         try {
-            
-            const imageUrls = await handleMultipleImageUpload(); // Wait for image upload to complete
-           
-            console.log("🚀 ~ addPropertySubmit ~ imageUrls:", imageUrls)
-            const formValues = { ...values, images: imageUrls };
-            console.log("🚀 ~ addPropertySubmit ~ formValues:", formValues);
+            if (!images || images.length === 0) {
+                setErrorMessage("At least one image required");
+                return;
+            }
+            if (!selectedLocation) {
+                setErrorMessage("Location is required");
+                return;
+            }
+            setIsLoading(true);
+            const imageUrls = await handleMultipleImageUpload();
+            const formValues = { ...values, images: imageUrls, location: selectedLocation };
             setFormdata(values);
-            console.log(formData, 'form datatatat');
-
             const response = await axiosInstance.post('property/add-property', formValues, config);
-            console.log("🚀 ~ addPropertySubmit ~ response:", response);
             if (response.statusText === "OK") {
                 toast.success("Property added successfully");
                 navigate('/host');
             }
         } catch (error) {
-            console.log("🚀 ~ addPropertySubmit ~ error:", error);
+            console.log("Error adding property:", error);
         } finally {
-            setIsLoading(false); // Ensure loading state is cleared after API call
+            setIsLoading(false);
         }
     };
 
+    // Conditional rendering for loading spinner
     if (isLoading) {
-        return (
-            <LoadingSpinner/>
-        )
+        return <LoadingSpinner />;
     }
+
     return (
         <div className="p-5 w-full text-sm  min-h-screen">
-            
+
             {/* top bar */}
             <div className="flex justify-between items-center font-semibold">
                 <h1 className="text-2xl font-bold">Add a new place</h1>
@@ -163,15 +176,17 @@ const AddProperty = () => {
                                     {/*divided section div */}
                                     <div className=" lg:flex gap-5 ">
 
-                                        
+
 
                                         <div className="lg:w-full  mb-3 lg:mb-0">
-                                            <h1 className="font-bold">Product Information</h1>
+                                            <h1 className="font-bold font-mono">Property Information</h1>
                                             <FieldWithHead header={"Title"} description={"Title for your place"} name={"title"} placeholder={"title"} />
 
                                             <FieldWithHead header={"Address"} description={"Address for your place"} name={"address"} placeholder={"address"} />
                                             <FieldWithHead header={"Description"} description={"Description of the place"} name={"description"} placeholder={"address"} />
                                             <FieldWithHead header="House Rules" description="Extra information,etc" name="houseRules" placeholder="" />
+                                            <FieldWithHead header="Category" description="Extra information,etc" name="category" placeholder="" />
+
                                         </div>
 
                                     </div>
@@ -285,6 +300,21 @@ const AddProperty = () => {
 
                             </div>
                         </div>
+                        <div className=' bg-bg-200 px-2 mx-4 rounded-lg pb-4'>
+                            <h2 className="text-md font-semibold mt-4">Location</h2>
+                            <p className="text-gray-500 text-sm">My property is located in</p>
+                            <input type="text" name="" className='w-full bg-gray-100 m-1 ring-0 focus:ring-0 border-b-2 border-black focus:outline-none' placeholder="search for your location" onChange={handleSearchQueryChange} />
+                            <select name='location' value={selectedLocation} onChange={handleLocationChange} className='w-full bg-bg-300 m-1'>
+                                {cities.length && (
+                                    cities.map((city, index) => (
+                                        <option key={index} value={city}>{city}</option>
+                                    ))
+                                )}
+                            </select>
+                            {errorMessage && (
+                                <p className="text-red-500 flex justify-center">{errorMessage}</p>
+                            )}
+                        </div>
                         <div className="bg-green-100">
                             <div className="background-div">
                                 <h1 className="font-bold">Property Images</h1>
@@ -300,26 +330,6 @@ const AddProperty = () => {
                         </div>
 
                         <button type="submit" className="primary my-4 hover:bg-primaryTint" >Save</button>
-
-
-
-
-                        {/* {preInput("Photos","more=better")}
-               
-               <div>
-               <div className="flex gap-2">
-               <Field type="text" name="imageUrl" placeholder={'add using a link ...jpg'} />
-               <button className="bg-gray-200 px-4 rounded-2xl">Add&nbsp; Photo</button>
-                    </div>
-                </div> */}
-                        {/* <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-col-6"></div>
-
-<button className=" flex justify-center gap-1 border bg-transparent rounded-2xl p-8 text-2xl text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
-                    </svg>
-                    Upload
-                </button> */}
 
 
                     </Form>

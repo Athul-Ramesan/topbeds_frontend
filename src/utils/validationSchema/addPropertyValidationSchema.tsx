@@ -4,11 +4,6 @@ export const addPropertyValidationSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
     address: Yup.string().required('Address is required'),
-    // location: Yup.object().shape({
-    //   city: Yup.string().required('City is required'),
-    //   state: Yup.string().required('State is required'),
-    //   country: Yup.string().required('Country is required'),
-    // }),
     amenities: Yup.array().of(Yup.string()).min(1, 'At least one amenity is required'),
     houseRules: Yup.string().required('house rule is required'),
     price: Yup.number().required('Price is required').positive('Price must be a positive number'),

@@ -20,7 +20,6 @@ const getCityByCountry = async():Promise<ICitiesWithId[]> => {
     } catch (error) {
         console.error('error', error);
         throw new Error("Couldnt fetch cities api");
-        
     }
 }
 

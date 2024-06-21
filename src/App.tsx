@@ -38,6 +38,8 @@ import UserProfilePage from "./pages/user/UserProfilePage";
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Components/Users";
 import Hosts from "./pages/admin/Hosts";
+import CheckoutPage from "./pages/user/checkout/CheckoutPage";
+import PaymentSuccessful from "./pages/user/checkout/PaymentSuccessful";
 
 interface IRoles {
   [key: string]: string
@@ -239,6 +241,7 @@ const UserRoutes: FC = () => {
     <Routes>
       <Route path="/" element={<UserLayout />} >
         <Route path="/profile" element={<UserProfilePage/>}>
+        
           {/* <Route path="/dashboard" element={<UserDashboard />} /> */}
         </Route>
       </Route>
@@ -258,10 +261,13 @@ const PublicRoutes: FC = () => {
         <Route path="/home" element={<IndexPage />} />
         <Route path="/properties" element={<AllProperties />} />
         <Route path="/properties/:propertyId" element={<Index />} />
+
+        {/* <Route path="/properties/:propertyId/checkout" element={<CheckoutPage />} /> */}
         <Route path="/about" element={<AboutPage />} />
         <Route path="/admin" element={<Dashboard />} />
-
+        <Route path="/paymentSuccess" element={<PaymentSuccessful/>} />
       </Route>
+
     </Routes>
   )
 }

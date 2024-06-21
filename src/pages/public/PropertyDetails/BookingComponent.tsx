@@ -1,31 +1,82 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Datepicker from 'react-tailwindcss-datepicker';
+import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
+import { useNavigate } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+import { axiosInstance } from '../../../config/instances';
+import { config } from '../../../config/config';
 
-interface BookingComponentProps {
-  price: number;
-  serviceFee: number;
-  nights: number;
-}
+// interface BookingComponentProps {
+//   price: number;
+//   serviceFee: number;
+//   nights: number;
+// }
 
-const BookingComponent: React.FC<BookingComponentProps> = ({ price, serviceFee, nights }) => {
+const BookingComponent = () => {
   const [guests, setGuests] = useState(1);
-  const totalBeforeTaxes = price * nights + serviceFee;
-
+  const { singleProperty } = useContext(SinglePropertyDetailsContext)
+  const navigate = useNavigate()
+  console.log("🚀 ~ singleProperty:", singleProperty)
+  const maximumGuest = singleProperty?.maxGuests | 2
+  const guestOption = Array.from({ length: maximumGuest }, (_, i) => i + 1)
+  const price = singleProperty?.price
+  const [date, setDate] = useState<IDateRangeValue>({
+    startDate: new Date(),
+    endDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
+  });
+  const [nights, setNights] = useState<number>(2)
+  // const totalBeforeTaxes = price * nights + serviceFee;
+  const handleValueChange = (newValue: any) => {
+    console.log("newValue:", newValue);
+    setDate(newValue);
+  }
   const handleGuestsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setGuests(parseInt(event.target.value));
   };
 
+  useEffect(() => {
+    const calculateNights = () => {
+      const start = new Date(date.startDate).getTime();
+      const end = new Date(date.endDate).getTime();
+      const difference = (end - start) / (1000 * 60 * 60 * 24)
+      setNights(difference)
+
+    }
+    calculateNights()
+  }, [date])
+
+  const makePayment =async ()=>{
+    const stripe =await loadStripe("pk_test_51PTPcK05vcABQvkG6AA0NInegpeZvuF47iI14eA7Fctgdrm3pQ73du4OV8MqhmS7lENU1Emxt6pKju2S1F9r3uL100QZ2UQkR2")
+    const body ={
+      property: singleProperty,
+      nights: nights,
+      guests: guests,
+      price: price,
+    }
+    console.log("🚀 ~ makePayment ~ body:", body)
+    
+    const response =  await axiosInstance.post('/booking/make-payment-session', body ,config)
+    console.log("🚀 ~ makePayment ~ response:", response)
+
+    const result = stripe?.redirectToCheckout({
+      sessionId:response.data?.id
+    })
+  console.log("🚀 ~ makePayment ~ result:", result)
+  }
   return (
     <div className="bg-gray-100 p-4 rounded-lg">
       <p className="text-xl font-bold mb-2">{`₹${price} night`}</p>
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <p className="text-sm text-gray-600">CHECK-IN</p>
-          <p>6/15/2024</p>
+      <div className="flex items-center justify-between mb-4 " >
+        <div className='w-full'>
+
+          <Datepicker placeholder={"select check-in and check-out dates"}
+            value={date}
+            // disabled={true}
+            inputClassName={"shadow-md shadow-black placeholder:text-green-500 text-green-600  rounded-md focus:ring-0 font-normal"}
+            onChange={handleValueChange}
+          />
         </div>
-        <div>
-          <p className="text-sm text-gray-600">CHECKOUT</p>
-          <p>6/20/2024</p>
-        </div>
+
       </div>
       <div className="mb-4">
         <label htmlFor="guests" className="text-sm text-gray-600">
@@ -37,26 +88,36 @@ const BookingComponent: React.FC<BookingComponentProps> = ({ price, serviceFee, 
           onChange={handleGuestsChange}
           className="block w-full p-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="1">1 guest</option>
-          <option value="2">2 guests</option>
-          <option value="3">3 guests</option>
+          {
+            guestOption.map((count) => (
+              <option key={count} value={count}>{count} guest{count > 1 ? 's' : ''}</option>
+
+            ))
+          }
           {/* Add more options as needed */}
         </select>
       </div>
-      <button className="bg-red-500 text-white px-4 py-2 rounded-lg w-full">Reserve</button>
+      <button
+        onClick={
+          makePayment
+        //   () => {
+        //   navigate(`/index/properties/${singleProperty?._id}/checkout`)
+        // }
+      }
+        className="bg-red-500 text-white px-4 py-2 rounded-lg w-full">Reserve</button>
       <div className="mt-4">
         <p className="text-sm text-gray-600">You won't be charged yet</p>
         <div className="flex justify-between mt-2">
-          <p>₹{price * nights} x {nights} nights</p>
+          <p>₹{price} x {nights} nights</p>
           <p>{`₹${price * nights}`}</p>
         </div>
         <div className="flex justify-between mt-2">
-          <p>Airbnb service fee</p>
-          <p>{`₹${serviceFee}`}</p>
+          <p>Topbeds service fee</p>
+          <p>{`₹${41}`}</p>
         </div>
         <div className="border-t border-gray-300 mt-4 pt-2 flex justify-between">
-          <p className="font-bold">Total before taxes</p>
-          <p className="font-bold">{`₹${totalBeforeTaxes}`}</p>
+          <p className="font-bold">Total</p>
+          <p className="font-bold">{`₹${price * nights + 41}`}</p>
         </div>
       </div>
     </div>
