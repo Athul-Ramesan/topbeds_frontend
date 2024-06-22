@@ -1,168 +1,154 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Grid,
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Modal,
-  Avatar,
-  Tabs,
-  Tab,
-} from "@mui/material";
+import { TiTick } from "react-icons/ti";
+import { TiCancel } from "react-icons/ti";
 import { axiosInstance } from '../../config/instances';
 import { config } from '../../config/config';
 import { IUserSignupData } from '../../interface/IUserSignup';
-
+import ConfirmationModal from '../../components/Modal/ConfirmationModal';
+import LoadingSpinner from '../LoadingSpinner';
+import HostsTable from './Components/HostsTable';
+import HostsRequestTable from './Components/HostsRequestTable';
+import HostsRejectedTable from './Components/HostsRejectedTable';
 
 const Hosts: React.FC = () => {
   const [hosts, setHosts] = useState<IUserSignupData[]>([]);
-  const [selectedHost, setSelectedHost] = useState<IUserSignupData | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [tabValue, setTabValue] = useState(0);
+  const [requestedUsers, setRequestedUsers] = useState<IUserSignupData[]>([])
+  const [openModal, setOpenModal] = useState(false)
+  const [rejectedUserId, setRejectedUserId] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [rejectedUsers, setRejectedUsers] = useState<IUserSignupData[]>([])
+
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axiosInstance.get('/user/get-all-users-with-host-status', config);
+        if (response.data.data) {
+          const users: IUserSignupData[] = response.data.data;
+          const hostRequestsData = users.filter(user => user.hostStatus === 'requested');
+          const rejectedUsersData = users.filter(user => user.hostStatus === 'rejected');
+          setRequestedUsers(hostRequestsData)
+          setRejectedUsers(rejectedUsersData)
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+  useEffect(() => {
+    const fetchHosts = async () => {
+      console.log('Fetching users data...');
+      try {
+        console.log('Fetching users data...inside try');
+        const response = await axiosInstance.get('/user/get-all-hosts', config);
+        console.log("🚀 ~ fetchhosts ~ response:", response);
+        if (response.data.hosts) {
+          setHosts(response.data.hosts)
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
     fetchHosts();
-    console.log(hosts,'hostasdfjhskldjfh')
   }, []);
 
-  const fetchHosts = async () => {
-    const response = await axiosInstance.get('/user/get-all-hosts', config)
-    console.log("🚀 ~ fetchHosts ~ response:", response.data)
-    if(response.data){
-      setHosts(response.data.hosts);
+  const handleAcceptReject = async (host: IUserSignupData, action: 'accept' | 'reject') => {
+    console.log(`${action} host with ID: ${host._id}`);
+    if (action === 'accept') {
+      setLoading(true)
+      const response = await axiosInstance.post('/user/change-host-status', { _id: host._id, hostStatus: 'accepted' }, config)
+      const newHost = response.data.data
+      const newHostArray = [...hosts, newHost]
+      const newRequestedUsers = requestedUsers.filter(item => item._id !== newHost._id)
+      setRequestedUsers(newRequestedUsers)
+      setHosts(newHostArray)
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000);
+
+
+      console.log("🚀 ~ handleAcceptReject ~ response:", response)
+    }
+    if (action === 'reject') {
+      setRejectedUserId(String(host._id))
+      setOpenModal(true)
     }
   };
+  const handleRejectConfirm = async () => {
+    setLoading(true)
+    const response = await axiosInstance.post('/user/change-host-status', { _id: rejectedUserId, hostStatus: 'rejected' }, config)
 
-  const handleAcceptReject = (host: IUserSignupData, action: 'accept' | 'reject') => {
-    // Implement your logic to accept or reject a host request
-    console.log(`${action} host with ID: ${host._id}`);
-  };
-
-  const handleHostClick = (host: IUserSignupData) => {
-    setSelectedHost(host);
-    setModalOpen(true);
-  };
-
-  const handleModalClose = () => {
-    setSelectedHost(null);
-    setModalOpen(false);
-  };
-
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setTabValue(newValue);
-  };
-
-  const getHostsByStatus = (status:IUserSignupData['hostStatus']) => {
-    console.log("🚀 ~ getHostsByStatus ~ status:", status)
-    const validHosts = hosts || []
-    console.log("🚀 ~ getHostsByStatus ~ validHosts:", validHosts)
-    return validHosts.filter((host) =>{ 
-
-      return host.hostStatus === status});
-  };
-
+    const newRejectedUser = response.data.data
+    const newRequestedUsers = requestedUsers.filter(item => item._id !== newRejectedUser._id)
+    const newRejectedUsers = [...rejectedUsers, newRejectedUser]
+    setRequestedUsers(newRequestedUsers)
+    setRejectedUsers(newRejectedUsers)
+    setOpenModal(false)
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000);
+    console.log("🚀 ~ handleRejectConfirm ~ response:", response)
+    setRejectedUserId("")
+  }
+  if (loading) {
+    return <LoadingSpinner />
+  }
   return (
-    <Grid container spacing={3}>
-      {/* Side Navbar */}
-      
-
-      {/* Hosts List */}
-      <Grid item xs={10}>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Hosts
-          </Typography>
-
-          <Tabs value={tabValue} onChange={handleTabChange}>
-            <Tab label="Accepted" />
-            <Tab label="Rejected" />
-            <Tab label="Pending" />
-          </Tabs>
-
-          <TableContainer component={Paper}  style={{height:"80%", width: "100%", marginBottom: "1rem" }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Sl. No.</TableCell>
-                  <TableCell>Host</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {getHostsByStatus(
-                  tabValue === 0 ? 'accepted' : tabValue === 1 ? 'rejected' : 'requested'
-                ).map((host, index) => (
-                  <TableRow key={host._id} hover onClick={() => handleHostClick(host)}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      <Box display="flex" alignItems="center">
-                        <Avatar>{host.firstName!.charAt(0)}</Avatar>
-                        <Typography marginLeft={3}>{host.firstName}</Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>{host.email}</TableCell>
-                    {/* <TableCell>{host.numListings}</TableCell> */}
-                    <TableCell>
-                      {host.hostStatus === 'requested' ? (
-                        <>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            onClick={() => handleAcceptReject(host, 'accept')}
-                          >
-                            Accept
-                          </Button>
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                            style={{ marginLeft: '8px' }}
-                            onClick={() => handleAcceptReject(host, 'reject')}
-                          >
-                            Reject
-                          </Button>
-                        </>
-                      ) : (
-                        <Typography>{host.hostStatus}</Typography>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-
-        {/* Host Details Modal */}
-        <Modal open={modalOpen}  onClose={handleModalClose}>
-          <Box display="flex" flexDirection="column" padding={3}>
-            {selectedHost && (
-              <>
-                <Typography variant="h6" gutterBottom>
-                  Host Details
-                </Typography>
-                <Box display="flex" alignItems="center" marginBottom={2}>
-                  <Avatar>{selectedHost?.firstName!.charAt(0)}</Avatar>
-                  <Typography marginLeft={1}>{selectedHost.firstName}</Typography>
-                </Box>
-                <Typography>Email: {selectedHost.email}</Typography>
-                {/* <Typography>No. of Listings: {selectedHost.numListings}</Typography> */}
-                {/* Add any other relevant details */}
-              </>
-            )}
-          </Box>
-        </Modal>
-      </Grid>
-    </Grid>
+    <div className='p-4 flex gap-2 w-full'>
+      <ConfirmationModal content='Are you sure? ' handleClose={() => setOpenModal(false)} open={openModal} handleConfirm={handleRejectConfirm} />
+      <div className="overflow-x-auto w-4/5 rounded">
+        <div role="tablist" className="tabs tabs-bordered">
+          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Host List" />
+          <div role="tabpanel" className="tab-content">
+            <HostsTable hosts={hosts} />
+          </div>
+          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Pending Requests" />
+          <div role="tabpanel" className="tab-content">
+            <HostsRequestTable handleAcceptReject={handleAcceptReject} requestedUsers={requestedUsers} />
+          </div>
+          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Rejected" />
+          <div role="tabpanel" className="tab-content">
+            <HostsRejectedTable rejectedUsers={rejectedUsers} />
+          </div>
+        </div>
+      </div>
+      <div className='bg-white w-1/5'>
+        <ul>
+          <p className='text-center font-bold p-2 bg-leafGreenMinimal rounded-md text-red-200'>Requests</p>
+          {requestedUsers.length ? (
+            requestedUsers.map((request, index) => (
+              <li key={index} className='rounded-md border-b p-2 flex gap-1 justify-between'>
+                <p>{request.firstName} {request.lastName}</p>
+                <div>
+                  <button
+                    title='accept'
+                    className='bg-white hover:bg-leafGreenMinimal duration-500 rounded'
+                    onClick={() => handleAcceptReject(request, 'accept')}
+                  >
+                    <TiTick size={26} color='green' />
+                  </button>
+                  <button
+                    title='reject'
+                    className='bg-white hover:bg-leafGreenMinimal duration-500 rounded'
+                    onClick={() => handleAcceptReject(request, 'reject')}
+                  >
+                    <TiCancel color='red' size={26} />
+                  </button>
+                </div>
+              </li>
+            ))
+          ) : (
+            <div className='flex flex-col  gap-24'>
+              <li className="text-center p-4">No requests available</li>
+              <img src="/no-requests-available..png" alt="" />
+            </div>
+          )}
+        </ul>
+      </div>
+    </div>
   );
 };
 

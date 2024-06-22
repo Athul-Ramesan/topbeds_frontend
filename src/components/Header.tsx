@@ -6,11 +6,16 @@ import TopbedsLogo from "./TopbedsLogo";
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import BecomeHostModal from "./host/BecomeHostModal";
 import { Globe } from "lucide-react";
+import InformationModal from "./Modal/InformationModal";
 
 const Header = () => {
   const [openBecomeHostModal,setOpenBecomeHostModal] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAppSelector(state => state.user)
+  const [openHostUnderWayMessage, setOpenHostUnderWayMessage] = useState(false)
+  const hostUnderWayClickHandle = ()=>{
+    setOpenHostUnderWayMessage(true)
+  }
   const becomeHostHandle =()=>{
     setOpenBecomeHostModal(true)
   }
@@ -40,10 +45,28 @@ const Header = () => {
         </div>
         {user && user.role==="user" ? (
           <>
+        {user.hostStatus==='requested' ? (
+          <p className="cursor-pointer hover:text-primaryColor "
+          onClick={hostUnderWayClickHandle}
+          >Host is underway</p>
+        ):
+        (
           <p className="cursor-pointer hover:text-primaryColor "
           onClick={becomeHostHandle}
           >become host?</p>
-        
+        )
+        } 
+         <InformationModal 
+            handleClose={()=> setOpenHostUnderWayMessage(false)}
+            open={openHostUnderWayMessage}
+            buttonText={`close`}
+            cancelButtonText = {""}
+            title='Your host access request is under process'
+            content={<>
+             We will reach you after the request being processed, You can check status later.
+            </>
+            }
+             />
           <BecomeHostModal open={openBecomeHostModal} handleClose={handleCloseBecomeHostModal}/>
         
           </>

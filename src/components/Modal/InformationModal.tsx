@@ -43,7 +43,7 @@ export default function InformationModal({
                         {title}
                     </DialogTitle>
                     <DialogContent className=''>
-                        <DialogContentText className='py-4' id="alert-dialog-description">
+                        <DialogContentText className='py-4 text-leafGreenMinimal' id="alert-dialog-description">
                             {content}
                         </DialogContentText>
                     </DialogContent>

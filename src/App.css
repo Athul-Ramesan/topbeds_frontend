@@ -3,3 +3,8 @@
 
     font-size: 12px;
 }
+*::-webkit-scrollbar{
+    background-color: red;
+    display: none  ;
+    
+}

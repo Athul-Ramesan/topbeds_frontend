@@ -6,6 +6,7 @@ import SideNavbar from "./SideNavbar";
 const SmallDeviceNavbar = () => {
   const [showSideNavbar, setShowSideNavbar] = useState(false);
   const toggleSideNavbar = () => {
+    console.log('show navbar clicked')
     setShowSideNavbar(!showSideNavbar);
   };
 

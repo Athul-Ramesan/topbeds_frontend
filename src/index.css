@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import 'tailwind-scrollbar'; */
 
 input[type="text"],
 input[type="password"],
@@ -43,10 +44,19 @@ button.primary {
   /* Initially move the sidebar off-screen */
 }
 
+.side-navbar-admin {
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+}
+.side-navbar-admin.show {
+  transform: translateX(0);
+}
+
 .side-navbar-host.show {
   transform: translateX(0);
   /* Move the sidebar back on-screen when the 'show' class is applied */
 }
+
 
 .active {
   @apply bg-gray-200;

@@ -10,10 +10,11 @@ import * as Yup from "yup";
 import BecomeHostFormInput from '../Forms/BecomeHostFormInput';
 import { axiosInstance } from '../../config/instances';
 import { config } from '../../config/config';
-import { useAppDispatch } from '../../redux/store';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { becomeHostAction } from '../../redux/actions/userAction/becomeHost';
 import InformationModal from '../Modal/InformationModal';
 import { Link } from 'react-router-dom';
+import DaisyModal from '../Modal/DaisyModal';
 
 interface FormValues {
     street: string;
@@ -40,9 +41,12 @@ const AddressSchema = Yup.object().shape({
 });
 
 const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
+    const {user} = useAppSelector(state=>state.user)
     const [isInformationModalOpen,setIsInformationModalOpen] = React.useState(false)
     const [messageModal, setMessageModal] = React.useState(false)
+    const [finalMessageModal, setFinalMessageModal] = React.useState(false)
     const dispatch = useAppDispatch();
+
     const initialValues: FormValues = {
         street: "",
         city: "",
@@ -60,8 +64,9 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
             console.log("🚀 ~ handleSubmit ~ response:", response)
             if(response.type ==="user/become-host/fulfilled"){
                 console.log('inside response of become host🥶🥶🥶🥶🥶🥶🥶🥶🥶🥶')
-                // handleClose()
+                handleClose()
                 setIsInformationModalOpen(true)
+                setFinalMessageModal(true)
             }
             // const response = await axiosInstance.post('user/add-address', values ,config)
         } catch (error: any) {
@@ -70,6 +75,7 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
 
     };
 
+   
     return (
         <React.Fragment>
            {isInformationModalOpen && 
@@ -77,15 +83,13 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
             <InformationModal 
             handleClose={()=> setIsInformationModalOpen(false)}
             open={isInformationModalOpen}
-            buttonText={`I'll do it later`}
+            buttonText={`close`}
             cancelButtonText = {""}
             title='Congrats, Your request has been submitted'
             content={<>
              We will reach you after checking your request. You can check status later.
             </>
             }
-            
-
              />
            )}
             <Dialog

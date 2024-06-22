@@ -40,6 +40,7 @@ import Users from "./pages/admin/Components/Users";
 import Hosts from "./pages/admin/Hosts";
 import CheckoutPage from "./pages/user/checkout/CheckoutPage";
 import PaymentSuccessful from "./pages/user/checkout/PaymentSuccessful";
+import Listing from "./pages/admin/Listing";
 
 interface IRoles {
   [key: string]: string
@@ -191,6 +192,7 @@ const AdminRoutes: FC = () => {
         {/* <Route path="listing" element={<Listing/>} /> */}
         <Route path="hosts" element={<Hosts/>} />
         <Route path="users" element={<Users />} />
+        <Route path="listing" element={<Listing />} />
         {/* <Route path="" element={<Customers/>} /> */}
         {/* <Route path="" element={<Payments/>} /> */}
 

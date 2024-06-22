@@ -57,10 +57,10 @@ const SideNavbar = () => {
           Payments
         </NavLink>
 
-        <NavLink className="side-nav-link-sp-admin" to="banner">
+        {/* <NavLink className="side-nav-link-sp-admin" to="banner">
           <AiOutlineTags />
           Banner
-        </NavLink>
+        </NavLink> */}
         
         <p className="side-nav-sub-title">User Management</p>
         
@@ -73,10 +73,10 @@ const SideNavbar = () => {
           Hosts
         </NavLink>
         <p className="side-nav-sub-title">Other</p>
-        <NavLink className="side-nav-link-sp-admin" to="settings">
+        {/* <NavLink className="side-nav-link-sp-admin" to="settings">
           <FiSettings />
           Settings
-        </NavLink>
+        </NavLink> */}
         <p
           className="side-nav-link-sp-admin cursor-pointer w-full"
           onClick={handleLogout}
