@@ -3,8 +3,10 @@ import Datepicker from 'react-tailwindcss-datepicker';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import { axiosInstance } from '../../../config/instances';
+import { axiosInstance, axiosInstanceForBooking } from '../../../config/instances';
 import { config } from '../../../config/config';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 // interface BookingComponentProps {
 //   price: number;
@@ -16,6 +18,7 @@ const BookingComponent = () => {
   const [guests, setGuests] = useState(1);
   const { singleProperty } = useContext(SinglePropertyDetailsContext)
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   console.log("🚀 ~ singleProperty:", singleProperty)
   const maximumGuest = singleProperty?.maxGuests | 2
   const guestOption = Array.from({ length: maximumGuest }, (_, i) => i + 1)
@@ -43,25 +46,42 @@ const BookingComponent = () => {
 
     }
     calculateNights()
-  }, [date])
+  }, [date.startDate, date.endDate])
 
   const makePayment =async ()=>{
+    setLoading(true)
+    const start = new Date(date.startDate)
+    const end = new Date(date.endDate)
     const stripe =await loadStripe("pk_test_51PTPcK05vcABQvkG6AA0NInegpeZvuF47iI14eA7Fctgdrm3pQ73du4OV8MqhmS7lENU1Emxt6pKju2S1F9r3uL100QZ2UQkR2")
     const body ={
       property: singleProperty,
+      startDate: start,
+      endDate: end,
       nights: nights,
       guests: guests,
       price: price,
     }
+    
     console.log("🚀 ~ makePayment ~ body:", body)
     
-    const response =  await axiosInstance.post('/booking/make-payment-session', body ,config)
-    console.log("🚀 ~ makePayment ~ response:", response)
+     try {
+      const response =  await  axiosInstance.post('/booking/make-payment-session',
+         body , config
+      )
+      console.log("🚀 ~ makePayment ~ response:", response)
+  
+        setLoading(false)
+      // const result = stripe?.redirectToCheckout({
+      //   sessionId:response.data?.id
+      //   })
 
-    const result = stripe?.redirectToCheckout({
-      sessionId:response.data?.id
-    })
-  console.log("🚀 ~ makePayment ~ result:", result)
+      console.log("🚀 ~ makePayment ~ result:",'inside status ok')
+     } catch (error:any) {
+      console.log("🚀 ~ makePayment ~ error:", error)
+      toast.error(error.message)
+      setLoading(false)
+     }
+    
   }
   return (
     <div className="bg-gray-100 p-4 rounded-lg">
@@ -99,12 +119,12 @@ const BookingComponent = () => {
       </div>
       <button
         onClick={
-          makePayment
+        makePayment
         //   () => {
         //   navigate(`/index/properties/${singleProperty?._id}/checkout`)
         // }
       }
-        className="bg-red-500 text-white px-4 py-2 rounded-lg w-full">Reserve</button>
+        className="bg-red-500 text-white px-4 py-2 rounded-lg w-full">{`${loading ? "Loading..." :"Book now"}`}</button>
       <div className="mt-4">
         <p className="text-sm text-gray-600">You won't be charged yet</p>
         <div className="flex justify-between mt-2">
