@@ -1,24 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Button,
-  TextField,
-  Box,
-  Container,
-  Tabs,
-  Tab,
-} from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { getAllUsersAction } from "../../../redux/actions/adminActions/users";
 import Pagination from "../../../components/Pagination";
 import { IUserSignupData } from "../../../interface/IUserSignup";
 import { axiosInstance } from "../../../config/instances";
+import TableUsers from "./TableUsers";
 
 const Users: React.FC = () => {
   const { users } = useAppSelector((state) => state.admin);
@@ -27,46 +13,50 @@ const Users: React.FC = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
   const [search, setSearch] = useState("");
-  const [tabValue,setTabValue] = useState(0)
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number)=>{
-    setTabValue(newValue)
-  }
-  const [query, setQuery] = useState({
-    page: 1,
-    limit: 10,
-    search: "",
-  });
-
-  const tableHead = ["SL.No", "User", "Email", "Status", "Actions"];
+  const [totalPages, setTotalPages] = useState(1);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    console.log(search ,"👉👉👉👉search query")
-    setQuery({
-      page: currentPage,
-      limit: itemsPerPage,
-      search: search,
-    });
-  }, [currentPage, itemsPerPage, search]);
-
-  useEffect(() => {
-    const getAllUsers = async () => {
+  // Function to fetch users based on current state
+  const fetchUsers = async () => {
+    try {
+      const query = {
+        page: currentPage,
+        limit: itemsPerPage,
+        search: search,
+      };
       const response = await dispatch(getAllUsersAction(query));
       if (response.type === "admin/users/get-all-users/fulfilled") {
-        setTotalItems(response.payload.totalCount);
-        setCurrentPageUsers(response.payload.data);
+        const { data, totalCount } = response.payload;
+        setCurrentPageUsers(data);
+        setTotalItems(totalCount);
+        setTotalPages(Math.ceil(totalCount / itemsPerPage));
       }
-    };
-    getAllUsers();
-  }, [dispatch, currentPage,itemsPerPage,search]);
-
-  const handlePageChange = (currentPageNumber: number) => {
-    setCurrentPage(currentPageNumber);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
   };
 
-  const handleBlockUnblock = async (userId: string | null, isBlocked: boolean | null) => {
-    if (!userId) return;
+  useEffect(() => {
+    fetchUsers();
+  }, [currentPage, itemsPerPage, search]);
 
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handlePrevClick = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handleBlockUnblock = async (userId: string, isBlocked: boolean) => {
     try {
       const response = await axiosInstance.patch(
         `/user/status-update/${userId}`,
@@ -74,74 +64,64 @@ const Users: React.FC = () => {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        setCurrentPageUsers(
-          currentPageUsers.map((user) =>
+        setCurrentPageUsers((prevUsers) =>
+          prevUsers.map((user) =>
             user._id === userId ? { ...user, isBlocked: !isBlocked } : user
           )
         );
       }
     } catch (error) {
-      console.error("Failed to update user status", error);
+      console.error("Failed to update user status:", error);
     }
   };
 
   return (
-    <Container maxWidth="xl">
-      <Box display="flex" justifyContent="space-between" alignItems="center" my={2}>
-        <TextField
-          label="Search Users"
-          variant="outlined"
+    <div className="px-4">
+      <div className="flex my-2 w-full">
+        <input
+          type="text"
+          placeholder="Search Users"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{ width: "300px" }}
+          className="focus:outline-none w-full max-w-xs"
         />
-      </Box>
-      <Tabs value={tabValue} onChange={handleTabChange}>
-            <Tab label="Accepted" />
-            <Tab label="Blocked" />
-          
-          </Tabs>
-      <TableContainer component={Paper} style={{height:"80%", width: "100%", marginBottom: "1rem" }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              {tableHead.map((head: string, index: number) => (
-                <TableCell key={index} >
-                 <p className="font-serif font-extrabold"> {head}</p> 
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody className="">
-            {currentPageUsers.map((user, index) => (
-              <TableRow key={user._id}>
-                <TableCell><p className="font-bold">{index + 1}</p></TableCell>
-                <TableCell><p className="font-sans text-font-color-200">{`${user.firstName} ${user.lastName}`}</p></TableCell>
-                <TableCell><p className="font-sans text-font-color-200">{user.email}</p></TableCell>
-                <TableCell><p className={`font-sans font-bold ${user.isBlocked ? "text-red-500" : "text-green-700" }` }>{user.isBlocked ? "Blocked" : "Active"}</p></TableCell>
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color={user.isBlocked ? "primary" : "secondary"}
-                    onClick={() => handleBlockUnblock(String(user._id), user.isBlocked!)}
-                  >
-                    {user.isBlocked ? "Unblock" : "Block"}
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Box display="flex" justifyContent="center" mt={2}>
-        <Pagination
-          currentPage={currentPage}
-          handlePageChange={handlePageChange}
-          itemsPerPage={itemsPerPage}
-          totalItems={totalItems}
+      </div>
+
+      <div role="tablist" className="tabs tabs-lifted">
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Hosts" defaultChecked />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          <div className="overflow-auto h-[445px] w-[750px]">
+            <TableUsers currentPageUsers={currentPageUsers} handleBlockUnblock={handleBlockUnblock} />
+          </div>
+        </div>
+
+        <input
+          type="radio"
+          name="my_tabs_2"
+          role="tab"
+          className="tab bg-blue-100"
+          aria-label={`Active`}
         />
-      </Box>
-    </Container>
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          <div className="overflow-auto h-[445px] w-[750px]">
+            <TableUsers currentPageUsers={currentPageUsers.filter(item => !item.isBlocked)} handleBlockUnblock={handleBlockUnblock} />
+          </div>
+        </div>
+
+        <input type="radio" name="my_tabs_2" role="tab" className="tab bg-red-300" aria-label="Blocked" />
+        <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
+          <div className="overflow-auto h-[445px] w-[750px]">
+            <TableUsers currentPageUsers={currentPageUsers.filter(item => item.isBlocked)} handleBlockUnblock={handleBlockUnblock} />
+          </div>
+        </div>
+      </div>
+
+      <div className="join flex justify-center mb-4">
+        <button className={`join-item btn ${currentPage <= 1 ? 'btn-disabled' : ''}`} onClick={handlePrevClick}>«</button>
+        <button className="join-item btn">{currentPage}</button>
+        <button className={`join-item btn ${currentPage >= totalPages ? 'btn-disabled' : ''}`} onClick={handleNextClick}>»</button>
+      </div>
+    </div>
   );
 };
 

@@ -126,7 +126,7 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuest
                             ):(
                                 <>
 
-                                <select className='bg-leafBackground-200 border-b-[1px] border-black focus:border-none h-14' onChange={handleSetLocation} value={selectedValue}>
+                                <select className='bg-blue-300 border-b-[1px] border-black focus:border-none h-14' onChange={handleSetLocation} value={selectedValue}>
                                     <option value="">
                                         Location
                                     </option>

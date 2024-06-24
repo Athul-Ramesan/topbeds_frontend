@@ -41,6 +41,11 @@ import Hosts from "./pages/admin/Hosts";
 import CheckoutPage from "./pages/user/checkout/CheckoutPage";
 import PaymentSuccessful from "./pages/user/checkout/PaymentSuccessful";
 import Listing from "./pages/admin/Listing";
+import DashboardIndex from "./pages/admin/DashboardIndex";
+import PreviewPropertyAdmin from "./pages/admin/Components/PreviewPropertyAdmin";
+import Subscription from "./pages/admin/Components/Subscription";
+import Bookings from "./pages/admin/Bookings";
+import Payments from "./pages/admin/Payments";
 
 interface IRoles {
   [key: string]: string
@@ -189,10 +194,15 @@ const AdminRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} >
-        {/* <Route path="listing" element={<Listing/>} /> */}
+        <Route index element={<Navigate to={'/admin/dashboard'}/>} />
+        <Route path="dashboard" element={<DashboardIndex/>} />
         <Route path="hosts" element={<Hosts/>} />
         <Route path="users" element={<Users />} />
         <Route path="listing" element={<Listing />} />
+        <Route path="listing/preview" element ={<PreviewPropertyAdmin/>} />
+        <Route path="subscription" element={<Subscription/>} />
+        <Route path="bookings" element={<Bookings/>} />
+        <Route path="payments" element={<Payments/>} />
         {/* <Route path="" element={<Customers/>} /> */}
         {/* <Route path="" element={<Payments/>} /> */}
 

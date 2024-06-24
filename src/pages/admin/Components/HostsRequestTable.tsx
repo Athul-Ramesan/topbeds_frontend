@@ -8,8 +8,6 @@ interface IHostsRequestTableProps {
 const HostsRequestTable:FC<IHostsRequestTableProps> = ({requestedUsers,handleAcceptReject}) => {
   return (
     <div>
-       { requestedUsers.length!==0 && (
-              requestedUsers.map((item, index) => (
                 <table className="min-w-full bg-white w-full">
                   <thead>
                     <tr>
@@ -19,6 +17,8 @@ const HostsRequestTable:FC<IHostsRequestTableProps> = ({requestedUsers,handleAcc
                       <th className="px-4 py-2">Action</th>
                     </tr>
                   </thead>
+       { requestedUsers.length!==0 && (
+              requestedUsers.map((item, index) => (
                   <tbody className='scrollbar-thin'>
                     <tr key={index}>
                       <td className="px-4 py-2">
@@ -57,10 +57,10 @@ const HostsRequestTable:FC<IHostsRequestTableProps> = ({requestedUsers,handleAcc
                       </td>
                     </tr>
                   </tbody>
-              </table>
               ))
               
               )}
+            </table>
             {
               !requestedUsers.length && (
                 <div className='flex flex-col justify-center items-center'>

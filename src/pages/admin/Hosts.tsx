@@ -100,22 +100,30 @@ const Hosts: React.FC = () => {
     <div className='p-4 flex gap-2 w-full'>
       <ConfirmationModal content='Are you sure? ' handleClose={() => setOpenModal(false)} open={openModal} handleConfirm={handleRejectConfirm} />
       <div className="overflow-x-auto w-4/5 rounded">
-        <div role="tablist" className="tabs tabs-bordered">
-          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Host List" />
-          <div role="tabpanel" className="tab-content">
+        <div role="tablist" className="tabs tabs-lifted">
+          <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Hosts" defaultChecked/>
+          <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
             <HostsTable hosts={hosts} />
           </div>
-          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Pending Requests" />
-          <div role="tabpanel" className="tab-content">
+
+          <input
+            type="radio"
+            name="my_tabs_2"
+            role="tab"
+            className="tab bg-blue-100"
+            aria-label={`${requestedUsers.length!==0 ? `Requests (${requestedUsers.length}) ` : 'Requests'}`}
+             />
+          <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
             <HostsRequestTable handleAcceptReject={handleAcceptReject} requestedUsers={requestedUsers} />
           </div>
-          <input type="radio" name="my_tabs_1" role="tab" className="tab" aria-label="Rejected" />
-          <div role="tabpanel" className="tab-content">
+
+          <input type="radio" name="my_tabs_2" role="tab" className="tab bg-red-300" aria-label="Rejected" />
+          <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
             <HostsRejectedTable rejectedUsers={rejectedUsers} />
           </div>
         </div>
       </div>
-      <div className='bg-white w-1/5'>
+      <div className='bg-white w-1/5 rounded-2xl'>
         <ul>
           <p className='text-center font-bold p-2 bg-leafGreenMinimal rounded-md text-red-200'>Requests</p>
           {requestedUsers.length ? (

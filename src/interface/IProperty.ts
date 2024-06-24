@@ -1,19 +1,10 @@
 import { IUserSignupData } from "./IUserSignup";
 
 export interface IProperty {
-    _id:string;
+  _id: string;
   title: string;
   description: string;
-  location?: {
-    address: string;
-    city: string;
-    state: string;
-    country: string;
-    coordinates: {
-      lat: number;
-      lng: number;
-    };
-  };
+  location?: string;
   hostId?: IUserSignupData
   reviews?: string[];
   availability?: {
@@ -22,6 +13,7 @@ export interface IProperty {
     available: boolean;
   }[];
   active?: boolean;
+  category?: string;
   address: string;
   amenities: string[];
   houseRules: string[];

@@ -3,10 +3,9 @@ import Datepicker from 'react-tailwindcss-datepicker';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import { axiosInstance, axiosInstanceForBooking } from '../../../config/instances';
+import { axiosInstance } from '../../../config/instances';
 import { config } from '../../../config/config';
 import toast from 'react-hot-toast';
-import axios from 'axios';
 
 // interface BookingComponentProps {
 //   price: number;
@@ -23,7 +22,7 @@ const BookingComponent = () => {
   const maximumGuest = singleProperty?.maxGuests | 2
   const guestOption = Array.from({ length: maximumGuest }, (_, i) => i + 1)
   const price = singleProperty?.price
-  const [date, setDate] = useState<IDateRangeValue>({
+  const [date, setDate] = useState({
     startDate: new Date(),
     endDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000)
   });
@@ -43,7 +42,6 @@ const BookingComponent = () => {
       const end = new Date(date.endDate).getTime();
       const difference = (end - start) / (1000 * 60 * 60 * 24)
       setNights(difference)
-
     }
     calculateNights()
   }, [date.startDate, date.endDate])
@@ -52,7 +50,8 @@ const BookingComponent = () => {
     setLoading(true)
     const start = new Date(date.startDate)
     const end = new Date(date.endDate)
-    const stripe =await loadStripe("pk_test_51PTPcK05vcABQvkG6AA0NInegpeZvuF47iI14eA7Fctgdrm3pQ73du4OV8MqhmS7lENU1Emxt6pKju2S1F9r3uL100QZ2UQkR2")
+    const stripe =await loadStripe
+    ("pk_test_51PTPcK05vcABQvkG6AA0NInegpeZvuF47iI14eA7Fctgdrm3pQ73du4OV8MqhmS7lENU1Emxt6pKju2S1F9r3uL100QZ2UQkR2")
     const body ={
       property: singleProperty,
       startDate: start,
@@ -69,11 +68,12 @@ const BookingComponent = () => {
          body , config
       )
       console.log("🚀 ~ makePayment ~ response:", response)
-  
-        setLoading(false)
-      // const result = stripe?.redirectToCheckout({
-      //   sessionId:response.data?.id
-      //   })
+        if(response.status.data.message="OK"){
+          setLoading(false)
+        const result = stripe?.redirectToCheckout({
+          sessionId:response.data?.id
+          })
+        }
 
       console.log("🚀 ~ makePayment ~ result:",'inside status ok')
      } catch (error:any) {
