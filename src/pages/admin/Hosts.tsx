@@ -9,6 +9,8 @@ import LoadingSpinner from '../LoadingSpinner';
 import HostsTable from './Components/HostsTable';
 import HostsRequestTable from './Components/HostsRequestTable';
 import HostsRejectedTable from './Components/HostsRejectedTable';
+import UserDetailsModal from './Components/UserDetailsModal';
+import { useAppSelector } from '../../redux/store';
 
 const Hosts: React.FC = () => {
   const [hosts, setHosts] = useState<IUserSignupData[]>([]);
@@ -17,6 +19,8 @@ const Hosts: React.FC = () => {
   const [rejectedUserId, setRejectedUserId] = useState('')
   const [loading, setLoading] = useState(false)
   const [rejectedUsers, setRejectedUsers] = useState<IUserSignupData[]>([])
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+  const {user} = useAppSelector(state=>state.user)
 
 
   useEffect(() => {
@@ -54,6 +58,11 @@ const Hosts: React.FC = () => {
 
     fetchHosts();
   }, []);
+
+
+
+  const handleOpenModal = () => setModalOpen(true);
+  const handleCloseModal = () => setModalOpen(false);
 
   const handleAcceptReject = async (host: IUserSignupData, action: 'accept' | 'reject') => {
     console.log(`${action} host with ID: ${host._id}`);
@@ -103,9 +112,10 @@ const Hosts: React.FC = () => {
         <div role="tablist" className="tabs tabs-lifted">
           <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Hosts" defaultChecked/>
           <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-            <HostsTable hosts={hosts} />
+            <HostsTable openModal={handleOpenModal} hosts={hosts} />
+            
           </div>
-
+        
           <input
             type="radio"
             name="my_tabs_2"

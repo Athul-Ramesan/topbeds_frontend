@@ -88,7 +88,7 @@ const Users: React.FC = () => {
       </div>
 
       <div role="tablist" className="tabs tabs-lifted">
-        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Hosts" defaultChecked />
+        <input type="radio" name="my_tabs_2" role="tab" className="tab" aria-label="Users" defaultChecked />
         <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
           <div className="overflow-auto h-[445px] w-[750px]">
             <TableUsers currentPageUsers={currentPageUsers} handleBlockUnblock={handleBlockUnblock} />

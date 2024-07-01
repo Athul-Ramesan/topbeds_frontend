@@ -3,9 +3,12 @@ import Datepicker from 'react-tailwindcss-datepicker';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import { axiosInstance } from '../../../config/instances';
+import { axiosInstance, bookingApiInstance } from '../../../config/instances';
 import { config } from '../../../config/config';
 import toast from 'react-hot-toast';
+import PropertyCalendar from './components/PropertyCalendar';
+import { useAppSelector } from '../../../redux/store';
+import LoginModal from '../../../components/Modal/LoginModal';
 
 // interface BookingComponentProps {
 //   price: number;
@@ -14,8 +17,11 @@ import toast from 'react-hot-toast';
 // }
 
 const BookingComponent = () => {
+  const [loginModalOpen, setLoginModalOpen] = useState(false)
   const [guests, setGuests] = useState(1);
   const { singleProperty } = useContext(SinglePropertyDetailsContext)
+  const user = useAppSelector(state=>state.user.user)
+  console.log("🚀 ~ BookingComponent ~ user:", user)
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   console.log("🚀 ~ singleProperty:", singleProperty)
@@ -28,11 +34,13 @@ const BookingComponent = () => {
   });
   const [nights, setNights] = useState<number>(2)
   // const totalBeforeTaxes = price * nights + serviceFee;
-  const handleValueChange = (newValue: any) => {
-    console.log("newValue:", newValue);
-    setDate(newValue);
-  }
+  // const handleValueChange = (newValue: any) => {
+  //   console.log("newValue:", newValue);
+  //   setDate(newValue);
+  // }
   const handleGuestsChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log('handle guest change called')
+    console.log(date)
     setGuests(parseInt(event.target.value));
   };
 
@@ -44,9 +52,13 @@ const BookingComponent = () => {
       setNights(difference)
     }
     calculateNights()
-  }, [date.startDate, date.endDate])
+  }, [date.startDate, date.endDate]) 
 
   const makePayment =async ()=>{
+    if(!user){
+      setLoginModalOpen(true)
+      return
+    }
     setLoading(true)
     const start = new Date(date.startDate)
     const end = new Date(date.endDate)
@@ -64,21 +76,31 @@ const BookingComponent = () => {
     console.log("🚀 ~ makePayment ~ body:", body)
     
      try {
-      const response =  await  axiosInstance.post('/booking/make-payment-session',
+      const response =  await  bookingApiInstance.post(`/booking/make-payment-session/${user?._id}`,
          body , config
       )
+      const updatedBody = {
+        ...body,
+        bookingId: response.data.bookingId,
+        propertyId: singleProperty._id
+      };
+      const stringBody = JSON.stringify(updatedBody)
       console.log("🚀 ~ makePayment ~ response:", response)
-        if(response.status.data.message="OK"){
+        localStorage.setItem('bookingData',stringBody)
+        if(response.data.message="OK"){
           setLoading(false)
-        const result = stripe?.redirectToCheckout({
+          const result = stripe?.redirectToCheckout({
           sessionId:response.data?.id
           })
+        }else{
+          setLoading(false)
         }
+        
 
       console.log("🚀 ~ makePayment ~ result:",'inside status ok')
      } catch (error:any) {
       console.log("🚀 ~ makePayment ~ error:", error)
-      toast.error(error.message)
+      toast.error(error.response.data.message)
       setLoading(false)
      }
     
@@ -88,13 +110,14 @@ const BookingComponent = () => {
       <p className="text-xl font-bold mb-2">{`₹${price} night`}</p>
       <div className="flex items-center justify-between mb-4 " >
         <div className='w-full'>
-
-          <Datepicker placeholder={"select check-in and check-out dates"}
+        <LoginModal isOpen={loginModalOpen} onClose={()=>setLoginModalOpen(false)}/>
+          {/* <Datepicker placeholder={"select check-in and check-out dates"}
             value={date}
             // disabled={true}
             inputClassName={"shadow-md shadow-black placeholder:text-green-500 text-green-600  rounded-md focus:ring-0 font-normal"}
             onChange={handleValueChange}
-          />
+          /> */}
+          <PropertyCalendar date={date} setDate={setDate} property={singleProperty}/>
         </div>
 
       </div>

@@ -22,10 +22,10 @@ const PropertyImages: React.FC = () => {
         showPhotos && (
           <div className={`grid grid-cols-3 gap-4 mt-4`}>
         {/* Render additional property images */}
-        {singleProperty.images.slice(1).map((image)=>{
+        {singleProperty.images.slice(1).map((image,index)=>{
           return(
 
-              <img className='rounded-lg h-32 w-full' src={image} alt="" />
+              <img key={index} className='rounded-lg h-32 w-full' src={image} alt="" />
             
           )
         })}

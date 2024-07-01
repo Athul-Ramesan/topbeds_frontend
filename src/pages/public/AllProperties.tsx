@@ -26,6 +26,12 @@ const AllProperties = () => {
   const [location, setLocation] = useState('')
   const [guestCount, setGuestCount] = useState('')
 
+  useEffect(()=>{
+    setLoading(true)
+    setTimeout(() => {
+        setLoading(false)
+    }, 2000);
+  },[])
   useEffect(() => {
     setFilterOptions({
       category: category,

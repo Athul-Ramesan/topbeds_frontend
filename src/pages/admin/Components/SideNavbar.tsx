@@ -49,18 +49,16 @@ const SideNavbar = () => {
           <ImStack />
           Subscription
         </NavLink>
-       
-
         
         <NavLink className="side-nav-link-sp-admin" to="payments">
           <BsCreditCard />
           Payments
         </NavLink>
 
-        {/* <NavLink className="side-nav-link-sp-admin" to="banner">
+        <NavLink className="side-nav-link-sp-admin" to="property">
           <AiOutlineTags />
-          Banner
-        </NavLink> */}
+          Property
+        </NavLink>
         
         <p className="side-nav-sub-title">User Management</p>
         

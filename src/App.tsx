@@ -39,13 +39,18 @@ import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Components/Users";
 import Hosts from "./pages/admin/Hosts";
 import CheckoutPage from "./pages/user/checkout/CheckoutPage";
-import PaymentSuccessful from "./pages/user/checkout/PaymentSuccessful";
+import PaymentSuccessful from "./pages/user/checkout/BookingPaymentSuccessful";
 import Listing from "./pages/admin/Listing";
 import DashboardIndex from "./pages/admin/DashboardIndex";
 import PreviewPropertyAdmin from "./pages/admin/Components/PreviewPropertyAdmin";
 import Subscription from "./pages/admin/Components/Subscription";
 import Bookings from "./pages/admin/Bookings";
 import Payments from "./pages/admin/Payments";
+import SubscriptionPaymentSuccessPage from "./pages/user/SubscriptionPaymentSuccessPage";
+import BookingPaymentSuccessful from "./pages/user/checkout/BookingPaymentSuccessful";
+import Reservation from "./pages/host/Reservations/Reservation";
+import BookingDetails from "./pages/user/Booking/BookingDetails";
+import Property from "./pages/admin/Property";
 
 interface IRoles {
   [key: string]: string
@@ -203,6 +208,7 @@ const AdminRoutes: FC = () => {
         <Route path="subscription" element={<Subscription/>} />
         <Route path="bookings" element={<Bookings/>} />
         <Route path="payments" element={<Payments/>} />
+        <Route path="property" element={<Property/>} />
         {/* <Route path="" element={<Customers/>} /> */}
         {/* <Route path="" element={<Payments/>} /> */}
 
@@ -238,7 +244,7 @@ const HostRoutes: FC = () => {
           </Route> */}
           {/* <Route path="arrival" element={<ArrivalGuidlines />} /> */}
         </Route>
-        <Route path="/reservations" element={""} />
+        <Route path="/reservations" element={<Reservation/>} />
         <Route path="/inbox" element={""} />
         <Route path="/reviews" element={""} />
         <Route path="/earnings" element={""} />
@@ -253,9 +259,10 @@ const UserRoutes: FC = () => {
     <Routes>
       <Route path="/" element={<UserLayout />} >
         <Route path="/profile" element={<UserProfilePage/>}>
-        
-          {/* <Route path="/dashboard" element={<UserDashboard />} /> */}
         </Route>
+          <Route path="/bookings/:bookingId" element={<BookingDetails />} />
+        <Route path="/subscription-payment-succes/:session_id" element={<SubscriptionPaymentSuccessPage/>} />
+       
       </Route>
     </Routes>
   )
@@ -273,11 +280,11 @@ const PublicRoutes: FC = () => {
         <Route path="/home" element={<IndexPage />} />
         <Route path="/properties" element={<AllProperties />} />
         <Route path="/properties/:propertyId" element={<Index />} />
-
+      
         {/* <Route path="/properties/:propertyId/checkout" element={<CheckoutPage />} /> */}
         <Route path="/about" element={<AboutPage />} />
         <Route path="/admin" element={<Dashboard />} />
-        <Route path="/paymentSuccess" element={<PaymentSuccessful/>} />
+        <Route path="/paymentSuccess/:session_id" element={<BookingPaymentSuccessful/>} />
       </Route>
 
     </Routes>

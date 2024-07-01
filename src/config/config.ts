@@ -1,4 +1,4 @@
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 export const config ={
     headers:{
@@ -13,7 +13,7 @@ export const multiplefileConfig= {
     },
 }
 export const ApiBaseUrl: string = "http://localhost:5000"
-
+export const BookingBaseUrl: string = "http://localhost:3003"
 
 export interface ApiError {
     message : string,

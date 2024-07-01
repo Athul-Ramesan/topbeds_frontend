@@ -1,3 +1,12 @@
+export interface ISubscription {
+    plan: string
+    startDate: Date
+    expiryDate: Date
+    active: boolean,
+    stripeSessionId: string
+}
+
+
 export interface IUserSignupData {
 
     firstName?: string | null,
@@ -19,5 +28,8 @@ export interface IUserSignupData {
     role?:string | null,
     hostStatus?:string,
     profileImage?:string | null,
-    isBlocked?: boolean | null
+    isBlocked?: boolean | null,
+    createdAt?:  Date | null,
+    subscriptions?: ISubscription 
+
 }
