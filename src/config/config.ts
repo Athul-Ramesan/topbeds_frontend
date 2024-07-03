@@ -14,6 +14,7 @@ export const multiplefileConfig= {
 }
 export const ApiBaseUrl: string = "http://localhost:5000"
 export const BookingBaseUrl: string = "http://localhost:3003"
+export const ChatBaseUrl : string = "http://localhost:3004"
 
 export interface ApiError {
     message : string,

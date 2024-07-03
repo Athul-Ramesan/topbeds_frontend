@@ -1,4 +1,5 @@
 import { IProperty } from "./IProperty";
+import { IUserSignupData } from "./IUserSignup";
 
 export interface IBooking {
     _id: string;
@@ -7,7 +8,8 @@ export interface IBooking {
     property:IProperty,
     bookingStatus:string,
     paymentStatus:string,
-    createdAt: Date
+    createdAt: Date,
+    user:IUserSignupData
   }
 
   export interface BookingResponse {

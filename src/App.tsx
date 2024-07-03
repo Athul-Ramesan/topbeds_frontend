@@ -245,7 +245,7 @@ const HostRoutes: FC = () => {
           {/* <Route path="arrival" element={<ArrivalGuidlines />} /> */}
         </Route>
         <Route path="/reservations" element={<Reservation/>} />
-        <Route path="/inbox" element={""} />
+        <Route path="/message" element={""} />
         <Route path="/reviews" element={""} />
         <Route path="/earnings" element={""} />
         <Route path="/Account" element={""} />

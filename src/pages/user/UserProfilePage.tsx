@@ -51,7 +51,7 @@ const UserProfilePage: React.FC = () => {
         <div className='mt-10'>
             
             <div role="tablist" className="tabs tabs-lifted">
-                <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold font-mono" aria-label="Profile" />
+                <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold font-mono" aria-label="Profile" defaultChecked />
                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6 b">
                     <div className="container mx-auto p-4">
                         <div className="flex flex-col lg:flex-row">
@@ -76,7 +76,7 @@ const UserProfilePage: React.FC = () => {
                     role="tab"
                     className="tab bg-red-200 font-mono font-extrabold"
                     aria-label="Booking Management"
-                    defaultChecked />
+                     />
                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6 h-screen">
 
                         <VerticalTabs bookings={bookings}/>

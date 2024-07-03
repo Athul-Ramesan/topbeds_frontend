@@ -7,14 +7,18 @@ const SubscriptionOption = () => {
   const [modalOpen, setModalOpen] = useState(false)
   const [hasSubscription, setHasSubscription] = useState(false)
   const handleClick = () => {
+    console.log(hasSubscription,'has subscription')
     setModalOpen(true)
   }
   const subscriptions = useAppSelector(state => state.user.user?.subscriptions)
   console.log("🚀 ~ SubscriptionOption ~ subscriptions:", subscriptions)
   useEffect(()=>{
-    if (!subscriptions.length===0) {
-      setHasSubscription(true)
+    if (subscriptions && subscriptions.length === 0) {
+      setHasSubscription(false);
+    } else {
+      setHasSubscription(true);
     }
+
   },[subscriptions])
   return (
     <div className='flex flex-col'>
