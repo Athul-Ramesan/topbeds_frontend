@@ -17,10 +17,10 @@ const HostSideBar = () => {
       <SideBarNav navItem={"Dashboard"}  icon={<RiDashboardLine/>} linkTo="/host/dashboard"/>
       <SideBarNav navItem={"Listing"}  icon={<RiListSettingsLine />} linkTo="/host/manage-listing"/>
       <SideBarNav navItem={"Reservations"}  icon={<RiCalendarTodoLine />} linkTo="/host/reservations"/>
-      <SideBarNav navItem={"Inbox"}  icon={<RiMailLine />} linkTo="/host/inbox" />
+      {/* <SideBarNav navItem={"Message"}  icon={<RiMailLine />} linkTo="/host/message" /> */}
       <SideBarNav navItem={"Reviews"}  icon={<RiStarLine />} linkTo="/host/reviews"/>
-      <SideBarNav navItem={"Earnings"}  icon={<RiMoneyDollarCircleLine />} linkTo="/host/Earnings"/>
-      <SideBarNav navItem={"Account Settings"}  icon={<RiMoneyDollarCircleLine />} linkTo="/host/account-settings"/>
+      {/* <SideBarNav navItem={"Earnings"}  icon={<RiMoneyDollarCircleLine />} linkTo="/host/Earnings"/> */}
+      {/* <SideBarNav navItem={"Account Settings"}  icon={<RiMoneyDollarCircleLine />} linkTo="/host/account-settings"/> */}
       </div>
     </div>
     </div>

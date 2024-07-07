@@ -13,7 +13,6 @@ import EmptyItemMessage from "./EmptyItemMessage";
 const ManageListing = () => {
   
   const { hostProperties } = useContext(HostPropertiesContext)
-  const [showFilterToolTip,setShowFilterToolTip] = useState(false)
   const [showAddToolTip,setShowAddToolTip] = useState(false)
 
   const navigate = useNavigate()
@@ -38,15 +37,15 @@ const ManageListing = () => {
   return (
     <div className="w-full p-4">
       {/* Search Bar */}
-      <div className="mb-4 flex flex-col md:flex-row justify-between items-center">
-        <input
+      <div className="mb-4 flex flex-col md:flex-row justify-end items-center">
+        {/* <input
           type="text"
           placeholder="Search listings..."
           className="w-full md:w-1/2 p-2 border border-gray-300 rounded mb-4 md:mb-0"
-        />
+        /> */}
         <div className="flex space-x-2">
           {/* <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Filter</button> */}
-         <div className="relative">
+         {/* <div className="relative">
          <BiFilter
          size={40}
           onMouseEnter={()=>{
@@ -61,7 +60,7 @@ const ManageListing = () => {
           toolTipText="filter"
           showToolTip={showFilterToolTip}
           />
-         </div>
+         </div> */}
 
 
          <div className="relative">

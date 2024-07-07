@@ -1,11 +1,16 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HostPropertiesContext } from "../../context/HostPropertiesContext";
-import { axiosInstance } from "../../config/instances";
+import { axiosInstance, bookingApiInstance } from "../../config/instances";
 import { useAppSelector } from "../../redux/store";
+
+
 
 const HostDashboard = () => {
     const {hostProperties,setHostProperties} = useContext(HostPropertiesContext)
     const { user } = useAppSelector(state => state.user)
+    const [totalReservations, setTotalReservations] = useState(0)
+    const [totalEarnings, setTotalEarnings] = useState(0)
+    const [totalProperties, setTotalProperties] = useState(0)
     console.log("🚀 ~ HostDashboard ~ hostProperties:", hostProperties)
     useEffect(() => {
       axiosInstance.get(`/property/get-host-properties/${user?._id}`)
@@ -17,6 +22,22 @@ const HostDashboard = () => {
           console.log(err);
         })
     }, [])
+    useEffect(()=>{
+      const fetchReservationData =async()=>{
+        const response = await bookingApiInstance.get('/dashboard/host-reservations')
+        console.log("🚀 ~ fetchReservationData ~ response:", response)
+        if(response.statusText==="OK"){
+          const hostsWithTotalData = response.data
+          const currentHostTotalData = hostsWithTotalData.find((host)=> host._id ===user?._id)
+           console.log("🚀 ~ fetchReservationData ~ currentHostTotalData:", currentHostTotalData)
+           setTotalReservations(currentHostTotalData.totalReservations)
+           setTotalEarnings(currentHostTotalData.totalEarnings)
+          setTotalProperties(currentHostTotalData.totalProperties)
+            console.log("🚀 ~ fetchReservationData ~ response.data:", response.data)
+          }
+      }
+      fetchReservationData()
+    },[])
   return (
     <div className="p-6 bg-gray-100 min-h-screen w-full">
       <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-lg">
@@ -33,12 +54,12 @@ const HostDashboard = () => {
 
           <div className="p-6 bg-white rounded-lg shadow-md">
             <h3 className="text-xl font-semibold text-gray-700 mb-4">Reservations</h3>
-            <p className="text-3xl font-bold text-primaryColor">0</p>
+            <p className="text-3xl font-bold text-primaryColor">{totalReservations}</p>
           </div>
 
           <div className="p-6 bg-white rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold text-gray-700 mb-4">Reviews</h3>
-            <p className="text-3xl font-bold text-primaryColor">0</p>
+            <h3 className="text-xl font-semibold text-gray-700 mb-4">Earnings</h3>
+            <p className="text-3xl font-bold text-primaryColor">₹ {totalEarnings}</p>
           </div>
         </div>
 

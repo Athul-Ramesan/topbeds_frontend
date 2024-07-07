@@ -11,6 +11,7 @@ import BookingList from './Booking/BookingList';
 import { bookingApiInstance } from '../../config/instances';
 import { useAppSelector } from '../../redux/store';
 import VerticalTabs from '../../components/Tabs/VerticalTabs';
+import UserReviews from '../../components/User/Review/UserReviews';
 
 
 const UserProfilePage: React.FC = () => {
@@ -64,7 +65,6 @@ const UserProfilePage: React.FC = () => {
                             </div>
                             <div className="w-full lg:w-1/4 p-4">
                                 <SubscriptionOption />
-                                <GetInTouch />
                             </div>
                         </div>
                     </div>
@@ -99,6 +99,14 @@ const UserProfilePage: React.FC = () => {
                 <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
                     Tab content 3
                 </div> */}
+                <input type="radio" name="my_tabs_2" role="tab" className="tab font-bold font-mono" aria-label="Reviews" />
+                <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6 b">
+                    <div className="container mx-auto p-4">
+                        <div className="flex flex-col lg:flex-row">
+                            <UserReviews/>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 

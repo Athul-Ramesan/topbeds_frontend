@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ChatList from './ChatList';
 import ChatWindow from './ChatWindow';
+import { useSocket } from '../../../../context/SocketContext';
 // import { useSocket } from '../contexts/SocketContext';
 
 const HostChat: React.FC = () => {
@@ -13,7 +14,7 @@ const HostChat: React.FC = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex w-full h-screen bg-gray-100">
       <ChatList onSelectChat={setSelectedChat} 
       socket={socket!} 
       />

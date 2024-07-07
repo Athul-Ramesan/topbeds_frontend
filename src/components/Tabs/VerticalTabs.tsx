@@ -65,6 +65,7 @@ export default function VerticalTabs( TabProps: VerticalTabsProps ) {
             >
                 <Tab label="Upcoming Bookings" {...a11yProps(0)} />
                 <Tab label="Completed Bookings" {...a11yProps(1)} />
+             
 
             </Tabs>
             <TabPanel value={value} index={0}>
@@ -81,6 +82,7 @@ export default function VerticalTabs( TabProps: VerticalTabsProps ) {
                     isUpcoming={false}
                 />
             </TabPanel>
+          
         </Box>
     );
 }

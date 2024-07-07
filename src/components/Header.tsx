@@ -1,14 +1,15 @@
-import { FaBedPulse } from "react-icons/fa6";
 import DropDown from "./DropDown";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import TopbedsLogo from "./TopbedsLogo";
-import { useAppDispatch, useAppSelector } from "../redux/store";
+import { useAppSelector } from "../redux/store";
 import BecomeHostModal from "./host/BecomeHostModal";
 import { Globe } from "lucide-react";
 import InformationModal from "./Modal/InformationModal";
+import SearchSortFilterCombined from "./public/SearchSortFilterCombined";
 
 const Header = () => {
+  const [searchFilterOpen, setSearchFilterOpen] = useState(false)
   const [openBecomeHostModal,setOpenBecomeHostModal] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAppSelector(state => state.user)
@@ -25,13 +26,22 @@ const Header = () => {
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
+  const searchFilterOnclick=()=>{
+    console.log('clicked anywhere')
+    setSearchFilterOpen(true)
+  }
   return (
     <div className="">
+      <SearchSortFilterCombined isOpen={searchFilterOpen}  onClose={()=>setSearchFilterOpen(false)}/>
       <DropDown isOpen={isOpen} toggleDropDown={toggleDropDown} setIsOpen={setIsOpen} />
       <header className="flex justify-between">
 
         <TopbedsLogo />
-        <div className="flex gap-2 border border-gray-500  rounded-full shadow-sm py-2 px-4 shadow-gray-400">
+        <div className="hidden lg:block">
+
+        <div  
+        onClick={()=> setSearchFilterOpen(!searchFilterOpen)}
+        className="flex gap-2 border border-gray-500  rounded-full shadow-sm py-2 px-4 shadow-gray-400">
           <div>Anywhere</div>
           <div className="border-l border-gray-300 p-2 "></div>
           <div>Any week</div>
@@ -42,6 +52,7 @@ const Header = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
           </button>
+        </div>
         </div>
         {user && user.role==="user" ? (
           <>
@@ -55,7 +66,7 @@ const Header = () => {
           onClick={becomeHostHandle}
           >become host?</p>
         )
-        } 
+      } 
          <InformationModal 
             handleClose={()=> setOpenHostUnderWayMessage(false)}
             open={openHostUnderWayMessage}

@@ -1,15 +1,18 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState,lazy } from "react"
 import { axiosInstance } from "../../config/instances"
 import ImageCard from "../../components/public/ImageCard"
 import LoadingSpinner from "../LoadingSpinner"
 import Pagination from "../../components/Pagination"
 import PublicSearchBar from "../../components/searchBar/PublicSearchBar"
 import SearchInterface from "../../components/searchBar/SearchInterface"
+
+
+
 const AllProperties = () => {
   // const [properties, setProperties] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState('');
   const [loading, setLoading] = useState(true)

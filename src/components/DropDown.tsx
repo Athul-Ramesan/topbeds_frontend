@@ -1,7 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { userLogoutAction } from "../redux/actions/userActions";
-import { AppDispatch, useAppDispatch, useAppSelector } from "../redux/store";
-import { setUserNull } from "../redux/reducers/user/userSlice";
+import {  useAppDispatch, useAppSelector } from "../redux/store";
 
 
 interface DropDownProps {
@@ -14,7 +13,7 @@ const DropDown: React.FC<DropDownProps> = ({ isOpen, toggleDropDown, setIsOpen }
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
-    const handleLogout = async () => {
+    const  handleLogout = async () => {
         try {
             console.log('inside handleLogout');
 
@@ -42,7 +41,8 @@ const DropDown: React.FC<DropDownProps> = ({ isOpen, toggleDropDown, setIsOpen }
                                     Profile
                                 </li>
                             </li>
-                            <li className="p-2 hover:bg-gray-100 cursor-pointer">Settings</li>
+                            <li className="p-2 hover:bg-gray-100 cursor-pointer"><Link to={'/user/message'}>
+                            Messages</Link></li>
                             <li onClick={handleLogout} className="p-2 hover:bg-gray-100 cursor-pointer">Logout</li>
                         </ul> :
                         <ul>

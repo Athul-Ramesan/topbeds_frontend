@@ -8,8 +8,7 @@ interface PropertyCalendarProps {
   setDate: (date: any) => void;
 }
 
-const PropertyCalendar: React.FC<PropertyCalendarProps> = ({ property,date,setDate }) => {
-
+const PropertyCalendar: React.FC<PropertyCalendarProps> = ({ property, date, setDate }) => {
   const [disabledDates, setDisabledDates] = useState<DateRangeType[]>([]);
   const [dateConfigs, setDateConfigs] = useState<Record<string, { className: string }>>({});
 
@@ -17,6 +16,15 @@ const PropertyCalendar: React.FC<PropertyCalendarProps> = ({ property,date,setDa
     if (property.availability) {
       const unavailableDateRanges: DateRangeType[] = [];
       const newDateConfigs: Record<string, { className: string }> = {};
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set to start of the day
+
+      // Add a range to disable all dates before today
+      unavailableDateRanges.push({
+        startDate: '1970-01-01', // An arbitrary far past date
+        endDate: today.toISOString().split('T')[0],
+      });
 
       property.availability.forEach(period => {
         const start = new Date(period.startDate);
@@ -43,7 +51,7 @@ const PropertyCalendar: React.FC<PropertyCalendarProps> = ({ property,date,setDa
   }, [property.availability]);
 
   const handleValueChange = (newValue: DateValueType) => {
-    console.log('handle value change called')
+    console.log('handle value change called');
     setDate(newValue);
   };
 

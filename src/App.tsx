@@ -5,13 +5,11 @@ import { useAppDispatch, useAppSelector } from "./redux/store";
 import EmailVerification from "./pages/EmailVerification";
 import { FC, useContext, useEffect, useState } from "react";
 import { getUserData } from "./redux/actions/userActions";
-import ProfileLayout from "./pages/ProfileLayout";
 import AddProperty from "./pages/host/AddProperty";
 import "./App.css"
 import IndexPage from "./pages/IndexPage";
 import HostDashboard from "./pages/host/HostDashboard";
 import HostLayout from "./pages/host/HostLayout";
-import AdminLayout from "./pages/admin/AdminLayout";
 import UserLayout from "./pages/user/UserLayout";
 import AboutPage from "./pages/public/AboutPage";
 import { IUserSignupData } from "./interface/IUserSignup";
@@ -26,7 +24,6 @@ import Index from "./pages/public/PropertyDetails/Index";
 
 import ForgotPasswordNewPage from "./pages/auth/ForgotPasswordNewPage";
 import ResetPassword from "./pages/auth/ResetPassword";
-import ShowAmenitiesHostProperty from "./pages/host/ShowAmenitiesHostProperty";
 import ShowbedroomsHostProperty from "./pages/host/ShowBedroomsHostProperty";
 import { HostPropertySingleContext } from "./context/HostPropertySingleContext";
 import ShowbathroomsHostProperty from "./pages/host/ShowBathroomsHostProperty";
@@ -38,8 +35,6 @@ import UserProfilePage from "./pages/user/UserProfilePage";
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Components/Users";
 import Hosts from "./pages/admin/Hosts";
-import CheckoutPage from "./pages/user/checkout/CheckoutPage";
-import PaymentSuccessful from "./pages/user/checkout/BookingPaymentSuccessful";
 import Listing from "./pages/admin/Listing";
 import DashboardIndex from "./pages/admin/DashboardIndex";
 import PreviewPropertyAdmin from "./pages/admin/Components/PreviewPropertyAdmin";
@@ -48,9 +43,12 @@ import Bookings from "./pages/admin/Bookings";
 import Payments from "./pages/admin/Payments";
 import SubscriptionPaymentSuccessPage from "./pages/user/SubscriptionPaymentSuccessPage";
 import BookingPaymentSuccessful from "./pages/user/checkout/BookingPaymentSuccessful";
-import Reservation from "./pages/host/Reservations/Reservation";
 import BookingDetails from "./pages/user/Booking/BookingDetails";
 import Property from "./pages/admin/Property";
+import ChatsPage from "./pages/host/Message/Pages/ChatsPage";
+import VideoCallPage from "./pages/user/chat/VideoCallPage";
+import HostReservation from "./pages/host/HostReservation";
+import SearchResult from "./pages/public/SearchResult";
 
 interface IRoles {
   [key: string]: string
@@ -114,52 +112,7 @@ function App() {
     return user ? element : <Navigate to="/index" />;
   }
 
-  // const preventAccess = ({element})=>{
-  //   const {user} = useAppSelector((state)=> state.user)
-  //   return 
-  // }
-  // if (user === null || user === undefined) {
-  //   return (
-  //     <div className="">
-  //       <Router>
-  //         <Toaster position="top-center" />
-  //         <Routes>
-  //           <Route path="/" element={<Layout />}>
-  //             <Route path="/login" element={<LoginPage />} />
-  //             <Route path="/signup" element={<RegisterPage />} />
-  //             <Route path="/verify-account" element={<EmailVerification />} />
-  //           </Route>
-  //         </Routes>
-  //       </Router>
-  //     </div>
-  //   )
-  // }
-  // if (user?.role === "user") {
-  //   return (
-  //     <div className="bg-bg-200">
-  //       <Router>
-
-  //         <Toaster position="top-center" />
-
-  //         <Routes>
-  //           <Route path="/" element={<Layout />}>
-  //             <Route path="/" element={<IndexPage />} />
-  //             <Route path="/account" element={<AccountPage />} />
-  //             <Route path="/verify-account" element={<EmailVerification />} />
-  //             <Route path="/add-property" element={<AddProperty />} />
-  //           </Route>
-  //           <Route path="/profile" element={<ProfileLayout />}>
-  //             {/* <Route path="/account" element={}/> */}
-  //           </Route>
-  //           <Route path="/host-profile" element={<HostLayout/>} >
-  //             {/* <Route path="/host-listing" element={<ListingManagement/>} /> */}
-  //             {/* <Route path="/listing" element={<ListingManagement/>} /> */}
-  //           </Route>
-  //         </Routes>
-  //       </Router>
-  //     </div>
-  //   )
-  // }
+ 
   return (
     <Router >
       <Routes>
@@ -209,8 +162,7 @@ const AdminRoutes: FC = () => {
         <Route path="bookings" element={<Bookings/>} />
         <Route path="payments" element={<Payments/>} />
         <Route path="property" element={<Property/>} />
-        {/* <Route path="" element={<Customers/>} /> */}
-        {/* <Route path="" element={<Payments/>} /> */}
+    
 
       </Route>
     </Routes>
@@ -234,7 +186,7 @@ const HostRoutes: FC = () => {
           <Route path="title" element={<ShowTitleHostProperty />} />
           <Route path="description" element={<ShowDescriptionHostProperty />}/>
           <Route path="price" element={<ShowPriceHostProperty />} />
-          <Route path="amenities" element={<ShowAmenitiesHostProperty />} />
+          {/* <Route path="amenities" element={<ShowAmenitiesHostProperty />} /> */}
           <Route path="bathrooms" element={<ShowbathroomsHostProperty/>} />
           <Route path="bedrooms" element={<ShowbedroomsHostProperty />} />
           <Route path="max-guests" element={<ShowMaxGuestsHostProperty/>} />
@@ -242,10 +194,10 @@ const HostRoutes: FC = () => {
 
           {/* <Route path="details" element={<HostPropertyDetail />} >
           </Route> */}
-          {/* <Route path="arrival" element={<ArrivalGuidlines />} /> */}
+      
         </Route>
-        <Route path="/reservations" element={<Reservation/>} />
-        <Route path="/message" element={""} />
+        <Route path="/reservations" element={<HostReservation/>} />
+        
         <Route path="/reviews" element={""} />
         <Route path="/earnings" element={""} />
         <Route path="/Account" element={""} />
@@ -260,8 +212,10 @@ const UserRoutes: FC = () => {
       <Route path="/" element={<UserLayout />} >
         <Route path="/profile" element={<UserProfilePage/>}>
         </Route>
+        <Route path="/message" element={<ChatsPage/>} />
           <Route path="/bookings/:bookingId" element={<BookingDetails />} />
         <Route path="/subscription-payment-succes/:session_id" element={<SubscriptionPaymentSuccessPage/>} />
+        <Route path='/videocall' element={<VideoCallPage />} />
        
       </Route>
     </Routes>
@@ -285,6 +239,7 @@ const PublicRoutes: FC = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/paymentSuccess/:session_id" element={<BookingPaymentSuccessful/>} />
+        <Route path="/searchResult" element={<SearchResult/>} />
       </Route>
 
     </Routes>

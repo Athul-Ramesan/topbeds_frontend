@@ -30,8 +30,8 @@ const ChatList: React.FC<ChatListProps> = ({ onSelectChat, socket }) => {
   }, [socket]);
 
   return (
-    <div className="w-1/3 bg-white border-r overflow-y-auto">
-      <div className="bg-gray-200 p-4">
+    <div className="w-1/3 bg-black border-r overflow-y-auto">
+      <div className="bg-green-200 p-4">
         <h2 className="text-xl font-semibold">Chats</h2>
       </div>
       <ul>

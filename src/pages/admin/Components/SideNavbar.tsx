@@ -40,19 +40,14 @@ const SideNavbar = () => {
           <FiBox />
           Listing
         </NavLink>
-        <NavLink className="side-nav-link-sp-admin" to="bookings">
+        {/* <NavLink className="side-nav-link-sp-admin" to="bookings">
           <BsCardChecklist />
           Bookings
-        </NavLink>
+        </NavLink> */}
 
         <NavLink className="side-nav-link-sp-admin" to="subscription">
           <ImStack />
           Subscription
-        </NavLink>
-        
-        <NavLink className="side-nav-link-sp-admin" to="payments">
-          <BsCreditCard />
-          Payments
         </NavLink>
 
         <NavLink className="side-nav-link-sp-admin" to="property">

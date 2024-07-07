@@ -13,9 +13,7 @@ const getCityByCountry = async():Promise<ICitiesWithId[]> => {
     
     try {
         const response = await fetch("https://api.countrystatecity.in/v1/countries/IN/cities", requestOptions);
-        console.log("🚀 ~ getCityByCountry ~ response:", response)
-        const result = await response.json();
-        console.log("🚀 ~ getCityByCountry ~ result:", result)
+        const result = await response.json() as ICitiesWithId[]
         return result
     } catch (error) {
         console.error('error', error);

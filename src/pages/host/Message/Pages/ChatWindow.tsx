@@ -50,8 +50,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({ chatId, socket }) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
-      <div className="bg-gray-200 p-4 flex items-center">
+    <div className="flex-1 bg-black flex flex-col">
+      <div className="bg-red-200 p-4 flex items-center">
         <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
         <h2 className="text-lg font-semibold">{chatName}</h2>
       </div>

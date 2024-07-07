@@ -12,6 +12,7 @@ interface ReviewFormModalProps {
   listingId: string;
   userId: string;
   onReviewSubmitted: () => void;
+  bookingId:string
 }
 
 const ReviewFormModal: React.FC<ReviewFormModalProps> = ({
@@ -20,6 +21,7 @@ const ReviewFormModal: React.FC<ReviewFormModalProps> = ({
   listingId,
   userId,
   onReviewSubmitted,
+  bookingId
 }) => {
   const formik = useFormik({
     initialValues: {
@@ -37,11 +39,12 @@ const ReviewFormModal: React.FC<ReviewFormModalProps> = ({
     }),
     onSubmit: async (values, { setSubmitting, resetForm }) => {
       try {
-        await bookingApiInstance.post('/reviews', {
+        await bookingApiInstance.post('/review', {
           user: userId,
           listing: listingId,
           rating: Number(values.rating),
           comment: values.comment,
+          bookingId
         });
         resetForm();
         onReviewSubmitted();

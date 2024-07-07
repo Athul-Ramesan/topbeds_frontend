@@ -14,7 +14,7 @@ const HostPropertyDetail = () => {
       <HostPropertySingleDetail contentHead="Title" contentText={`${hostProperty.title}`} />
       <HostPropertySingleDetail contentHead="Description" contentText={`${hostProperty.description}`} />
       <HostPropertySingleDetail contentHead="Price" contentText={`${hostProperty.price}`} />
-      <HostPropertySingleDetail contentHead="Amenities" contentText={`${hostProperty.amenities}`} />
+      {/* <HostPropertySingleDetail contentHead="Amenities" contentText={`${hostProperty.amenities}`} /> */}
       <HostPropertySingleDetail contentHead="Bathrooms" contentText={`${hostProperty.bathrooms}`} />
       <HostPropertySingleDetail contentHead="Bedrooms" contentText={`${hostProperty.bedrooms}`} />
       <HostPropertySingleDetail contentHead="Max-guests" contentText={`${hostProperty.maxGuests}`} />

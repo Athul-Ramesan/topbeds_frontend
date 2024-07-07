@@ -4,6 +4,7 @@ import { IBooking } from '../../../interface/IBooking';
 import { Link, useLocation } from 'react-router-dom';
 import {format} from 'date-fns'
 import ReviewFormModal from '../../../components/Modal/ReviewFormModal';
+import { bookingApiInstance } from '../../../config/instances';
 
 
 interface BookingItemProps {
@@ -17,6 +18,7 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
     const location = useLocation()
     console.log(location.pathname,'location pathname');
     const [bookingStatus, setBookingStatus] = useState('')
+    const [reviewDone, setReviewDone] = useState(false)
     
     
     useEffect(()=>{
@@ -30,6 +32,17 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
     const onReviewSubmitted =()=>{
       setReviewModalOpen(false)
     }
+    useEffect(()=>{
+      const fetchReviewDetails=async()=>{
+        const response = await bookingApiInstance.get(`/review/booking/${booking._id}`)
+        if(response.statusText==="OK"){
+          const review = response.data
+          if(review){
+            setReviewDone(true)
+          }
+        }
+      }
+    },[])
     return (
         <div className="border rounded-lg p-4 mb-4">
           {bookingStatus==='Cancelled' ? (
@@ -52,12 +65,15 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
           ) : (
             location.pathname !== '/host/reservations' ? (
               <>
-            <button 
-            onClick={handleLeaveReviewClick}
-            className="mt-2 btn btn-success btn-outline text-white px-4 py-2 rounded">
+              {reviewDone && (
+                <button 
+                onClick={handleLeaveReviewClick}
+                className="mt-2 btn btn-success btn-outline text-white px-4 py-2 rounded">
               Leave Review
             </button>
+            )}
             <ReviewFormModal
+            bookingId={booking._id}
             isOpen={reviewModalOpen}
             listingId={booking.property._id}
             onClose={()=>setReviewModalOpen(false)}

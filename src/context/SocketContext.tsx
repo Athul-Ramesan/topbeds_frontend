@@ -1,6 +1,7 @@
 import { FC, createContext, useContext, useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { ChatBaseUrl } from "../config/config";
+import { useAppSelector } from "../redux/store";
 
 interface User{
   id:string;
@@ -25,13 +26,20 @@ const SocketContext = createContext<SocketContextType>({
 export const useSocket = ()=> useContext(SocketContext)
 
 export const SocketProvider : FC <SocketProviderProps>= ({children})=>{
+  const {user} = useAppSelector(state=>state.user)
+  console.log("🚀 ~ user:", user)
 
   const [socket , setSocket] = useState<Socket | null>(null)
   const [isConnected , setIsConnected] = useState<boolean>(false)
   const [onlineUsers , setOnlineUsers] = useState<User[]>([])
-
+  
   useEffect(()=>{
-    const newSocket = io(ChatBaseUrl)
+
+    const newSocket = io(ChatBaseUrl,{
+      query:{
+        userId: user?._id
+      }
+    })
     setSocket(newSocket)
     newSocket.on("connect",()=>setIsConnected(true))
     newSocket.on("disconnect",()=>{
@@ -55,7 +63,7 @@ export const SocketProvider : FC <SocketProviderProps>= ({children})=>{
         newSocket.off("user_disconnected")
         newSocket.close()
       }
-  },[])
+  },[user])
   return (
     <SocketContext.Provider value={{socket , isConnected , onlineUsers}}>
       {children}

@@ -6,6 +6,7 @@ import { bookingApiInstance } from '../../../config/instances';
 import CancellationPolicy from './CancellationPolicy';
 import { AlertOctagonIcon } from 'lucide-react';
 import RefundMessage from './RefundMessage';
+import MessageModal from '../../../components/Modal/MessageModal';
 
 const BookingDetails: React.FC = () => {
     const { bookingId } = useParams<{ bookingId: string }>();
@@ -13,6 +14,7 @@ const BookingDetails: React.FC = () => {
     const [isCancelled,setIsCancelled] = useState(false)
     const [refundAmount, setRefundAmount] = useState('')
     const [loading, setLoading] = useState(false)
+    const [openMessageModal, setOpenMessageModal] = useState(false)
 
     useEffect(() => {
         const fetchBookingDetails = async () => {
@@ -43,11 +45,15 @@ const BookingDetails: React.FC = () => {
         }finally{
             setLoading(false)
         }
+    }   
+    const handleMessageHostClick=()=>{
+        setOpenMessageModal(true)
     }
     //   if (!booking) return <div>Loading...</div>;
 
     return (
         <div className='flex mt-10' >
+            
             <div className="max-w-3xl mx-auto px-4 py-8 border border-black rounded-lg shadow-md">
                 <h1 className="text-2xl font-bold mb-6">{booking?.property.title}</h1>
 
@@ -112,8 +118,16 @@ const BookingDetails: React.FC = () => {
                 <>
                 <div onClick={handleCancelBooking} className='btn bg-red-300'>{loading? 'Loading...': 'Cancel Booking'}</div>
                 <CancellationPolicy />
+                <div>
+                    <div
+                    onClick={handleMessageHostClick}
+                    className='btn bg-black text-white my-10 hover:border hover:border-black hover:text-black '>
+                        Message Host
+                    </div>
+                </div>
                 </>
                 )}
+                <MessageModal hostId={String(booking?.property.hostId)} isOpen={openMessageModal} onClose={()=> setOpenMessageModal(false)}/>
             </div>
         </div>
     );
