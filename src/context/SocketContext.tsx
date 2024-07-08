@@ -66,7 +66,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
             </div>
           </div>
         ), {
-          duration: 20000, // 10 seconds
+          duration: 20000, 
           position: 'top-right',
         });
       })

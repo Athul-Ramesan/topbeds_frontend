@@ -11,6 +11,7 @@ function randomID(len: number): string {
   for (let i = 0; i < len; i++) {
     result += chars.charAt(Math.floor(Math.random() * maxPos));
   }
+  console.log("🚀 ~ randomID ~ result:🥶🥶🥶🥶🥶", result)
   return result;
 }
 
@@ -24,42 +25,52 @@ const VideoCall: FC = () => {
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
   const senderId = queryParams.get('senderId');
-  const {socket} = useSocket();
+  const { socket } = useSocket();
   const roomID = getUrlParams().get('roomID') || randomID(5);
   const meetingContainerRef = useRef<HTMLDivElement>(null);
+  const zegoRef = useRef<any>(null);
 
   useEffect(() => {
-    if (meetingContainerRef.current) {
-      myMeeting(meetingContainerRef.current);
+    if (meetingContainerRef.current && !zegoRef.current) {
+      initializeZegoCloud();
     }
 
-    async function myMeeting(element: HTMLDivElement) {
-      const appID = Number(import.meta.env.VITE_REACT_APP_APPID);
-      const serverSecret = import.meta.env.VITE_REACT_APP_SERVERSECRET;
-      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), randomID(5));
-      const zp = ZegoUIKitPrebuilt.create(kitToken);
-      zp.joinRoom({
-        container: element,
-        sharedLinks: [
-          {
-            name: 'Copy link',
-            url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
-          },
-        ],
-        scenario: {
-          mode: ZegoUIKitPrebuilt.OneONoneCall,
+    return () => {
+      // Clean up when component unmounts
+      if (zegoRef.current) {
+        zegoRef.current.destroy();
+      }
+    };
+  }, [socket, id, senderId]);
+
+  const initializeZegoCloud = async () => {
+    const appID = Number(import.meta.env.VITE_REACT_APP_APPID);
+    const serverSecret = import.meta.env.VITE_REACT_APP_SERVERSECRET;
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, randomID(5), randomID(5));
+    
+    zegoRef.current = ZegoUIKitPrebuilt.create(kitToken);
+    
+    zegoRef.current.joinRoom({
+      container: meetingContainerRef.current,
+      sharedLinks: [
+        {
+          name: 'Copy link',
+          url: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
         },
-      });
+      ],
+      scenario: {
+        mode: ZegoUIKitPrebuilt.OneONoneCall,
+      },
+    });
 
-      const data = {
-        id: id,
-        senderId: senderId,
-        link: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
-      };
+    const data = {
+      id: id,
+      senderId: senderId,
+      link: `${window.location.protocol}//${window.location.host}${window.location.pathname}?roomID=${roomID}`,
+    };
 
-      socket?.emit("videoCall", data);
-    }
-  }, [roomID, socket, id, senderId]);
+    socket?.emit("videoCall", data);
+  };
 
   return (
     <div
