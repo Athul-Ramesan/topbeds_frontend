@@ -1,216 +1,116 @@
-import { Search, Send } from "lucide-react"
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
-import { IUserSignupData } from "../../../../interface/IUserSignup"
-import { useSocket } from "../../../../context/SocketContext"
-import { useAppSelector } from "../../../../redux/store"
-import { ChatListSkeleton } from "../../../../components/Skeltons/ChatListSkelton"
-import { VideoCameraIcon, VideoCameraSlashIcon } from "@heroicons/react/24/outline"
-import { MdOutlineVideoCall, MdVideoCall } from "react-icons/md"
-import { RiVideoChatFill } from "react-icons/ri"
+// ChatListComponent.tsx
 
+import { FC, useState, useEffect } from 'react';
+import { Search } from 'lucide-react';
+import { IChat, IMessage } from '../../../../interface/chatInterfaces';
+import { useSocket } from '../../../../context/SocketContext';
+import { useAppSelector } from '../../../../redux/store';
+import { IUserSignupData } from '../../../../interface/IUserSignup';
+import { ChatListSkeleton } from '../../../../components/Skeltons/ChatListSkelton';
 
-export interface IMessage {
-    _id: string
-    sender: IUserSignupData;
-    receiverId?: string
-    receiver: IUserSignupData;
-    content: string;
-    contentType: string;
-    receiverSeen: boolean;
-}
-export interface IChat {
-    _id: string
-    participants: IUserSignupData[]
-    // type:string
-    lastSeen: {
-        participant: IUserSignupData,
-        seenAt: Date
-    }
-    messages: IMessage[]
-    requestStatus: string;
-}
 interface ChatListComponentProps {
     chatList: IChat[];
-    setChatList: (chatList: IChat[]) => void
-    chatListFetchingLoading: boolean
+    setChatList: (chatList: IChat[]) => void;
+    chatListFetchingLoading: boolean;
+    onChatSelect: (chat: IChat) => void;
 }
-const ChatListComponent: FC<ChatListComponentProps> = ({ chatList, setChatList, chatListFetchingLoading }) => {
-    const { socket, isConnected, onlineUsers } = useSocket();
-    const [isChatSelected, setIsChatSelected] = useState(false)
 
-    const [selectedChat, setSelectedChat] = useState<IChat>()
-    const [contentType, setContentType] = useState('')
-    const [selectedReceiver, setSelectedReceiver] = useState<IUserSignupData>()
-    const [senderMessages, setSenderMessages] = useState<IMessage[]>([])
-    const [receiverMessages, setReceiverMessages] = useState<IMessage[]>([])
-    const [message, setMessage] = useState('')
-    const [chatId, setChatId] = useState('')
-    const bottomRef = useRef<HTMLDivElement | null>(null)
-    const { user } = useAppSelector(state => state.user)
-    console.log("🚀 ~ ChatListComponent ~ onlineUsers:", onlineUsers)
-    console.log("🚀 ~ ChatListComponent ~ isConnected:", isConnected)
-    console.log("🚀 ~ ChatListComponent ~ socket:", socket)
+const ChatListComponent: FC<ChatListComponentProps> = ({
+    chatList,
+    setChatList,
+    chatListFetchingLoading,
+    onChatSelect,
+}) => {
+    const { socket, onlineUsers } = useSocket();
+    const { user } = useAppSelector(state => state.user);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
+        if (socket) {
+            socket.on('new_message_send', (message: IMessage) => {
+                console.log("🚀 ~ socket.on ~new_message:", message)
+                // setChatList((chatList:IChat[]) =>{
+                //     chatList?.map((chat:IChat) => {
+                //         if (chat._id === message.chatId) {
+                //             return {
+                //                 ...chat,
+                //                 messages: [...chat.messages, message],
+                //             } as IChat;
+                //         }
+                //         return chat as IChat;
+                //     })
+                // }
+                // );
+            });
 
-        socket?.on("new_message_send", (message: IMessage) => {
-            if (message.sender === user?._id) {
-                setSenderMessages(prev => [...prev, message])
-            } else {
-                setReceiverMessages(prev => [...prev, message])
-            }
-        })
-
-    }, [socket])
-    useEffect(() => {
-        if (bottomRef.current) {
-            bottomRef.current.scrollTop = bottomRef.current.scrollHeight;
+            return () => {
+                socket.off('new_message_send');
+            };
         }
-    }, [chatId]);
-    const onChatClick = (chatId: string) => {
+    }, [socket, setChatList]);
 
-        socket?.emit('join_chat', chatId)
-        setChatId(chatId)
-        const selectedChat: IChat = chatList.find(chat => chat._id === chatId)!
-        setSelectedChat(selectedChat)
-        const receiver = selectedChat.participants.find(participant => participant._id !== user?._id)
-        setSelectedReceiver(receiver!)
-        const selectedChatMessages = selectedChat.messages
-        console.log("🚀 ~ onChatClick ~ selectedChatMessages:", selectedChatMessages)
-        const senderMessages = selectedChatMessages.filter(senderMessage => senderMessage.sender._id === user?._id)
-        setSenderMessages(senderMessages)
-        const receiverMessages = selectedChatMessages.filter(senderMessage => senderMessage.sender._id !== user?._id)
-        setReceiverMessages(receiverMessages)
+    const isUserOnline = (userId: string) => onlineUsers.includes(userId);
 
-        setIsChatSelected(true)
-    }
-    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setMessage(e.target.value)
-        setContentType('text')
-    }
-    const handleSubmitMessage = () => {
-        console.log('before sending message socket')
-        const messageData = {
-            receiverId: selectedReceiver?._id,
-            content: message,
-            contentType: contentType,
-            chatId
-        }
-        socket?.emit('new_message', messageData)
-        console.log('after sending message socket')
-    }
+    const filteredChatList = chatList?.filter(chat =>
+        chat.participants.some(
+            participant =>
+                participant._id !== user?._id &&
+                participant.firstName.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    );
+    console.log(filteredChatList,'fi;tereeeeeeeeed')
+
     return (
-        <>
-            <div className="w-1/2 h-full border-x border-gray-300 px-2">
-                <div className="w-full h-20 flex items-center ">
-                    <div className="flex w-full  h-10 items-center rounded-lg border">
-                        <input type="text" placeholder="search user..." className=" bg-transparent outline-none border-none" />
-                        <Search className="me-2" size={27} />
-                    </div>
+        <div className="w-1/3 h-full border-r border-gray-300 overflow-hidden flex flex-col">
+            <div className="p-4 w-full">
+                <div className="flex items-center justify-between border rounded-xl">
+                    <input
+                        type="text"
+                        placeholder="Search chats..."
+                        className="w-full p-2 pl-10 border-none rounded-lg outline-none "
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
+                    <Search className="  text-gray-400 m-3" size={24} />
                 </div>
-                {chatListFetchingLoading ? (
-                    <ChatListSkeleton />
-                ) :
-                    (
-                        <div className="h-full w-full overflow-y-auto">
-                            {
-                                chatList.map((chat, index) => (
-                                    <div key={index}
-                                        onClick={() => onChatClick(chat._id)}
-                                        className="cursor-pointer  h-16 border-x-0 flex border items-center">
-                                        <div className="size-12 rounded-full">
-                                            <img sizes="" className=" size-full object-cover rounded-full" src="/athul.JPG" alt="" />
-                                        </div>
-                                        <div className="h-full w-full flex flex-col py-1 px-2">
-                                            <h1 className="font-bold">
-                                                {chat.participants
-                                                    .filter(participant => participant._id != user?._id)
-                                                    .map((participant) => participant.firstName)
-                                                }</h1>
-                                            <p className="text-gray-500 line-clamp-2">{
-                                                chat.messages
-                                                    .map(message => message.content)}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-
-                        </div>
-                    )}
             </div>
-
-            <div className="h-full  w-full border  flex flex-col">
-                {/* header */}
-                {selectedChat ? (
-                    <>
-
-                        <div className="w-full px-4  h-20 border-b  border-gray-400 shadow-md flex items-center justify-between ">
-                            <div className="flex items-center h-ful">
-                                <div className="h-full p-1 w-16 rounded-full flex items-center">
-                                    <img sizes="" className="size-10 object-cover rounded-full" src="/athul.JPG" alt="" />
+            {chatListFetchingLoading ? (
+                <ChatListSkeleton />
+            ) : (
+                <div className="flex-1 overflow-y-auto">
+                    {filteredChatList?.map(chat => {
+                        const otherParticipant = chat.participants.find(p => p._id !== user?._id) as IUserSignupData;
+                        const lastMessage = chat.messages[chat.messages.length - 1];
+                        return (
+                            <div
+                                key={chat._id}
+                                className="flex items-center p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+                                onClick={() => onChatSelect(chat)}
+                            >
+                                <div className="relative">
+                                    <img
+                                        src={otherParticipant.profileImage || '/default-avatar.png'}
+                                        alt={String(otherParticipant.firstName)}
+                                        className="w-12 h-12 rounded-full object-cover"
+                                    />
+                                    {isUserOnline(otherParticipant._id!) && (
+                                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                                    )}
                                 </div>
-                                <div>
-                                    <h1 className=" px-4">{selectedReceiver?.firstName} {selectedReceiver?.lastName}</h1>
+                                <div className="ml-4 flex-1">
+                                    <h3 className="font-semibold">{otherParticipant.firstName} {otherParticipant.lastName}</h3>
+                                    <p className="text-sm text-gray-500 truncate">{lastMessage?.content}</p>
+                                </div>
+                                <div className="text-xs text-gray-400">
+                                    {new Date(lastMessage?.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                 </div>
                             </div>
-                            <div className="h-full flex items-center px-10">
-                                <RiVideoChatFill size={30} />
-                            </div>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
+    );
+};
 
-                        </div>
-
-                        {/* messages window */}
-                        <div ref={bottomRef} className="w-full h-full overflow-y-auto flex flex-col justify-between bg-[url(/whatsapp.jpg)] bg-contain">
-
-                            <div className="h-full p-2 overflow-auto">
-                                {receiverMessages.length > 0 && (
-                                    receiverMessages.map((message, index) => (
-                                        <div key={index} className="chat chat-start">
-                                            <div className="chat-bubble">{message.content}</div>
-                                        </div>
-                                    ))
-                                )}
-                                {senderMessages.length > 0 && (
-                                    senderMessages.map((message, index) => (
-                                        <div key={index} className="chat chat-end">
-                                            <div className="chat-bubble">{message.content}</div>
-                                        </div>
-                                    ))
-                                )}
-                            </div>
-
-
-                            <div className="h-20 flex gap-2 items-center px-2">
-                                <input
-                                    onChange={onChangeInput}
-                                    type="text" placeholder="Type a message..." className="px-3 outline-none placeholder:px-2" style={{ borderRadius: '25px' }} />
-                                <button
-                                    onClick={handleSubmitMessage}
-                                    className="size-10 flex items-center justify-center bg-blue-500 text-white rounded-full duration-300 ">
-                                    <Send className="w-5" />
-                                </button>
-                            </div>
-                        </div>
-                    </>
-                ) :
-                    (
-                        <>
-                            <div className="w-full px-4 h-20 border-b bg-bg-300 border-gray-300 shadow-md flex items-center ">
-                                <div className="h-full p-1 w-16 rounded-full flex items-center">
-
-                                </div>
-                                <div>
-                                    <h1 className=" px-4">{selectedReceiver?.firstName} {selectedReceiver?.lastName}</h1>
-                                </div>
-
-                            </div>
-                            <div className="flex  bg-[url(/whatsapp.jpg)]  justify-center items-center w-full h-full text-font-color-200 text-xl font-semibold">Select a chat to start messaging.....</div>
-                        </>
-                    )}
-            </div>
-        </>
-    )
-}
-
-export default ChatListComponent
+export default ChatListComponent;

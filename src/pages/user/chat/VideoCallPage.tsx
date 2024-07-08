@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { useSocket } from "../../../context/SocketContext";
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+import { useSocket } from "../../../context/SocketContext";
 
 function randomID(len: number): string {
   let result = '';
@@ -19,12 +19,12 @@ export function getUrlParams(url: string = window.location.href): URLSearchParam
   return new URLSearchParams(urlStr);
 }
 
-const VideoCallPage: FC = () => {
+const VideoCall: FC = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
   const senderId = queryParams.get('senderId');
-  const socket = useSocket();
+  const {socket} = useSocket();
   const roomID = getUrlParams().get('roomID') || randomID(5);
   const meetingContainerRef = useRef<HTMLDivElement>(null);
 
@@ -70,4 +70,4 @@ const VideoCallPage: FC = () => {
   );
 };
 
-export default VideoCallPage;
+export default VideoCall;

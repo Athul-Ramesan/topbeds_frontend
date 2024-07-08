@@ -18,11 +18,11 @@ const PropertyCalendar: React.FC<PropertyCalendarProps> = ({ property, date, set
       const newDateConfigs: Record<string, { className: string }> = {};
 
       const today = new Date();
-      today.setHours(0, 0, 0, 0); // Set to start of the day
+      today.setHours(0, 0, 0, 0); 
 
-      // Add a range to disable all dates before today
+
       unavailableDateRanges.push({
-        startDate: '1970-01-01', // An arbitrary far past date
+        startDate: '1970-01-01', 
         endDate: today.toISOString().split('T')[0],
       });
 
@@ -57,13 +57,17 @@ const PropertyCalendar: React.FC<PropertyCalendarProps> = ({ property, date, set
 
   return (
     <Datepicker
+    primaryColor={"blue"} 
       placeholder={"Select check-in and check-out dates"}
       value={date}
       onChange={handleValueChange}
-      inputClassName="shadow-md bg-white placeholder:text-green-500 text-green-600 rounded-md focus:ring-0 font-normal"
+      inputClassName="shadow-md placeholder:text-green-500 text-green-600 rounded-md focus:ring-0 font-normal"
       disabledDates={disabledDates}
       configs={{
         dateFormat: "yyyy-MM-dd",
+        classNames: {
+          calendar: "bg-white",
+        },
         ...dateConfigs
       }}
     />

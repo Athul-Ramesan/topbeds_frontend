@@ -63,7 +63,7 @@ const AllProperties = () => {
         });
   
         console.log("🚀 ~ .then ~ response:", response)
-        const properties = response.data?.data.reverse();
+        const properties = response.data?.data
         setCurrentProperties(properties);
         setTotalItems(response.data.totalItems);
         setLoading(false);

@@ -25,13 +25,20 @@ const MessageModal:FC<messageModalProps>= ({isOpen,onClose,hostId}) => {
         console.log(message,'messsageee')
     }
     const handleSendMessage =async()=>{
-        socket?.emit('message', {senderId:user?._id,hostId})
+      const messageData = {
+        receiverId: hostId,
+        content: message,
+        contentType: 'text',
+      };
+        console.log("🚀 ~ handleSendMessage ~ messageData:", messageData)
+      
         const response = await chatApiInstance.post(`/chat/send-message/${user?._id}/${hostId}`, {content:message})
         if(response){
             console.log("🚀 ~ handleSendMessage ~ response:", response)
             setMessage('')
             toast.success('message sent ! check your profile')
             onClose()
+            socket?.emit('new_message', messageData)
         }
         console.log(message,'message' )
     }

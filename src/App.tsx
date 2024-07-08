@@ -215,7 +215,7 @@ const UserRoutes: FC = () => {
         <Route path="/message" element={<ChatsPage/>} />
           <Route path="/bookings/:bookingId" element={<BookingDetails />} />
         <Route path="/subscription-payment-succes/:session_id" element={<SubscriptionPaymentSuccessPage/>} />
-        <Route path='/videocall' element={<VideoCallPage />} />
+        <Route path='/video-call' element={<VideoCallPage />} />
        
       </Route>
     </Routes>

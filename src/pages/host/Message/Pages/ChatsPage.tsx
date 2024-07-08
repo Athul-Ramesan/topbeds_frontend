@@ -5,47 +5,91 @@ import { chatApiInstance } from "../../../../config/instances"
 import { useAppSelector } from "../../../../redux/store"
 import toast from "react-hot-toast"
 import { useSocket } from "../../../../context/SocketContext"
+import { IMessage } from "../../../../interface/chatInterfaces"
+import { useNavigate } from "react-router-dom"
 
 const ChatsPage = () => {
-    const [chatList, setChatList] = useState<IChat[]>([])
-    const { user } = useAppSelector(state => state.user)
-    const [ chatListFetchingLoading, setChatListFetchingLoading ] = useState(false)
-    const [isLoading, setIsLoading] = useState(true);
-    const [isConnected, setIsConnected] = useState(false);
-    const [onlineUsers, setOnlineUsers] = useState<any[]>([]);
-    const socket = useSocket()
-
+    const [chatList, setChatList] = useState<IChat[]>([]);
+    const [selectedChat, setSelectedChat] = useState<IChat | null>(null);
+    const [chatListFetchingLoading, setChatListFetchingLoading] = useState(false);
+    const { socket } = useSocket();
+    const { user } = useAppSelector((state) => state.user);
+    const navigate = useNavigate()
     useEffect(() => {
-        const fetchChats = async () => {
-            try {
-                setChatListFetchingLoading(true)
-                const response = await chatApiInstance.get(`/chat/get-chats/${user?._id}`)
-                if (response.statusText === "OK") {
-                    console.log("🚀 ~ fetchChats ~ response🥶🥶🥶🥶:", response)
-                    console.log(response.data)
-                    setChatList(response.data)
-                    setChatListFetchingLoading(false)
-                } else {
-                    console.log("🚀 ~ fetchChats ~ response:", response)
-                    toast.error('couldnt fetch your chat now, please try after sometimes')
-                }
-            } catch (error: any) {
-                console.log("🚀 ~ fetchChats ~ error:", error)
-                
-                setChatListFetchingLoading(false)
-            }finally{
-                setChatListFetchingLoading(false)
+        fetchChats();
+    }, [user]);
+    const fetchChats = async () => {
+        try {
+            setChatListFetchingLoading(true);
+            const response = await chatApiInstance.get(`/chat/get-chats/${user?._id}`);
+            if (response.status === 200) {
+                console.log("🚀 ~ fetchChats ~ response when reloading:", response)
+                setChatList(response.data);
+            } else {
+                toast.error("Couldn't fetch your chats now, please try again later");
             }
+        } catch (error) {
+            console.error("Error fetching chats:", error);
+            toast.error("An error occurred while fetching chats");
+        } finally {
+            setChatListFetchingLoading(false);
         }
-        fetchChats()
-    }, [])
+    };
 
-    
-  useEffect(() => {
-    console.log("Socket changed:", socket);
 
-    
-  }, [socket]);
+    const updateChatList = (message: IMessage) => {
+        console.log("🚀 ~ updateChatList ~ message:", message)
+        console.log(chatList,'chatlistttt')
+        setChatList((prevList) => {
+            const updatedList = prevList?.map((chat) => {
+                if (chat._id === message.chatId) {
+                    return {
+                        ...chat,
+                        messages: [...chat.messages, message],
+                    };
+                }
+                return chat;
+            });
+
+           
+            return updatedList?.sort((a, b) => {
+                const aLastMessage = a.messages[a.messages.length - 1];
+                const bLastMessage = b.messages[b.messages.length - 1];
+                return new Date(bLastMessage.createdAt).getTime() - new Date(aLastMessage.createdAt).getTime();
+            });
+        });
+
+
+        if (selectedChat && message.chatId === selectedChat._id) {
+            setSelectedChat((prevChat:IChat) => {
+                if (prevChat) {
+                    return {
+                        ...prevChat,
+                        messages: [...prevChat.messages, message],
+                    };
+                }
+                return null;
+            });
+        }
+    };
+    const handleChatSelect = (chat: IChat) => {
+        setSelectedChat(chat);
+    };
+    useEffect(() => {
+        if (socket) {
+            socket.on('incoming_video_call', ({ callerId, roomID }) => {
+                navigate(`/user/video-call?callerId=${callerId}&roomID=${roomID}`);
+              });
+            socket.on("new_message_send", (message: IMessage) => {
+                updateChatList(message);
+            });
+
+            return () => {
+                socket.off("new_message_send");
+            };
+        }
+    }, [socket]);
+
 
     return (
         <div className=" h-[510px] w-full mt-3 flex overflow-hidden flex-col">
@@ -53,8 +97,14 @@ const ChatsPage = () => {
                 <h1>Chats</h1>
             </div> */}
             <div className="w-full h-full flex">
-                <ChatListComponent chatListFetchingLoading={chatListFetchingLoading}  chatList={chatList} setChatList={setChatList} />
-                <ChatWindowComponent />
+                <ChatListComponent
+                    chatList={chatList}
+                    setChatList={setChatList}
+                    chatListFetchingLoading={chatListFetchingLoading}
+                    onChatSelect={handleChatSelect}
+                />
+                {/* <ChatListComponent chatListFetchingLoading={chatListFetchingLoading} chatList={chatList} setChatList={setChatList} /> */}
+                <ChatWindowComponent selectedChat={selectedChat} />
             </div>
         </div>
     )

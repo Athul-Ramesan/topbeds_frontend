@@ -2,7 +2,7 @@ import { ChangeEvent, FC, FormEvent, MouseEventHandler, useCallback, useEffect, 
 import { AnimatePresence, motion } from 'framer-motion';
 import getCityByCountry from '../../utils/locationAPI/getCityByCountry';
 import { ICitiesWithId } from '../searchBar/SearchInterface';
-import { debounce } from 'lodash'
+import { debounce, filter } from 'lodash'
 import { axiosInstance } from '../../config/instances';
 import { IProperty } from '../../interface/IProperty';
 import { useNavigate } from 'react-router-dom';
@@ -162,7 +162,7 @@ const SearchSortFilterCombined: FC<SearchSortFileterCombinedProps> = ({ isOpen, 
                                     value={filters.endDate}
                                     onChange={handleInputChange}
                                     className="w-1/2 p-2 border rounded  placeholder:text-primaryColor border-primaryColor outline-none"
-                                    min={todayDate}
+                                    min={filters.startDate}
                                 />
                             </div>
                             <input
