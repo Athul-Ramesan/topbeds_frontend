@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { HostPropertiesContext } from "../../context/HostPropertiesContext";
-import { axiosInstance, bookingApiInstance } from "../../config/instances";
+import {  bookingApiInstance, propertyApiInstance } from "../../config/instances";
 import { useAppSelector } from "../../redux/store";
 
 
@@ -13,7 +13,7 @@ const HostDashboard = () => {
     const [totalProperties, setTotalProperties] = useState(0)
     console.log("🚀 ~ HostDashboard ~ hostProperties:", hostProperties)
     useEffect(() => {
-      axiosInstance.get(`/property/get-host-properties/${user?._id}`)
+      propertyApiInstance.get(`/get-host-properties/${user?._id}`)
         .then(data => {
           setHostProperties(data.data.reverse())
           console.log("🚀 ~ useEffect ~ data:", data)

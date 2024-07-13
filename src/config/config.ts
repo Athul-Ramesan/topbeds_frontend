@@ -13,8 +13,12 @@ export const multiplefileConfig= {
     },
 }
 export const ApiBaseUrl: string = "http://localhost:5000"
-export const BookingBaseUrl: string = "http://localhost:3003"
-export const ChatBaseUrl : string = "http://localhost:3004"
+
+export const AuthBaseUrl: string = "http://localhost:3000/api/auth"
+export const UserBaseUrl : string = "http://localhost:3001/api/user"
+export const PropertyBaseUrl : string = "http://localhost:3002/api/property"
+export const BookingBaseUrl: string = "http://localhost:3003/api/booking"
+export const ChatBaseUrl : string = "http://localhost:3004/api/chat"
 
 export interface ApiError {
     message : string,

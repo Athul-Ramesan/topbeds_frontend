@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { axiosInstance } from "../../../config/instances"
+import { axiosInstance, userApiInstance } from "../../../config/instances"
 import { ApiError, config, handleError } from "../../../config/config"
 import { AxiosError } from "axios"
 
@@ -19,8 +19,8 @@ export const UpdatePasswordAction = createAsyncThunk<
     'user/update-user-password',
     async ({ _id, oldPassword, newPassword }, { rejectWithValue }) => {
         try {
-            const { data } = await axiosInstance.patch(
-                '/user/update-user-data',
+            const { data } = await userApiInstance.patch(
+                '/update-user-data',
                 {
                     _id,
                     oldPassword,

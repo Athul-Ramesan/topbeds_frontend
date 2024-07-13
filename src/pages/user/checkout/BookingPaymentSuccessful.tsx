@@ -32,7 +32,7 @@ const BookingPaymentSuccessful:FC = () => {
       }
 
       try {
-        const stripeResponse = await bookingApiInstance.get(`/booking/payment-session-status/${session_id}`);
+        const stripeResponse = await bookingApiInstance.get(`/payment-session-status/${session_id}`);
 
         console.log("🚀 ~ savePaymentDetails ~ stripeResponse:", stripeResponse)
         if (stripeResponse.data.payment_status === 'paid') {
@@ -44,7 +44,7 @@ const BookingPaymentSuccessful:FC = () => {
             const bookingDataObj = JSON.parse(bookingData!)
             console.log('bookingDataObj', bookingDataObj)
             const {propertyId ,startDate, endDate,bookingId,} = bookingDataObj
-            await bookingApiInstance.post('/booking/confirm', { session_id, propertyId, user ,startDate, endDate, bookingId ,userId:user?._id})
+            await bookingApiInstance.post('/confirm', { session_id, propertyId, user ,startDate, endDate, bookingId ,userId:user?._id})
             .then(saveResponse=>{
               console.log("🚀 ~ savePaymentDetails ~ saveResponse:", saveResponse)
               if (saveResponse.statusText==='Created') {

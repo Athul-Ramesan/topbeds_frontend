@@ -1,6 +1,5 @@
-import { SetStateAction, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ImageUploadIcon from "./ImageUploadIcon";
-import { Dispatch } from "@reduxjs/toolkit";
 
 interface CustomFileInputProps {
   onChange: (files: File[]) => void;
@@ -71,9 +70,7 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
     setImages([])
     
   };
-  const handleFileDropingAndUploading =()=>{
 
-  }
   return (
     <div
       className="border-dashed border-2 p-8 rounded-lg text-center"

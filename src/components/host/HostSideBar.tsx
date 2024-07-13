@@ -1,6 +1,5 @@
-import { NavLink } from "react-router-dom"
 import TopbedsLogo from "../TopbedsLogo"
-import {RiCalendarTodoLine, RiDashboardLine, RiListSettingsLine, RiMailLine, RiMoneyDollarCircleLine, RiStarLine, RiUserSettingsLine} from "react-icons/ri"
+import {RiCalendarTodoLine, RiDashboardLine, RiListSettingsLine, RiStarLine} from "react-icons/ri"
 import SideBarNav from "./SideBarNav"
 
 const HostSideBar = () => {

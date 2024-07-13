@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import AddFacilityModalPage from '../../components/Modal/AddFacilityModalPage'
-import { axiosInstance } from '../../config/instances'
+import { axiosInstance, propertyApiInstance } from '../../config/instances'
 import toast from 'react-hot-toast'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { Trash } from 'lucide-react'
@@ -22,7 +22,7 @@ const Property = () => {
     }
     useEffect(()=>{
         const fetchFacilities = async()=>{
-            const response = await axiosInstance.get('/property/get-property-facility')
+            const response = await propertyApiInstance.get('/get-property-facility')
             console.log("🚀 ~ fetchFacilities ~ response:", response)
             if(!response.data){
                 toast.error('Something went wrong fetching the facilities')
@@ -36,7 +36,7 @@ const Property = () => {
     const handleConfirm = async (facilityId:string)=>{
         try {
           console.log('inside handleConfirm')
-            const response = await axiosInstance.delete(`/property/delete-property-facility/${facilityId}`)
+            const response = await propertyApiInstance.delete(`/delete-property-facility/${facilityId}`)
             if(!response.data){
                 toast.error('Something went wrong deleting the facility')
             }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TiTick } from "react-icons/ti";
 import { TiCancel } from "react-icons/ti";
-import { axiosInstance } from '../../config/instances';
+import { userApiInstance } from '../../config/instances';
 import { config } from '../../config/config';
 import { IUserSignupData } from '../../interface/IUserSignup';
 import ConfirmationModal from '../../components/Modal/ConfirmationModal';
@@ -26,7 +26,7 @@ const Hosts: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axiosInstance.get('/user/get-all-users-with-host-status', config);
+        const response = await userApiInstance.get('/get-all-users-with-host-status', config);
         if (response.data.data) {
           const users: IUserSignupData[] = response.data.data;
           const hostRequestsData = users.filter(user => user.hostStatus === 'requested');
@@ -46,7 +46,7 @@ const Hosts: React.FC = () => {
       console.log('Fetching users data...');
       try {
         console.log('Fetching users data...inside try');
-        const response = await axiosInstance.get('/user/get-all-hosts', config);
+        const response = await userApiInstance.get('/get-all-hosts', config);
         console.log("🚀 ~ fetchhosts ~ response:", response);
         if (response.data.hosts) {
           setHosts(response.data.hosts)
@@ -68,7 +68,7 @@ const Hosts: React.FC = () => {
     console.log(`${action} host with ID: ${host._id}`);
     if (action === 'accept') {
       setLoading(true)
-      const response = await axiosInstance.post('/user/change-host-status', { _id: host._id, hostStatus: 'accepted' }, config)
+      const response = await userApiInstance.post('/change-host-status', { _id: host._id, hostStatus: 'accepted' }, config)
       const newHost = response.data.data
       const newHostArray = [...hosts, newHost]
       const newRequestedUsers = requestedUsers.filter(item => item._id !== newHost._id)
@@ -88,7 +88,7 @@ const Hosts: React.FC = () => {
   };
   const handleRejectConfirm = async () => {
     setLoading(true)
-    const response = await axiosInstance.post('/user/change-host-status', { _id: rejectedUserId, hostStatus: 'rejected' }, config)
+    const response = await userApiInstance.post('/change-host-status', { _id: rejectedUserId, hostStatus: 'rejected' }, config)
 
     const newRejectedUser = response.data.data
     const newRequestedUsers = requestedUsers.filter(item => item._id !== newRejectedUser._id)

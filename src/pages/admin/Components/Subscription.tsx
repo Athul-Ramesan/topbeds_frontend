@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { subscriptionValidationShcema } from '../../../utils/validationSchema/subscriptionValidationScherma';
-import axios from 'axios';
+
 import toast from 'react-hot-toast';
 import { scrollToTop } from '../../../utils/helpers/scrollToTop';
+import { bookingApiInstance } from '../../../config/instances';
 
 export interface ISubscriptionPlan {
   _id: string;
@@ -34,7 +35,7 @@ const Subscription: React.FC = () => {
   }, [])
   const fetchAllPlans = async () => {
     try {
-      const response = await axios.get('http://localhost:3003/subscription')
+      const response = await bookingApiInstance.get('/subscription')
       setPlans(response.data)
       console.log("🚀 ~ fetchAllPlans ~ response:", response)
 
@@ -46,7 +47,7 @@ const Subscription: React.FC = () => {
   const handleRemovePlan = async (id: string) => {
     console.log("🚀 ~ handleRemovePlan ~ id:", id)
     try {
-      const response = await axios.delete(`http://localhost:3003/subscription/${id}`);
+      const response = await bookingApiInstance.delete(`/subscription/${id}`);
       if (response.data) {
         setPlans(plans.filter(plan => plan._id !== id));
         toast.success('Plan removed successfully');
@@ -96,10 +97,10 @@ const Subscription: React.FC = () => {
       let response: any
       if (isEditMode) {
         console.log(values._id, 'values id')
-        response = await axios.patch(`http://localhost:3003/subscription/${editId}`, values);
+        response = await bookingApiInstance.patch(`/subscription/${editId}`, values);
         console.log("🚀 ~ handleSubmit ~ edit response:", response)
       } else {
-        response = await axios.post('http://localhost:3003/subscription/create', values);
+        response = await bookingApiInstance.post('/subscription/create', values);
         console.log("🚀 ~ handleSubmit ~ response:", response);
       }
 

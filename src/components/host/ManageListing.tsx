@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import PropertyList from "./PropertyList";
 import { HostPropertiesContext } from "../../context/HostPropertiesContext";
 import { useNavigate } from "react-router-dom";
-import { BiFilter} from "react-icons/bi";
 import ToolTipAtBottom from "../ToolTipBottom";
 import { MdAdd } from "react-icons/md";
 import EmptyItemMessage from "./EmptyItemMessage";
@@ -22,9 +21,7 @@ const ManageListing = () => {
   const handleClickAddIcon =()=>{
     navigate('/host/add-property')
   }
-  const handleClickFilterIcon = ()=>{
-    
-  }
+
   if(!hostProperties || hostProperties.length===0){
     return (
       <>

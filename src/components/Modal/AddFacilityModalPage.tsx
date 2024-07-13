@@ -1,9 +1,9 @@
-import React, { ChangeEvent, FC, useEffect, useState } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 import { motion } from 'framer-motion';
 import 'tailwindcss/tailwind.css';
-import Picker, { EmojiClickData, Theme } from 'emoji-picker-react';
+import { EmojiClickData, Theme } from 'emoji-picker-react';
 import EmojiPicker from 'emoji-picker-react';
-import { axiosInstance } from '../../config/instances';
+import { propertyApiInstance } from '../../config/instances';
 import toast from 'react-hot-toast';
 import { IFacility } from '../../pages/admin/Property';
 
@@ -38,7 +38,7 @@ const AddFacilityModalPage: FC<AddFacilityProps> = ({ isOpen, onClose,setFacilit
             setError('Please enter a facility name')
         }
            try {
-            const response =await axiosInstance.post('/property/add-property-facility', {name:facility, icon:chosenEmoji})
+            const response =await propertyApiInstance.post('/add-property-facility', {name:facility, icon:chosenEmoji})
             if(!response.data){
                 toast.error('Something went wrong')
             }

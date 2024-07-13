@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import getCityByCountry from '../../utils/locationAPI/getCityByCountry';
 import { ICitiesWithId } from '../searchBar/SearchInterface';
 import { debounce, filter } from 'lodash'
-import { axiosInstance } from '../../config/instances';
+import {  propertyApiInstance } from '../../config/instances';
 import { IProperty } from '../../interface/IProperty';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../pages/LoadingSpinner';
@@ -45,7 +45,7 @@ const SearchSortFilterCombined: FC<SearchSortFileterCombinedProps> = ({ isOpen, 
         console.log('clicked search button')
         try {
             setLoading(true)
-            const response = await axiosInstance.get('/property/search', { params: filters });
+            const response = await propertyApiInstance.get('/search', { params: filters });
             console.log("🚀 ~ handleSearch ~ response:", response)
             setResults(response.data);
             onClose()

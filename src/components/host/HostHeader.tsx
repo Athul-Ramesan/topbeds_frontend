@@ -1,4 +1,3 @@
-import { IoIosNotificationsOutline } from "react-icons/io";
 import NotificationIcon from "../NotificationIcon";
 
 

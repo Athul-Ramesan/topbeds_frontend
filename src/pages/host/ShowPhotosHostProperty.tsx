@@ -5,7 +5,7 @@ import { HostPropertySingleContext } from "../../context/HostPropertySingleConte
 import SkeletonImageDiv from "../../components/SkeletonImageDiv"
 import ModalIndex from "../../components/Modal/ModalIndex"
 import AddNewPhotoComponent from "../../components/AddNewPhotoComponent"
-import { axiosInstance } from "../../config/instances"
+import { axiosInstance, propertyApiInstance } from "../../config/instances"
 import { config } from "../../config/config"
 import toast from "react-hot-toast"
 
@@ -35,7 +35,7 @@ const ShowPhotosHostProperty = () => {
     try {
       console.log(hostProperty._id)
       
-      const response = await axiosInstance.post(`/property/upload-images/${hostProperty._id}`,{imageUrls},config)
+      const response = await propertyApiInstance.post(`/upload-images/${hostProperty._id}`,{imageUrls},config)
       
       console.log("🚀 ~ handleAddPhotoSubmit ~ response:", response)
       if(response.statusText==="OK"){

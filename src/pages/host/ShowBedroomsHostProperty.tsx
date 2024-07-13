@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useState } from "react"
 import { FaLightbulb } from "react-icons/fa6"
 import toast from "react-hot-toast"
 import { config } from "../../config/config"
-import { axiosInstance } from "../../config/instances"
+import { axiosInstance, propertyApiInstance } from "../../config/instances"
 import { validateBedrooms } from "../../utils/validationSchema/validateBedrooms"
 import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
 import SaveButton from "../../components/Buttons/SaveButton"
@@ -38,7 +38,7 @@ const ShowbedroomsHostProperty = () => {
     }
     const numericValue = {...value, bedrooms: Number(value.bedrooms)}
 
-    const response = await axiosInstance.post(`/property/update-property/${hostProperty._id}`, numericValue , config)
+    const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, numericValue , config)
     if (response.statusText === "OK") {
       setIsAnyChange(false)
       toast.success("Bathrooms property updated successfully")

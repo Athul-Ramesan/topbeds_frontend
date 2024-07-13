@@ -16,6 +16,10 @@ const ImageCard: FC<ImageCardProps> = ({ properties }) => {
   const navigate = useNavigate()
   console.log("🚀 ~ properties:", properties)
 
+  if(properties.length<1){
+    return <div className="w-full h-full flex justify-center items-center">No properties found</
+    div>
+  }
   return (
     <div
 

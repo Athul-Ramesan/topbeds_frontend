@@ -3,7 +3,7 @@ import { FaLightbulb } from "react-icons/fa6"
 import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
 import { validateDescription } from "../../utils/validationSchema/validateDescription"
 import toast from "react-hot-toast"
-import { axiosInstance } from "../../config/instances"
+import { axiosInstance, propertyApiInstance } from "../../config/instances"
 import { config } from "../../config/config"
 import CancelButton from "../../components/Buttons/CancelButton"
 import SaveButton from "../../components/Buttons/SaveButton"
@@ -38,7 +38,7 @@ const ShowDescriptionHostProperty = () => {
       return
     }
 
-    const response = await axiosInstance.post(`/property/update-property/${hostProperty._id}`, value , config)
+    const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, value , config)
     if (response.statusText === "OK") {
       setIsAnyChange(false)
       toast.success("Description updated successfully")

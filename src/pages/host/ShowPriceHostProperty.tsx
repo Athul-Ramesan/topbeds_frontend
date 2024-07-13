@@ -4,7 +4,7 @@ import { HostPropertySingleContext } from "../../context/HostPropertySingleConte
 import { validatePrice } from "../../utils/validationSchema/validatePrice"
 import toast from "react-hot-toast"
 import { config } from "../../config/config"
-import { axiosInstance } from "../../config/instances"
+import {  propertyApiInstance } from "../../config/instances"
 import CancelButton from "../../components/Buttons/CancelButton"
 import SaveButton from "../../components/Buttons/SaveButton"
 
@@ -38,7 +38,7 @@ const ShowPriceHostProperty = () => {
     }
     const numericValue = {...value, price: Number(value.price)}
 
-    const response = await axiosInstance.post(`/property/update-property/${hostProperty._id}`, numericValue , config)
+    const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, numericValue , config)
     if (response.statusText === "OK") {
       setIsAnyChange(false)
       toast.success("Price updated successfully")

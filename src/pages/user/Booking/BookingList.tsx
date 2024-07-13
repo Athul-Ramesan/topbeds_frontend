@@ -17,7 +17,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings, title, isUpcoming }
 
       <h2 className="text-2xl font-bold font-mono mb-4">{title}</h2>
     <div className="mb-8 w-full grid grid-cols-4 gap-2">
-      {bookings.reverse().map(booking => (
+      {bookings.map(booking => (
           <div key={booking._id}>
            
             <BookingItem booking={booking} isUpcoming={isUpcoming} />

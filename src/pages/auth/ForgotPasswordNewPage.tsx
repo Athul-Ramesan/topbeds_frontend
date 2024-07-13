@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { axiosInstance } from '../../config/instances';
+import { authApiInstance } from '../../config/instances';
 import { useNavigate } from 'react-router-dom';
 
 const ForgotPasswordNewPage: React.FC = () => {
@@ -12,7 +12,7 @@ const ForgotPasswordNewPage: React.FC = () => {
     e.preventDefault();
     setButtonLoading(true)
     try {
-      const response = await axiosInstance.post('/auth/forgot-password', { email });
+      const response = await authApiInstance.post('/forgot-password', { email });
       console.log("🚀 ~ handleSubmit ~ response:", response)
       setMessage(response.data.message);
       setError('');

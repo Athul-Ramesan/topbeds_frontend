@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { validatePassword } from '../../utils/validationSchema/validatePassword';
-import { axiosInstance } from '../../config/instances';
+import { authApiInstance, axiosInstance } from '../../config/instances';
 
 const ResetPassword: React.FC = () => {
   const { token } = useParams<{ token: string }>();
@@ -27,7 +27,7 @@ const ResetPassword: React.FC = () => {
     }
     setButtonLoading(true)
     try {
-      const response = await axiosInstance.post(`/auth/reset-password/${token}`, { password });
+      const response = await authApiInstance.post(`/reset-password/${token}`, { password });
       setMessage(response.data.message);
       console.log("🚀 ~ handleSubmit ~ response:", response)
       setError('');

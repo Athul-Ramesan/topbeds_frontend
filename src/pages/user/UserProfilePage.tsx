@@ -28,7 +28,7 @@ const UserProfilePage: React.FC = () => {
         const fetchBookings = async () => {
           try {
             setIsLoading(true);
-            const response = await bookingApiInstance.get(`/booking/user/${user?._id}`);
+            const response = await bookingApiInstance.get(`/user/${user?._id}`);
             if (!response.data) {
                 throw new Error('Failed to fetch bookings');
                 }

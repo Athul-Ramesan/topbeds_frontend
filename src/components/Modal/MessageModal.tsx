@@ -1,8 +1,7 @@
 import { AnimatePresence,motion } from 'framer-motion'
 import { Send } from 'lucide-react'
-import React, { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { useSocket } from '../../context/SocketContext'
-import { useSelector } from 'react-redux'
 import { useAppSelector } from '../../redux/store'
 import { chatApiInstance } from '../../config/instances'
 import toast from 'react-hot-toast'
@@ -32,7 +31,7 @@ const MessageModal:FC<messageModalProps>= ({isOpen,onClose,hostId}) => {
       };
         console.log("🚀 ~ handleSendMessage ~ messageData:", messageData)
       
-        const response = await chatApiInstance.post(`/chat/send-message/${user?._id}/${hostId}`, {content:message})
+        const response = await chatApiInstance.post(`/send-message/${user?._id}/${hostId}`, {content:message})
         if(response){
             console.log("🚀 ~ handleSendMessage ~ response:", response)
             setMessage('')

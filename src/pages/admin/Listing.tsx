@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { axiosInstance } from '../../config/instances';
+import {  propertyApiInstance } from '../../config/instances';
 import LoadingSpinner from '../LoadingSpinner';
 import Card from './Components/Card';
 import { IProperty } from '../../interface/IProperty';
@@ -38,7 +38,7 @@ const Listing = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axiosInstance.get('/property/get-all-properties', {
+        const response = await propertyApiInstance.get('/get-all-properties', {
           params: {
             search: searchQuery,
             sort: sortOption,

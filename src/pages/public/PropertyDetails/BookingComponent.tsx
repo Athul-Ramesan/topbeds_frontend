@@ -76,7 +76,7 @@ const BookingComponent = () => {
     console.log("🚀 ~ makePayment ~ body:", body)
     
      try {
-      const response =  await  bookingApiInstance.post(`/booking/make-payment-session/${user?._id}`,
+      const response =  await  bookingApiInstance.post(`/make-payment-session/${user?._id}`,
          body , config
       )
       const updatedBody = {

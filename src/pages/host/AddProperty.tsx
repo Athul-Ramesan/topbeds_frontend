@@ -7,7 +7,7 @@ import { addPropertyValidationSchema } from "../../utils/validationSchema/addPro
 import FieldWithHead from "../../components/Forms/FieldWithHead"
 import FieldHeadOnly from "../../components/Forms/FieldHeadOnly"
 import CheckBoxField from "../../components/Forms/CheckBoxField"
-import { axiosInstance } from "../../config/instances"
+import { propertyApiInstance } from "../../config/instances"
 import { config } from "../../config/config"
 import { useNavigate } from "react-router-dom";
 import CustomFileInput from "../../components/host/CustomFileInput";
@@ -73,7 +73,7 @@ const AddProperty = () => {
     useEffect(() => {
         const getAllFacilities = async () => {
             try {
-                const response = await axiosInstance.get('/property/get-property-facility')
+                const response = await propertyApiInstance.get('/get-property-facility')
                 console.log("🚀 ~ getAllFacilities ~ response:", response)
                 if (response.data) {
                     setFacilities(response.data.facilities)
@@ -144,7 +144,7 @@ const AddProperty = () => {
             const imageUrls = await handleMultipleImageUpload();
             const formValues = { ...values, images: imageUrls, location: selectedLocation };
             setFormdata(values);
-            const response = await axiosInstance.post('property/add-property', formValues, config);
+            const response = await propertyApiInstance.post('/add-property', formValues, config);
             if (response.statusText === "OK") {
                 toast.success("Property added successfully");
                 navigate('/host');

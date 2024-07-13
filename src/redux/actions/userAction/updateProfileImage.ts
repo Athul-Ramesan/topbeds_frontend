@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { axiosInstance } from "../../../config/instances"
+import { axiosInstance, userApiInstance } from "../../../config/instances"
 import { ApiError, config, handleError } from "../../../config/config"
 import { AxiosError } from "axios"
 
@@ -18,8 +18,8 @@ interface UpdateProfileImagePayload {
     'user/update-profile-image',
     async ({ _id, image }, { rejectWithValue }) => {
       try {
-        const { data } = await axiosInstance.post(
-          '/user/update-profile-image',
+        const { data } = await userApiInstance.post(
+          '/update-profile-image',
           { _id, image },
           config
         );

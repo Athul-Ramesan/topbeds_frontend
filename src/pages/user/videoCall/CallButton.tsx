@@ -13,7 +13,7 @@ const CallButton: FC<CallButtonProps> = ({ recipientId }) => {
     const { socket } = useSocket();
 
     const handleStartCall = () => {
-        navigate(`/user/video-call?id=${recipientId}&senderId=${recipientId}`)
+        navigate(`/user/video-call?id=${recipientId}&senderId=${recipientId}&roomID=6Set9`)
       };
 
     return (

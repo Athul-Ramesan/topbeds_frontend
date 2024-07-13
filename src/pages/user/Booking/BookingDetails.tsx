@@ -19,7 +19,7 @@ const BookingDetails: React.FC = () => {
     useEffect(() => {
         const fetchBookingDetails = async () => {
             // Replace with your actual API call
-            const response = await bookingApiInstance(`/booking/${bookingId}`);
+            const response = await bookingApiInstance.get(`/${bookingId}`);
             const data: IBooking = response.data
             setBooking(data);
             if(data.bookingStatus==='Cancelled'){
@@ -32,7 +32,7 @@ const BookingDetails: React.FC = () => {
     const handleCancelBooking = async() => {
         try {
             setLoading(true)
-        const response = await bookingApiInstance.post(`/booking/cancel/${bookingId}`,{refundPercentage:50})
+        const response = await bookingApiInstance.post(`/cancel/${bookingId}`,{refundPercentage:50})
         const refundAmount = response.data.refundAmount
         if(refundAmount){
             setRefundAmount(String(refundAmount))

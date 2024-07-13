@@ -4,7 +4,7 @@ import { HostPropertySingleContext } from "../../context/HostPropertySingleConte
 import { validatePrice } from "../../utils/validationSchema/validatePrice"
 import toast from "react-hot-toast"
 import { config } from "../../config/config"
-import { axiosInstance } from "../../config/instances"
+import { axiosInstance, propertyApiInstance } from "../../config/instances"
 import CancelButton from "../../components/Buttons/CancelButton"
 import SaveButton from "../../components/Buttons/SaveButton"
 import { validateMaxGuests } from "../../utils/validationSchema/validateMaxGuest"
@@ -38,7 +38,7 @@ const ShowMaxGuestsHostProperty = () => {
     }
     const numericValue = {...value, maxGuests: Number(value.maxGuests)}
 
-    const response = await axiosInstance.post(`/property/update-property/${hostProperty._id}`, numericValue , config)
+    const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, numericValue , config)
     if (response.statusText === "OK") {
       setIsAnyChange(false)
       toast.success("Guest count updated successfully")

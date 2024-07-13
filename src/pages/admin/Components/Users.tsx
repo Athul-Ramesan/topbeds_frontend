@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { getAllUsersAction } from "../../../redux/actions/adminActions/users";
 import Pagination from "../../../components/Pagination";
 import { IUserSignupData } from "../../../interface/IUserSignup";
-import { axiosInstance } from "../../../config/instances";
+import {  userApiInstance } from "../../../config/instances";
 import TableUsers from "./TableUsers";
 
 const Users: React.FC = () => {
@@ -58,8 +58,8 @@ const Users: React.FC = () => {
 
   const handleBlockUnblock = async (userId: string, isBlocked: boolean) => {
     try {
-      const response = await axiosInstance.patch(
-        `/user/status-update/${userId}`,
+      const response = await userApiInstance.patch(
+        `/status-update/${userId}`,
         { isBlocked: isBlocked },
         { withCredentials: true }
       );

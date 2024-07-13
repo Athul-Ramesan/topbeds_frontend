@@ -2,19 +2,13 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from "yup";
 import BecomeHostFormInput from '../Forms/BecomeHostFormInput';
-import { axiosInstance } from '../../config/instances';
-import { config } from '../../config/config';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { becomeHostAction } from '../../redux/actions/userAction/becomeHost';
 import InformationModal from '../Modal/InformationModal';
-import { Link } from 'react-router-dom';
-import DaisyModal from '../Modal/DaisyModal';
 
 interface FormValues {
     street: string;
@@ -41,9 +35,9 @@ const AddressSchema = Yup.object().shape({
 });
 
 const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
-    const {user} = useAppSelector(state=>state.user)
+    // const {user} = useAppSelector(state=>state.user)
     const [isInformationModalOpen,setIsInformationModalOpen] = React.useState(false)
-    const [messageModal, setMessageModal] = React.useState(false)
+    // const [messageModal, setMessageModal] = React.useState(false)
     const [finalMessageModal, setFinalMessageModal] = React.useState(false)
     const dispatch = useAppDispatch();
 

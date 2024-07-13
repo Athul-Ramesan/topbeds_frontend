@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
-import { axiosInstance } from "../config/instances";
+import { propertyApiInstance } from "../config/instances";
 import { useParams } from "react-router-dom";
 import ModalIndex from "./Modal/ModalIndex";
 import ConfirmationModal from "./Modal/ConfirmationModal";
@@ -31,7 +31,7 @@ const ImageDiv: FC<ImageDivProps> = ({ width, image }) => {
   const handleClickConfirmDeletePhoto = async () => {
     
     setImageDeletingLoading(true)
-    const response = await axiosInstance.delete(`/property/delete-photo?propertyId=${propertyId}&image=${image}`)
+    const response = await propertyApiInstance.delete(`/delete-photo?propertyId=${propertyId}&image=${image}`)
     if (response.statusText === "OK") {
       console.log("🚀 ~ handleClickDeletePhoto ~ response:", response)
       setHostProperty(response.data.updatedProperty)
