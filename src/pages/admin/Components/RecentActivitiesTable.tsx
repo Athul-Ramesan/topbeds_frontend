@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { bookingApiInstance } from '../../../config/instances';
 
 const RecentActivitiesTable = () => {
-  const [activities, setActivities] = useState(null);
+  const [activities, setActivities] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,11 +25,11 @@ const RecentActivitiesTable = () => {
     return <div className="text-center py-10">Loading...</div>;
   }
 
-  const formatDate = (dateString) => {
+  const formatDate = (dateString:any) => {
     return new Date(dateString).toLocaleString();
   };
 
-  const TableSection = ({ title, data, columns }) => (
+  const TableSection = ({ title, data, columns }:any) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -41,15 +41,15 @@ const RecentActivitiesTable = () => {
         <table className="table table-zebra w-full">
           <thead>
             <tr>
-              {columns.map((column, index) => (
+              {columns.map((column:any, index:any) => (
                 <th key={index}>{column}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {data.map(({item, index}:any) => (
               <tr key={index}>
-                {columns.map((column, colIndex) => (
+                {columns.map((column:any, colIndex:any) => (
                   <td key={colIndex}>
                     {column === 'Date' ? formatDate(item.createdAt) :
                      column === 'User' ? `${item.user?.firstName} ${item.user?.lastName}` :

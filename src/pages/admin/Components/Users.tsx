@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { useAppDispatch } from "../../../redux/store";
 import { getAllUsersAction } from "../../../redux/actions/adminActions/users";
-import Pagination from "../../../components/Pagination";
 import { IUserSignupData } from "../../../interface/IUserSignup";
 import {  userApiInstance } from "../../../config/instances";
 import TableUsers from "./TableUsers";
 
 const Users: React.FC = () => {
-  const { users } = useAppSelector((state) => state.admin);
+  // const { users } = useAppSelector((state) => state.admin);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageUsers, setCurrentPageUsers] = useState<IUserSignupData[]>([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -16,6 +15,8 @@ const Users: React.FC = () => {
   const [totalPages, setTotalPages] = useState(1);
   const dispatch = useAppDispatch();
 
+  // console.log(setItemsPerPage);
+  console.log(totalItems)
   // Function to fetch users based on current state
   const fetchUsers = async () => {
     try {
@@ -40,9 +41,9 @@ const Users: React.FC = () => {
     fetchUsers();
   }, [currentPage, itemsPerPage, search]);
 
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  // const handlePageChange = (pageNumber: number) => {
+  //   setCurrentPage(pageNumber);
+  // };
 
   const handlePrevClick = () => {
     if (currentPage > 1) {

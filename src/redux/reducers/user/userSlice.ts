@@ -89,7 +89,7 @@ const userSlice = createSlice({
         state.loading = true;
       })
       //verify otp
-      .addCase(verifyOtpAction.fulfilled, (state, action) => {
+      .addCase(verifyOtpAction.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
         // state.user = action.payload as IUserSignupData

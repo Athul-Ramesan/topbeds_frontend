@@ -4,7 +4,6 @@ import { PlusIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { subscriptionValidationShcema } from '../../../utils/validationSchema/subscriptionValidationScherma';
 
 import toast from 'react-hot-toast';
-import { scrollToTop } from '../../../utils/helpers/scrollToTop';
 import { bookingApiInstance } from '../../../config/instances';
 
 export interface ISubscriptionPlan {

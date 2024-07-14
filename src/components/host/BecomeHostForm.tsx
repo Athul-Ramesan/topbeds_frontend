@@ -6,9 +6,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Form, Formik } from 'formik';
 import * as Yup from "yup";
 import BecomeHostFormInput from '../Forms/BecomeHostFormInput';
-import { useAppDispatch, useAppSelector } from '../../redux/store';
+
 import { becomeHostAction } from '../../redux/actions/userAction/becomeHost';
 import InformationModal from '../Modal/InformationModal';
+import { useAppDispatch } from '../../redux/store';
 
 interface FormValues {
     street: string;
@@ -39,6 +40,7 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
     const [isInformationModalOpen,setIsInformationModalOpen] = React.useState(false)
     // const [messageModal, setMessageModal] = React.useState(false)
     const [finalMessageModal, setFinalMessageModal] = React.useState(false)
+    console.log("🚀 ~ finalMessageModal:", finalMessageModal)
     const dispatch = useAppDispatch();
 
     const initialValues: FormValues = {
@@ -102,7 +104,9 @@ const BecomeHostForm: React.FC<Props> = ({ open, handleClose }) => {
                         validationSchema={AddressSchema}
                         onSubmit={handleSubmit}
                     >
-                        {({ isSubmitting }) => (
+                        {({ 
+                            // isSubmitting 
+                        }) => (
                             <Form className='p-4'>
                                 <BecomeHostFormInput label='Street' name='street' type='text' />
                                 <BecomeHostFormInput label='City' name='city' type='text' />

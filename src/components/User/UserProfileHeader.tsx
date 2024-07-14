@@ -1,15 +1,11 @@
-import { Edit3 } from 'lucide-react';
 import React from 'react';
-import { FaUserPlus } from 'react-icons/fa';
 import ProfileImage from './ProfileImage';
 import 'react-image-crop/dist/ReactCrop.css'
 import { useAppSelector } from '../../redux/store';
 
 const UserProfileHeader: React.FC = () => {
     const {user} = useAppSelector(state=>state.user)
-    const handleProfileImageChange = () => {
-
-    }
+ 
     return (
         <div className="relative bg-slate-800 rounded-lg">
             <img

@@ -6,11 +6,13 @@ import { HostPropertySingleContext } from "../../context/HostPropertySingleConte
 
 const ShowAmenitiesHostProperty = () => {
   const { hostProperty } = useContext(HostPropertySingleContext)
-  const [value, setValue] = useState(hostProperty.amenities)
+  const [value, setValue] = useState<any>(hostProperty.amenities)
   const [isAnyChange, setIsAnyChange] = useState(false)
   const handleOnChange = (e:ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setValue(e.target.value)
+    setValue((prev:string[])=>{
+      prev.push(e.target.value)
+    })
 
     console.log("🚀 ~ handleOnChange ~ value:", value)
     if (value !== hostProperty.amenities) {

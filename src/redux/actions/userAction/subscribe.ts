@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosInstance, bookingApiInstance } from "../../../config/instances";
+import {  bookingApiInstance } from "../../../config/instances";
 import { ApiError, config, handleError } from "../../../config/config";
 import { AxiosError } from "axios";
-import { IAddress } from "../../../interface/IAddress";
 
 export const subscribe = createAsyncThunk('booking/subscribe',async(subscribeData:{userId:string, planId:string},{rejectWithValue})=>{
     try {

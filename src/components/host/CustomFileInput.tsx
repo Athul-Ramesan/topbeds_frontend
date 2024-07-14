@@ -11,7 +11,7 @@ interface CustomFileInputProps {
 
 const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) => {
   const [droppedFiles, setDroppedFiles] = useState<File[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
+  // const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [errorMessage,setErrorMessage] = useState('')
   
@@ -21,19 +21,19 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
   (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDragging(true);
+    // setIsDragging(true);
   };
 
   const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDragging(false);
+    // setIsDragging(false);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDragging(false);
+    // setIsDragging(false);
     setErrorMessage("")
     const files = Array.from(e.dataTransfer.files);
     console.log("🚀 ~ handleDrop ~ files:", files);
@@ -41,8 +41,8 @@ const CustomFileInput: React.FC<CustomFileInputProps> = ({ onChange,setImages}) 
     onChange([...droppedFiles, ...files]);
   };
 
-  const handleButtonClick = (e) => {
-    e.preventDefault()
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     fileInputRef.current?.click();
   };
 

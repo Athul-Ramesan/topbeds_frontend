@@ -1,4 +1,3 @@
-import React from 'react'
 import HeadingSingleProperty from './HeadingSingleProperty'
 import ImageGallery from './ImageGallery'
 import DetailsSection from './DetailsSection'

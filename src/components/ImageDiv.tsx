@@ -2,7 +2,6 @@ import { FC, useContext, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { propertyApiInstance } from "../config/instances";
 import { useParams } from "react-router-dom";
-import ModalIndex from "./Modal/ModalIndex";
 import ConfirmationModal from "./Modal/ConfirmationModal";
 import { HostPropertySingleContext } from "../context/HostPropertySingleContext";
 import toast from "react-hot-toast";
@@ -12,10 +11,12 @@ interface ImageDivProps {
   width?: string
 }
 const ImageDiv: FC<ImageDivProps> = ({ width, image }) => {
+  console.log("🚀 ~ width:", width)
   const [isMouseEnter, setIsMouseEnter] = useState(false)
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false)
   const { setHostProperty } = useContext(HostPropertySingleContext)
   const [imageDeletingLoading, setImageDeletingLoading] = useState(false)
+  console.log("🚀 ~ imageDeletingLoading:", imageDeletingLoading)
   const { propertyId } = useParams()
   const handleMouseEnter = () => {
     setIsMouseEnter(true)

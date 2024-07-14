@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import ModalIndex from '../../../components/Modal/ModalIndex';
-import PreviewPropertyAdmin from './PreviewPropertyAdmin';
+import React from 'react';
 import { IProperty } from '../../../interface/IProperty';
 import { useNavigate } from 'react-router-dom';
 

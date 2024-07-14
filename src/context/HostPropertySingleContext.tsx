@@ -1,4 +1,4 @@
-import React, { FC, createContext, useState } from 'react';
+import React, { FC, createContext } from 'react';
 import { IProperty } from '../interface/IProperty';
 import useLocalStorage from '../hooks/useLocalStorage';
 // import { IProperty } from '../interface/IProperty';
@@ -14,17 +14,18 @@ const defaultValue: HostPropertySingleContextType = {
       _id:"",
       title: "",
       description: "",
-      location: {
-        address: "",
-        city: "",
-        state: "",
-        country: "",
-        coordinates: {
-          lat: 0,
-          lng: 0,
-        },
-      },
-      hostId: "",
+      location: '',
+      // {
+      //   address: "",
+      //   city: "",
+      //   state: "",
+      //   country: "",
+      //   coordinates: {
+      //     lat: 0,
+      //     lng: 0,
+      //   },
+      // },
+      hostId: undefined,
       reviews: [""],
       availability: [{
         startDate: new Date(),

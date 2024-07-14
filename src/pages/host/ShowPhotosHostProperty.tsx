@@ -23,9 +23,7 @@ const ShowPhotosHostProperty = () => {
   const handleAddPhotoClick = ()=>{
     setOpenModal(true)
   }
-  const handleDeletePhoto = ()=>{
-    
-  }
+  
   const handleCloseModal = ()=>{
     setOpenModal(false)
   }

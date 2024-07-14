@@ -1,4 +1,4 @@
-import { ReactNode, FC, useEffect, useRef } from "react";
+import {  FC, useEffect, } from "react";
 
 interface ConfirmationModalProps {
 //   children: ReactNode;

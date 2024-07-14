@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 
-const SkeletonLoader = ({ cardWidth }) => {
+const SkeletonLoader = ({ cardWidth }:any) => {
+  console.log("🚀 ~ SkeletonLoader ~ cardWidth:", cardWidth)
   const [loading, setLoading] = useState(true);
   const cardCount = 10;
 

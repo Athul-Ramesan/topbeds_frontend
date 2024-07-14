@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
-import {loadStripe} from '@stripe/stripe-js'
 
 const BookingSection: React.FC = () => {
   const {singleProperty} = useContext(SinglePropertyDetailsContext)

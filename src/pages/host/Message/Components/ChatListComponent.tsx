@@ -53,7 +53,7 @@ const ChatListComponent: FC<ChatListComponentProps> = ({
 
     const filteredChatList = chatList?.filter(chat =>
         chat.participants.some(
-            participant =>
+            (participant:any) =>
                 participant._id !== user?._id &&
                 participant.firstName.toLowerCase().includes(searchTerm.toLowerCase())
         )
@@ -78,8 +78,8 @@ const ChatListComponent: FC<ChatListComponentProps> = ({
                 <ChatListSkeleton />
             ) : (
                 <div className="flex-1 overflow-y-auto">
-                    {filteredChatList?.map(chat => {
-                        const otherParticipant = chat.participants.find(p => p._id !== user?._id) as IUserSignupData;
+                    {filteredChatList?.map((chat:any) => {
+                        const otherParticipant = chat.participants.find((p:any) => p._id !== user?._id) as IUserSignupData;
                         const lastMessage = chat.messages[chat.messages.length - 1];
                         return (
                             <div

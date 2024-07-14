@@ -26,6 +26,7 @@ const LoginPage = () => {
 
   const navigate = useNavigate()
   const [isForgotPasswordModalOpen, setForgotPasswordModalOpen] = useState(false)
+  console.log("🚀 ~ LoginPage ~ isForgotPasswordModalOpen:", isForgotPasswordModalOpen)
 
 
 
@@ -73,9 +74,9 @@ const LoginPage = () => {
       }
     }
   }
-  const hanldeCloseModal = () => {
-    setForgotPasswordModalOpen(false)
-  }
+  // const hanldeCloseModal = () => {
+  //   setForgotPasswordModalOpen(false)
+  // }
   return (
     <div className="flex bg-cover bg-center h-screen " style={{ backgroundImage: "url('/login-cover.jpg')" }}>
        <div className="p-8 opacity-30 bg-gradient-to-r from-black via-gray-800 to-gray-500 rounded-lg w-2/5 border-r border-none">

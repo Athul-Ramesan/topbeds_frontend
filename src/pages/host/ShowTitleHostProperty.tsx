@@ -1,9 +1,9 @@
-import React, { ChangeEvent, MouseEvent, useContext, useState } from 'react'
+import React, { ChangeEvent, useContext, useState } from 'react'
 import { HostPropertySingleContext } from '../../context/HostPropertySingleContext'
 import { FaLightbulb } from "react-icons/fa";
 import SaveButton from '../../components/Buttons/SaveButton';
 import CancelButton from '../../components/Buttons/CancelButton';
-import { axiosInstance, propertyApiInstance } from '../../config/instances';
+import {  propertyApiInstance } from '../../config/instances';
 import { config } from '../../config/config';
 import toast from 'react-hot-toast';
 import { validateTitle } from '../../utils/validationSchema/validateTitle';

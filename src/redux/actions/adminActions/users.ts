@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {  userApiInstance } from "../../../config/instances";
-import { ApiError, config, handleError } from "../../../config/config";
+import { ApiError,  handleError } from "../../../config/config";
 import { AxiosError } from "axios";
-import { IAddress } from "../../../interface/IAddress";
 
 interface queryProps{
     limit?:number

@@ -26,10 +26,10 @@ const Header = () => {
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
-  const searchFilterOnclick=()=>{
-    console.log('clicked anywhere')
-    setSearchFilterOpen(true)
-  }
+  // const searchFilterOnclick=()=>{
+  //   console.log('clicked anywhere')
+  //   setSearchFilterOpen(true)
+  // }
   return (
     <div className="">
       <SearchSortFilterCombined isOpen={searchFilterOpen}  onClose={()=>setSearchFilterOpen(false)}/>

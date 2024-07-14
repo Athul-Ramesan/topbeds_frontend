@@ -21,7 +21,7 @@ const Reviews: React.FC = () => {
   const propertyId = singleProperty._id
   const [averageRating, setAverageRating] = useState<number>(0);
   const [totalReviews, setTotalReviews] = useState<number>(0);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<any>([]);
   const [showAllReviews, setShowAllReviews] = useState<boolean>(false);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Reviews: React.FC = () => {
         className="overflow-hidden"
       >
         <AnimatePresence>
-          {showAllReviews && reviews.map((review) => (
+          {showAllReviews && reviews.map((review:any) => (
             <motion.div
               key={review._id}
               initial={{ opacity: 0, y: 20 }}

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { bookingApiInstance } from '../../../config/instances'
 
 const Stats = () => {

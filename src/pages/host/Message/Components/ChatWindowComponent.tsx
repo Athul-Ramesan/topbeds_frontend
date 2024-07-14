@@ -94,7 +94,7 @@ const ChatWindowComponent: FC<ChatWindowComponentProps> = ({ selectedChat }) => 
         </button> */}
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {user && messages?.map(message => (
+        {user && messages?.map((message:any) => (
           <div
             key={message?._id}
 

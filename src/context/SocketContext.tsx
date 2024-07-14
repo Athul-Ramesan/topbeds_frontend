@@ -6,10 +6,10 @@ import { ChatBaseUrl } from '../config/config';
 import { useAppSelector } from '../redux/store';
 import toast from 'react-hot-toast';
 
-interface User {
-  id: string;
-  name: string;
-}
+// interface User {
+//   id: string;
+//   name: string;
+// }
 
 interface SocketContextType {
   socket: Socket | null;

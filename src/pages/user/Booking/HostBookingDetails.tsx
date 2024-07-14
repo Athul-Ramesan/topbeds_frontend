@@ -4,7 +4,7 @@ import { IBooking } from '../../../interface/IBooking';
 import { format } from 'date-fns';
 
 interface HostBookingDetailsProps {
-  booking: IBooking;
+  booking: any;
 }
 
 const HostBookingDetails: React.FC<HostBookingDetailsProps> = ({ booking }) => {

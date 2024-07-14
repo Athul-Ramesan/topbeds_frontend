@@ -30,12 +30,12 @@ const Reservation: React.FC = () => {
     <div className="container mx-auto px-4">
       <h1 className="text-3xl font-bold mb-8">Property Bookings</h1>
       <BookingList 
-        bookings={bookings.upcomingBookings} 
+        bookings={bookings?.upcomingBookings} 
         title="Upcoming Bookings" 
         isUpcoming={true} 
       />
       <BookingList 
-        bookings={bookings.completedBookings} 
+        bookings={bookings?.completedBookings} 
         title="Past Bookings" 
         isUpcoming={false} 
       />

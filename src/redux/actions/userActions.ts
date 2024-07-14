@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUserSignupData } from "../../interface/IUserSignup";
 import { AxiosError } from "axios";
-import {  authApiInstance, axiosInstance } from "../../config/instances";
+import {  authApiInstance } from "../../config/instances";
 import { ApiError, config, handleError } from "../../config/config";
 import { IUserLoginData } from "../../interface/IUserLogin";
 

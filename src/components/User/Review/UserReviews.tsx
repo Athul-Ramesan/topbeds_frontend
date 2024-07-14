@@ -1,6 +1,5 @@
 // UserReviews.tsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useAppSelector } from '../../../redux/store';
 import { bookingApiInstance } from '../../../config/instances';
 

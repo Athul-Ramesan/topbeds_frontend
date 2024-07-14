@@ -9,8 +9,6 @@ import LoadingSpinner from '../LoadingSpinner';
 import HostsTable from './Components/HostsTable';
 import HostsRequestTable from './Components/HostsRequestTable';
 import HostsRejectedTable from './Components/HostsRejectedTable';
-import UserDetailsModal from './Components/UserDetailsModal';
-import { useAppSelector } from '../../redux/store';
 
 const Hosts: React.FC = () => {
   const [hosts, setHosts] = useState<IUserSignupData[]>([]);
@@ -20,7 +18,6 @@ const Hosts: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [rejectedUsers, setRejectedUsers] = useState<IUserSignupData[]>([])
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  const {user} = useAppSelector(state=>state.user)
 
 
   useEffect(() => {

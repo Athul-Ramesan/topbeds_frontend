@@ -28,7 +28,7 @@ const HostDashboard = () => {
         console.log("🚀 ~ fetchReservationData ~ response:", response)
         if(response.statusText==="OK"){
           const hostsWithTotalData = response.data
-          const currentHostTotalData = hostsWithTotalData.find((host)=> host._id ===user?._id)
+          const currentHostTotalData = hostsWithTotalData.find((host:any)=> host._id ===user?._id)
            console.log("🚀 ~ fetchReservationData ~ currentHostTotalData:", currentHostTotalData)
            setTotalReservations(currentHostTotalData.totalReservations)
            setTotalEarnings(currentHostTotalData.totalEarnings)

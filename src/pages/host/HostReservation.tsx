@@ -1,13 +1,12 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import HostCalendar from './Components/HostCalender';
 import { useAppSelector } from '../../redux/store';
 
-interface HostReservationProps {
-  hostId: string;
-}
+// interface HostReservationProps {
+//   hostId: string;
+// }
 
-const HostReservation: React.FC<HostReservationProps> = () => {
+const HostReservation = () => {
     const {user} = useAppSelector(state=>state.user)
   return (
     <motion.div

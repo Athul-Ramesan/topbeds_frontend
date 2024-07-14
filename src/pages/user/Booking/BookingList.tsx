@@ -4,7 +4,7 @@ import { IBooking } from '../../../interface/IBooking';
 import BookingItem from './BookingItem';
 
 interface BookingListProps {
-  bookings: IBooking[];
+  bookings:any
   title: string;
   isUpcoming: boolean;
 }
@@ -17,7 +17,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings, title, isUpcoming }
 
       <h2 className="text-2xl font-bold font-mono mb-4">{title}</h2>
     <div className="mb-8 w-full grid grid-cols-4 gap-2">
-      {bookings.map(booking => (
+      {bookings.map((booking:any) => (
           <div key={booking._id}>
            
             <BookingItem booking={booking} isUpcoming={isUpcoming} />

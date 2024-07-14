@@ -33,7 +33,7 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
       setReviewModalOpen(false)
     }
     useEffect(()=>{
-      const fetchReviewDetails=async()=>{
+      const fetchReviewDetails= async()=>{
         const response = await bookingApiInstance.get(`/review/booking/${booking._id}`)
         if(response.statusText==="OK"){
           const review = response.data
@@ -42,6 +42,7 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
           }
         }
       }
+      fetchReviewDetails()
     },[])
     return (
         <div className="border rounded-lg p-4 mb-4">

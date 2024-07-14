@@ -123,7 +123,7 @@ const PropertyForm: React.FC<PropertyFormProps> = () => {
             {({ push, remove }) => (
               <div>
                 <label htmlFor="amenities">Amenities</label>
-                {values.amenities.map((amenity, index) => (
+                {values.amenities.map((_, index) => (
                   <div key={index}>
                     <Field name={`amenities.${index}`} type="text" />
                     <button type="button" onClick={() => remove(index)}>
@@ -139,7 +139,7 @@ const PropertyForm: React.FC<PropertyFormProps> = () => {
             {({ push, remove }) => (
               <div>
                 <label htmlFor="houseRules">House Rules</label>
-                {values.houseRules.map((houseRule, index) => (
+                {values.houseRules.map((_, index) => (
                   <div key={index}>
                     <Field name={`houseRules.${index}`} type="text" />
                     <button type='button' onClick={() => remove(index)}>Remove</button>

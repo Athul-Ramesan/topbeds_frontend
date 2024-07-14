@@ -1,11 +1,6 @@
-import BarChart from './Components/BarChart'
-import Chart from './Components/BarChart'
 import GraphComponent from './Components/GraphComponent'
-import LineChart from './Components/LineChart'
-import PieChart from './Components/PieChart'
 import RecentActivitiesTable from './Components/RecentActivitiesTable'
 import Stats from './Components/Stats'
-import Table from './Components/Table'
 
 const DashboardIndex = () => {
   return (

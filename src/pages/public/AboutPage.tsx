@@ -1,5 +1,3 @@
-import { Skeleton } from "@mui/material"
-import SkeletonLoader from "../../components/loader/SkeletonLoader"
 import AboutUs from "./AboutUs";
 import Mission from "./Mission";
 import Offerings from "./Offerings";

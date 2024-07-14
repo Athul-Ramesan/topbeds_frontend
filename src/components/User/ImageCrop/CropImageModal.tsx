@@ -1,7 +1,6 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import CloseIcon from "./CloseIcon";
 import ImageCropper from "./ImageCropper";
-import LoadingSpinner from "../../../pages/LoadingSpinner";
 // import ImageCropper from "./ImageCropper";
 
 interface CropImageModalProps{

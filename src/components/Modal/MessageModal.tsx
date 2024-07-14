@@ -15,6 +15,8 @@ interface messageModalProps{
 const MessageModal:FC<messageModalProps>= ({isOpen,onClose,hostId}) => {
     console.log("🚀 ~ hostId:", hostId)
     const {socket,isConnected,onlineUsers} = useSocket()
+    console.log("🚀 ~ onlineUsers:", onlineUsers)
+    console.log("🚀 ~ isConnected:", isConnected)
     const {user} = useAppSelector(state=>state.user)
     
     const [message, setMessage] = useState('')

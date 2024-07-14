@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext, useState } from "react"
+import { ChangeEvent, useContext, useState } from "react"
 import { FaLightbulb } from "react-icons/fa6"
 import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
 import { validatePrice } from "../../utils/validationSchema/validatePrice"

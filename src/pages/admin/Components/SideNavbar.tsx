@@ -1,20 +1,15 @@
 import { NavLink, useNavigate } from "react-router-dom";
 
 import { RiDashboardLine } from "react-icons/ri";
-import { FiBox, FiSettings, FiHelpCircle, FiLogOut } from "react-icons/fi";
+import { FiBox, FiLogOut } from "react-icons/fi";
 import { ImStack } from "react-icons/im";
-import { HiOutlineTicket } from "react-icons/hi";
-import { BsCardChecklist, BsCreditCard } from "react-icons/bs";
 import { AiOutlineTags } from "react-icons/ai";
-import { FaUsersCog, FaUsers } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
-// import { userLogoutAction } from "../../../redux/actions/userActions";
+import { FaUsers } from "react-icons/fa";
+import { useAppDispatch } from "../../../redux/store";
 import TopbedsLogo from "../../../components/TopbedsLogo";
 import { userLogoutAction } from "../../../redux/actions/userActions";
 
 const SideNavbar = () => {
-  const { user } = useAppSelector((state) => state.user);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

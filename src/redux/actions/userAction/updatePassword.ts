@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import { axiosInstance, userApiInstance } from "../../../config/instances"
+import {  userApiInstance } from "../../../config/instances"
 import { ApiError, config, handleError } from "../../../config/config"
 import { AxiosError } from "axios"
 

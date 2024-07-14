@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
+import  { FC } from 'react';
 import { motion } from 'framer-motion';
 import 'tailwindcss/tailwind.css';
 import { IUserSignupData } from '../../../interface/IUserSignup';
-import { format } from 'date-fns';
 
 
 interface UserDetailsModalProps {

@@ -185,7 +185,11 @@ const AddProperty = () => {
             </div>
             {/* place adding section */}
             <Formik initialValues={addPropertyInitialValues} onSubmit={addPropertySubmit} validationSchema={addPropertyValidationSchema}>
-                {({ values }) => (
+                {({
+                    
+                    // values
+                 }
+                ) => (
                     <Form>
                         {/* place information */}
                         <div className="lg:flex">
@@ -226,6 +230,7 @@ const AddProperty = () => {
                                         {facilities && (
                                             facilities.map((facility, index) => (
                                                 <CheckBoxField
+                                                key={index}
                                                     name="amenities"
                                                     value={facility.name}
                                                     icon={facility.icon} />

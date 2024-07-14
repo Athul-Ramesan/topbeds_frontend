@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/store";
 import { useEffect } from "react";
-import SinglePlaceCard from "../../components/User/SinglePlaceCard";
-import ProfileSideBar from "../../components/SideBar/ProfileSideBar";
-import SidebarIndex from "../../components/SideBar/SidebarIndex";
 
 
 

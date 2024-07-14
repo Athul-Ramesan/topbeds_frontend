@@ -1,34 +1,28 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
-interface IProps {
-    time: number,
-    setTime: (time: number) => void
-}
+// interface IProps {
+//     time: number;
+//     setTime: React.Dispatch<React.SetStateAction<number>>;
+// }
 
-const OTPTimer = (props: IProps) => {
-    const { time, setTime } = props;
+// const OTPTimer: React.FC<IProps> = ({ time, setTime }) => {
+//     useEffect(() => {
+//         let intervalId: NodeJS.Timeout;
 
-    useEffect(() => {
-        let intervalId: NodeJS.Timeout;
+//         if (time > 0) {
+//             intervalId = setInterval(() => {
+//                 setTime((prevTime) => prevTime - 1);
+//             }, 1000);
+//         }
 
-        if (time > 0) {
-            console.log("🚀 ~ useEffect ~ time:", time)
-            intervalId = setInterval(() => {
-                
-               setTime((time:number)=>{
-                return time-1
-               })
-            }, 1000);
-        }
+//         return () => clearInterval(intervalId);
+//     }, [time, setTime]);
 
-        return () => clearInterval(intervalId);
-    }, [time]);
+//     return (
+//         <div>
+//             <p className="text-red-500">00:{time < 10 ? `0${time}` : time}</p>
+//         </div>
+//     );
+// }
 
-    return (
-        <div>
-            <p className="text-red-500">00:{time <10 ? 0 : ""}{time}</p>
-        </div>
-    );
-}
-
-export default OTPTimer;
+// export default OTPTimer;

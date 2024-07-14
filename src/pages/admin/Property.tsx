@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import AddFacilityModalPage from '../../components/Modal/AddFacilityModalPage'
-import { axiosInstance, propertyApiInstance } from '../../config/instances'
+import {  propertyApiInstance } from '../../config/instances'
 import toast from 'react-hot-toast'
-import { TrashIcon } from '@heroicons/react/24/outline'
 import { Trash } from 'lucide-react'
 import ConfirmationModalNew from '../../components/Modal/ConfirmationModalNew'
 
@@ -14,7 +13,7 @@ export interface IFacility {
 }
 const Property = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [facililies, setFacilities] = useState<IFacility[]>([])
+    const [facililies, setFacilities] = useState<any>([])
     const [confirmationModalOpen, setConfirmationModalOpen] = useState(false)
     const [facilityId, setFacilityId] = useState('')
     const handleAddClick = ()=>{
@@ -40,8 +39,8 @@ const Property = () => {
             if(!response.data){
                 toast.error('Something went wrong deleting the facility')
             }
-            setFacilities((prev)=>{
-                return[ prev.filter((facility)=>facility._id !== facilityId)].reverse()
+            setFacilities((prev:any)=>{
+                return[ prev.filter((facility:any)=>facility._id !== facilityId)].reverse()
             })
             toast.success(`succesfully deleted facility` )
         } catch (error:any) {
@@ -80,7 +79,7 @@ const Property = () => {
                 </tr>
               </thead>
               <tbody>
-                {facililies.reverse().map((facility,index) => (
+                {facililies.reverse().map((facility:any,index:any) => (
                   <tr key={index}>
                     <td>
                       <div className="flex items-center gap-3">

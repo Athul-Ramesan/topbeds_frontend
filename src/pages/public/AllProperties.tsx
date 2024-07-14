@@ -1,4 +1,4 @@
-import { useEffect, useState,lazy } from "react"
+import { useEffect, useState } from "react"
 import { axiosInstance } from "../../config/instances"
 import ImageCard from "../../components/public/ImageCard"
 import LoadingSpinner from "../LoadingSpinner"
@@ -30,6 +30,8 @@ const AllProperties = () => {
   const [guestCount, setGuestCount] = useState('')
 
   useEffect(()=>{
+    console.log("🚀 ~ AllProperties ~ filterOptions:", filterOptions)
+    setItemsPerPage(8)
     setLoading(true)
     setTimeout(() => {
         setLoading(false)
@@ -81,9 +83,6 @@ const AllProperties = () => {
     setCurrentPage(pageNumber);
   };
 
-  const handleCategoryChange = () => {
-
-  }
 
   if (loading) {
     return <LoadingSpinner />

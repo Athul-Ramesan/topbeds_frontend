@@ -14,16 +14,17 @@ const defaultValue: SinglePropertyDetailsContextType = {
       _id:"",
       title: "",
       description: "",
-      location: {
-        address: "",
-        city: "",
-        state: "",
-        country: "",
-        coordinates: {
-          lat: 0,
-          lng: 0,
-        },
-      },
+      location: '',
+      // {
+      //   address: "",
+      //   city: "",
+      //   state: "",
+      //   country: "",
+      //   coordinates: {
+      //     lat: 0,
+      //     lng: 0,
+      //   },
+      // },
       hostId: {},
       reviews: [""],
       availability: [{

@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useState } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { SidebarContext } from './ProfileSideBar';
 
 type SidebarItemProps = {
@@ -8,7 +8,7 @@ type SidebarItemProps = {
     alert?: boolean;
 };
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ icon, text, active, alert }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ icon, text, active }) => {
     const { expanded } = useContext(SidebarContext)
     return (
         <li className={`relative  flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors ${active ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-primaryColor " : "hover:bg-indigo-600 text-gray-600"} ` }>

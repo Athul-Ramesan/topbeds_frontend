@@ -10,7 +10,7 @@ import MessageModal from '../../../components/Modal/MessageModal';
 
 const BookingDetails: React.FC = () => {
     const { bookingId } = useParams<{ bookingId: string }>();
-    const [booking, setBooking] = useState<IBooking | null>(null);
+    const [booking, setBooking] = useState<any>(null);
     const [isCancelled,setIsCancelled] = useState(false)
     const [refundAmount, setRefundAmount] = useState('')
     const [loading, setLoading] = useState(false)
@@ -79,7 +79,7 @@ const BookingDetails: React.FC = () => {
 
                     <div>
                         <div className="grid grid-cols-2 gap-2">
-                            {booking?.property.images.slice(0, 4).map((image, index) => (
+                            {booking?.property.images.slice(0, 4).map((image:any, index:any) => (
                                 <img
                                     key={index}
                                     src={image}
@@ -98,7 +98,7 @@ const BookingDetails: React.FC = () => {
                 <div className="mt-8">
                     <h2 className="text-xl font-semibold mb-2">House Rules</h2>
                     <ul className="list-disc list-inside">
-                        {booking?.property.houseRules.map((rule, index) => (
+                        {booking?.property.houseRules.map((rule:any, index:any) => (
                             <li key={index}>{rule}</li>
                         ))}
                     </ul>

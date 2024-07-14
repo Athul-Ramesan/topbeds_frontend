@@ -1,7 +1,4 @@
-import axios from 'axios';
-import { HomeIcon } from 'lucide-react';
 import { useEffect, useState, useRef, FC } from 'react';
-import { usePopper } from 'react-popper';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { bookingApiInstance } from '../../config/instances';
 import PaymentProcessingIcon from '../../components/loader/PaymentProcessingIcon';
@@ -13,9 +10,9 @@ const SubscriptionPaymentSuccessPage: FC = () => {
   
   const [paymentStatus, setPaymentStatus] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const location = useLocation();
+  // const location = useLocation();
   const params = useParams()
-  const [sessionId, setSessionId] = useState('')
+  // const [sessionId, setSessionId] = useState('')
 
   useEffect(() => {
     

@@ -136,7 +136,9 @@ const FetchCountryStateCity: React.FC<FetchCountryStateCityProps> = ({ onLocatio
 
             <div>
                 <label htmlFor="city">City:</label>
-                <select id="city" disabled={!selectedState}>
+                <select id="city"
+                 onChange={(e) => setSelectedCity(e.target.value)}
+                disabled={!selectedState}>
                     <option value="">Select a city</option>
                     {cities.map((city) => (
                         <option key={city.name} value={city.name}>

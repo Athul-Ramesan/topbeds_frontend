@@ -30,6 +30,6 @@ export interface IUserSignupData {
     profileImage?:string | null,
     isBlocked?: boolean | null,
     createdAt?:  Date | null,
-    subscriptions?: ISubscription 
+    subscriptions?: ISubscription []
 
 }

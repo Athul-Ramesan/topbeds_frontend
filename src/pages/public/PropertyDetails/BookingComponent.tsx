@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Datepicker from 'react-tailwindcss-datepicker';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
 import { useNavigate } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import { axiosInstance, bookingApiInstance } from '../../../config/instances';
+import { bookingApiInstance } from '../../../config/instances';
 import { config } from '../../../config/config';
 import toast from 'react-hot-toast';
 import PropertyCalendar from './components/PropertyCalendar';
@@ -22,7 +21,7 @@ const BookingComponent = () => {
   const { singleProperty } = useContext(SinglePropertyDetailsContext)
   const user = useAppSelector(state=>state.user.user)
   console.log("🚀 ~ BookingComponent ~ user:", user)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   console.log("🚀 ~ singleProperty:", singleProperty)
   const maximumGuest = singleProperty?.maxGuests | 2
@@ -92,6 +91,7 @@ const BookingComponent = () => {
           const result = stripe?.redirectToCheckout({
           sessionId:response.data?.id
           })
+          console.log(result)
         }else{
           setLoading(false)
         }

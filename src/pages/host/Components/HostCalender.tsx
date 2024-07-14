@@ -3,8 +3,9 @@ import { Calendar, momentLocalizer, Event } from 'react-big-calendar';
 import moment from 'moment';
 import { motion, AnimatePresence } from 'framer-motion';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { IProperty, IUserSignupData } from './interfaces'; // Adjust the import path as needed
 import { bookingApiInstance } from '../../../config/instances';
+import { IProperty } from '../../../interface/IProperty';
+import { IUserSignupData } from '../../../interface/IUserSignup';
 
 const localizer = momentLocalizer(moment);
 

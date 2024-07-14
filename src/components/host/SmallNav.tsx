@@ -1,7 +1,7 @@
-import { NavLink, useParams } from "react-router-dom"
+import {  useParams } from "react-router-dom"
 
 const SmallNav = () => {
-    const {propertyId} = useParams()
+    // const {propertyId} = useParams()
     return (
         <>
         <p  className=" w-full flex justify-center hover:scale-90 rounded-3xl text-lg font-semibold transition-transform transform duration-500 hover:bg-gray-200">Your space</p>

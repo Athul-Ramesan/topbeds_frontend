@@ -13,7 +13,7 @@ const SubscriptionOption = () => {
   const subscriptions = useAppSelector(state => state.user.user?.subscriptions)
   console.log("🚀 ~ SubscriptionOption ~ subscriptions:", subscriptions)
   useEffect(()=>{
-    if (subscriptions && subscriptions.length === 0) {
+    if (subscriptions && subscriptions?.length  === 0) {
       setHasSubscription(false);
     } else {
       setHasSubscription(true);

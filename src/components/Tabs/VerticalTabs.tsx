@@ -41,13 +41,14 @@ function a11yProps(index: number) {
 
 
 interface VerticalTabsProps {
-    bookings: IBooking[];
+    bookings: any;
   }
 export default function VerticalTabs( TabProps: VerticalTabsProps ) {
     const [value, setValue] = React.useState(0);
 
     const {bookings} = TabProps
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        console.log("🚀 ~ handleChange ~ event:", event)
         setValue(newValue);
     };
 

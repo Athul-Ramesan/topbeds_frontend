@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import UserProfileHeader from '../../components/User/UserProfileHeader';
-import UserInfo from '../../components/User/UserInfo';
-import Listings from '../../components/User/Listings';
 import UserContacts from '../../components/User/UserContacts';
-import GetInTouch from '../../components/User/GetInTouch';
 import SecuritySection from '../../components/User/SecuritySection';
 import SubscriptionOption from '../../components/User/SubscriptionOption';
 import { BookingResponse } from '../../interface/IBooking';
-import BookingList from './Booking/BookingList';
 import { bookingApiInstance } from '../../config/instances';
 import { useAppSelector } from '../../redux/store';
 import VerticalTabs from '../../components/Tabs/VerticalTabs';
@@ -22,7 +18,9 @@ const UserProfilePage: React.FC = () => {
     });
     const {user} = useAppSelector(state=>state.user)
     const [isLoading, setIsLoading] = useState(true);
+    console.log("🚀 ~ isLoading:", isLoading)
     const [error, setError] = useState<string | null>(null);
+    console.log("🚀 ~ error:", error)
 
     useEffect(() => {
         const fetchBookings = async () => {

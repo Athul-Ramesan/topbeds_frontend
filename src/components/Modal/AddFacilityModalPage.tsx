@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react'
+import  { ChangeEvent, FC, useState } from 'react'
 import { motion } from 'framer-motion';
 import 'tailwindcss/tailwind.css';
 import { EmojiClickData, Theme } from 'emoji-picker-react';
@@ -10,7 +10,7 @@ import { IFacility } from '../../pages/admin/Property';
 interface AddFacilityProps {
     isOpen: boolean
     onClose: () => void
-    setFacilities:(facililies:IFacility[])=>void
+    setFacilities:(facililies:any)=>void
 }
 const AddFacilityModalPage: FC<AddFacilityProps> = ({ isOpen, onClose,setFacilities }) => {
     const [chosenEmoji, setChosenEmoji] = useState('');
@@ -18,7 +18,10 @@ const AddFacilityModalPage: FC<AddFacilityProps> = ({ isOpen, onClose,setFacilit
     const [facility, setFacility] = useState('')
     const [error, setError]= useState('')
     if (!isOpen) return null;
-    const onEmojiClick = (emojiObject: EmojiClickData, event: MouseEvent) => {
+    const onEmojiClick = (
+        emojiObject: EmojiClickData,
+        //  event: MouseEvent
+        ) => {
         console.log(chosenEmoji, 'chosen emojiii')
         setChosenEmoji(emojiObject.emoji);
         setShowPicker(!showPicker)
@@ -44,7 +47,7 @@ const AddFacilityModalPage: FC<AddFacilityProps> = ({ isOpen, onClose,setFacilit
             }
             console.log("🚀 ~ handleSubmit ~ response:", response)
             const newFacility = response.data.facility
-            setFacilities((prev) => {
+            setFacilities((prev:any) => {
                 return [...prev, newFacility].reverse()
               });
               
