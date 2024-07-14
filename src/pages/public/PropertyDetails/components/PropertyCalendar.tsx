@@ -64,7 +64,8 @@ const PropertyCalendar: React.FC<PropertyCalendarProps> = ({ property, date, set
       inputClassName="shadow-md placeholder:text-green-500 text-green-600 rounded-md focus:ring-0 font-normal"
       disabledDates={disabledDates}
       configs={{
-        dateFormat: "yyyy-MM-dd",
+
+        // dateFormat: "yyyy-MM-dd",
         classNames: {
           calendar: "bg-white",
         },
