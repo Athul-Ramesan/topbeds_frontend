@@ -1,0 +1,3 @@
+{
+    "rewrites": [{ "source": "/(.*)", "destination": "https://topbeds-frontend.vercel.app"}]
+  }
