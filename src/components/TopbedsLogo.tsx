@@ -5,7 +5,7 @@ const TopbedsLogo = () => {
   return (
     <>
       <Link to={"/index"} className="flex gap-1 items-center">
-        <FaBedPulse size={20} className="text-primaryColor" />
+        <FaBedPulse size={20} className="text-primaryColor"/>
         <span className="font-bold text-xl">Topbeds</span>
       </Link>
     </>

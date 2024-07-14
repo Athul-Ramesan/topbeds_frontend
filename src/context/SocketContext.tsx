@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { ChatBaseUrl } from '../config/config';
+import {  SocketUrl } from '../config/config';
 import { useAppSelector } from '../redux/store';
 import toast from 'react-hot-toast';
 
@@ -36,7 +36,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (user?._id) {
-      const newSocket = io(ChatBaseUrl, {
+      const newSocket = io(SocketUrl, {
         query: { userId: user._id },
       });
 
