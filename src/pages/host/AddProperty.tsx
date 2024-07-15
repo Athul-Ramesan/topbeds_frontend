@@ -14,7 +14,6 @@ import CustomFileInput from "../../components/host/CustomFileInput";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../LoadingSpinner";
 import getCityByCountry from "../../utils/locationAPI/getCityByCountry";
-import { ICitiesWithId } from "../../components/searchBar/SearchInterface";
 
 interface IProperty {
     address: string;

@@ -41,7 +41,7 @@ const HostCalendar: React.FC<HostCalendarProps> = ({ hostId }) => {
   const fetchHostBookings = async () => {
     setIsLoading(true);
     try {
-      const response = await bookingApiInstance.get(`/booking/host/${hostId}`);
+      const response = await bookingApiInstance.get(`/host/${hostId}`);
       const data: IBooking[] = response.data.allBookings
       const formattedBookings: CalendarEvent[] = data.map(booking => ({
         title: `${booking.property.title}: ${booking.guests} guests`,
