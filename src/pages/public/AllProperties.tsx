@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { axiosInstance } from "../../config/instances"
+import {  propertyApiInstance } from "../../config/instances"
 import ImageCard from "../../components/public/ImageCard"
 import LoadingSpinner from "../LoadingSpinner"
 import Pagination from "../../components/Pagination"
@@ -49,7 +49,7 @@ const AllProperties = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axiosInstance.get('/property/get-all-properties', {
+        const response = await propertyApiInstance.get('/get-all-properties', {
           params: {
             search: searchQuery,
             sort: sortOption,
