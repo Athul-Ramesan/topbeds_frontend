@@ -51,16 +51,16 @@ const RecentActivitiesTable = () => {
               <tr key={index}>
                 {columns.map((column:any, colIndex:any) => (
                   <td key={colIndex}>
-                    {column === 'Date' ? formatDate(item.createdAt) :
-                     column === 'User' ? `${item.user?.firstName} ${item.user?.lastName}` :
-                     column === 'Property' ? item.property?.title :
-                     column === 'First Name' ? `${item.firstName}` :
-                     column === 'Last Name' ? `${item.lastName}` :
-                     column === 'Total Price' ? `₹${item.totalPrice}` :
+                    {column === 'Date' ? formatDate(item?.createdAt) :
+                     column === 'User' ? `${item?.user?.firstName} ${item?.user?.lastName}` :
+                     column === 'Property' ? item?.property?.title :
+                     column === 'First Name' ? `${item?.firstName}` :
+                     column === 'Last Name' ? `${item?.lastName}` :
+                     column === 'Total Price' ? `₹${item?.totalPrice}` :
 
-                     column === 'Host' ? (`${item} ${item.hostId?.lastName}`? `${item.hostId?.firstName} ${item.hostId?.lastName}` : 'Akhil Ramesh' ) :
+                     column === 'Host' ? (`${item} ${item?.hostId?.lastName}`? `${item?.hostId?.firstName} ${item?.hostId?.lastName}` : 'Akhil Ramesh' ) :
                      
-                     column === 'Price' ? `₹${item.price}` :
+                     column === 'Price' ? `₹${item?.price}` :
                      column === 'Booking Status' ? `Cancelled` :
                      item[column.toLowerCase()]}
                   </td>

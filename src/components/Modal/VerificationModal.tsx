@@ -133,7 +133,7 @@ const VerificationModal: FC<Props> = ({ isOpen, onClose, user, onSubmit }: Props
                   <button
                     type="button"
                     onClick={handleResendOtp}
-                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                    className="btn btn-primary hover:btn-info transition-colors"
                   >
                     Resend OTP
                   </button>
