@@ -39,7 +39,7 @@ const ShowDescriptionHostProperty = () => {
     }
 
     const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, value , config)
-    if (response.statusText === "OK") {
+    if (response.status === 200) {
       setIsAnyChange(false)
       toast.success("Description updated successfully")
       setHostProperty(response.data.updatedProperty)

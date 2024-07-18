@@ -1,3 +1,4 @@
+
 import { ChangeEvent, useContext, useState } from "react"
 import { FaLightbulb } from "react-icons/fa6"
 import toast from "react-hot-toast"
@@ -39,7 +40,7 @@ const ShowbathroomsHostProperty = () => {
     const numericValue = {...value, bathrooms: Number(value.bathrooms)}
 
     const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, numericValue , config)
-    if (response.statusText === "OK") {
+    if (response.status === 200) {
       setIsAnyChange(false)
       toast.success("Bathrooms property updated successfully")
       setHostProperty(response.data.updatedProperty)

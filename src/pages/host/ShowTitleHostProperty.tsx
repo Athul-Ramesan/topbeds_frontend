@@ -44,7 +44,7 @@ const ShowTitleHostProperty = () => {
     }
 
     const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, value , config)
-    if (response.statusText === "OK") {
+    if (response.status === 200) {
       setIsAnyChange(false)
       toast.success("Title updated successfully")
       console.log(response.data);

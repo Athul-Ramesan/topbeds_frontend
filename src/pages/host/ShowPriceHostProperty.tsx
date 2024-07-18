@@ -39,7 +39,8 @@ const ShowPriceHostProperty = () => {
     const numericValue = {...value, price: Number(value.price)}
 
     const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, numericValue , config)
-    if (response.statusText === "OK") {
+    console.log("🚀 ~ HandleSaveClick ~ response:", response)
+    if (response.status === 200) {
       setIsAnyChange(false)
       toast.success("Price updated successfully")
       setHostProperty(response.data.updatedProperty)

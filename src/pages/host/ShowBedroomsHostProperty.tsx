@@ -39,7 +39,7 @@ const ShowbedroomsHostProperty = () => {
     const numericValue = {...value, bedrooms: Number(value.bedrooms)}
 
     const response = await propertyApiInstance.post(`/update-property/${hostProperty._id}`, numericValue , config)
-    if (response.statusText === "OK") {
+    if (response.status === 200) {
       setIsAnyChange(false)
       toast.success("Bathrooms property updated successfully")
       setHostProperty(response.data.updatedProperty)
