@@ -21,7 +21,7 @@ const ChatsPage = () => {
     const fetchChats = async () => {
         try {
             setChatListFetchingLoading(true);
-            const response = await chatApiInstance.get(`/chat/get-chats/${user?._id}`);
+            const response = await chatApiInstance.get(`/get-chats/${user?._id}`);
             if (response.status === 200) {
                 console.log("🚀 ~ fetchChats ~ response when reloading:", response)
                 setChatList(response.data);
