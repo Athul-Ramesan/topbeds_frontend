@@ -44,7 +44,7 @@ const ManageListing = () => {
     return (
       <div className="m-10 w-full h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
         {Array.from({ length: 8 }).map((_, index) => (
-          <div key={index} className="skeleton h-32 w-32"></div>
+          <div key={index} className="skeleton h-full w-full"></div>
         ))}
       </div>
     );
