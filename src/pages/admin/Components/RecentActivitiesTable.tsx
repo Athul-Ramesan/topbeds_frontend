@@ -52,15 +52,15 @@ const RecentActivitiesTable = () => {
                 {columns.map((column:any, colIndex:any) => (
                   <td key={colIndex}>
                     {column === 'Date' ? formatDate(item?.createdAt) :
-                     column === 'User' ? `${item?.user?.firstName} ${item?.user?.lastName}` :
-                     column === 'Property' ? item?.property?.title :
-                     column === 'First Name' ? `${item?.firstName}` :
-                     column === 'Last Name' ? `${item?.lastName}` :
-                     column === 'Total Price' ? `₹${item?.totalPrice}` :
+                     column === 'User' ? `${item?.user?.firstName || ""} ${item?.user?.lastName || ""}` :
+                     column === 'Property' ? item?.property?.title || "":
+                     column === 'First Name' ? `${item?.firstName}` || "":
+                     column === 'Last Name' ? `${item?.lastName || ""}` :
+                     column === 'Total Price' ? `₹${item?.totalPrice || 0}` :
 
-                     column === 'Host' ? (`${item} ${item?.hostId?.lastName}`? `${item?.hostId?.firstName} ${item?.hostId?.lastName}` : 'Akhil Ramesh' ) :
+                     column === 'Host' ? `${item?.hostId?.firstName || ''} ${item?.hostId?.lastName || ''}` :
                      
-                     column === 'Price' ? `₹${item?.price}` :
+                     column === 'Price' ? `₹${item?.price || 0}` :
                      column === 'Booking Status' ? `Cancelled` :
                      item[column.toLowerCase()] || ""}
                   </td>
@@ -79,25 +79,25 @@ const RecentActivitiesTable = () => {
       
       <TableSection 
         title="Latest Bookings" 
-        data={activities.latestBookings}
+        data={activities.latestBookings || []}
         columns={['Date', 'User', 'Property', 'Total Price']}
       />
 
       <TableSection 
         title="Latest Cancellations" 
-        data={activities.latestCancellations}
+        data={activities.latestCancellations || []}
         columns={['Date', 'User', 'Property', 'Booking Status']}
       />
 
       <TableSection 
         title="New User Registrations" 
-        data={activities.newUserRegistrations}
+        data={activities.newUserRegistrations || []}
         columns={['Date', 'First Name', 'Last Name', 'Email']}
       />
 
       <TableSection 
         title="New Property Listings" 
-        data={activities.newPropertyListings}
+        data={activities.newPropertyListings || []}
         columns={['Date', 'Title', 'Host', 'Price']}
       />
     </div>
