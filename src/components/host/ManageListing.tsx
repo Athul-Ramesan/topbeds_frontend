@@ -24,6 +24,7 @@ const ManageListing = () => {
   }
 
   useEffect(() => {
+    setLoading(true)
     const timer = setTimeout(() => {
       setLoading(false)
     }, 1500)
