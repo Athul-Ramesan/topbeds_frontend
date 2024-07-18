@@ -39,8 +39,6 @@ import Listing from "./pages/admin/Listing";
 import DashboardIndex from "./pages/admin/DashboardIndex";
 import PreviewPropertyAdmin from "./pages/admin/Components/PreviewPropertyAdmin";
 import Subscription from "./pages/admin/Components/Subscription";
-import Bookings from "./pages/admin/Bookings";
-import Payments from "./pages/admin/Payments";
 import SubscriptionPaymentSuccessPage from "./pages/user/SubscriptionPaymentSuccessPage";
 import BookingPaymentSuccessful from "./pages/user/checkout/BookingPaymentSuccessful";
 import BookingDetails from "./pages/user/Booking/BookingDetails";
@@ -87,7 +85,7 @@ function App() {
   if (loading) {
     return <LoadingSpinner />
   }
-  const ProtectHostRoute = ({ element }) => {
+  const ProtectHostRoute = ({ element }:any) => {
     console.log("🚀 ~ ProtectHostRoute ~ element:", element)
 
     console.log("🚀 ~ ProtectHostRoute ~ user:", user)
@@ -95,18 +93,18 @@ function App() {
     return user && user?.role === 'host' ? element : <Navigate to="/index" replace />
   }
 
-  const ProtectedAdminRoute = ({ element }) => {
+  const ProtectedAdminRoute = ({ element }:any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
     return user && user?.role==='admin' ? element : <Navigate to="/index" />;
   }
-  const isAdminRoute = ({ element }) => {
+  const isAdminRoute = ({ element }:any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
     return user && user?.role==='admin' ? element : <Navigate to="/index" />;
   }
   
-  const ProtectedRoute = ({ element }) => {
+  const ProtectedRoute = ({ element }:any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
     return user ? element : <Navigate to="/index" />;
@@ -159,8 +157,6 @@ const AdminRoutes: FC = () => {
         <Route path="listing" element={<Listing />} />
         <Route path="listing/preview" element ={<PreviewPropertyAdmin/>} />
         <Route path="subscription" element={<Subscription/>} />
-        <Route path="bookings" element={<Bookings/>} />
-        <Route path="payments" element={<Payments/>} />
         <Route path="property" element={<Property/>} />
     
 
