@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { loadStripe } from '@stripe/stripe-js';
 import { useAppSelector } from '../../redux/store';
 import axios from 'axios';
+import { bookingApiInstance } from '../../config/instances';
 
 interface Plan {
   id: number;
@@ -94,7 +95,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
      fetchPlans()
   },[])
   const fetchPlans=async()=>{
-      const response = await    axios.get('http://localhost:3003/subscription')
+      const response = await    bookingApiInstance.get('/subscription')
       console.log("🚀 ~ fetchPlans ~ response:", response)
       setPlans(response.data)
   }
