@@ -47,7 +47,7 @@ const SinglePropertyCard :FC<SinglePropertyCardProps> = ({ property }) => {
         src={property.images[currentImageIndex]}
         alt={property.title}
         effect="blur"
-        className="w-full h-64 object-cover"
+        className="w-full h-64 object-cover block"
       />
       {/* <img src={property.images[currentImageIndex]} alt={property.title} className="w-full h-64 object-cover" /> */}
       <button
