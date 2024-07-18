@@ -62,7 +62,7 @@ const RecentActivitiesTable = () => {
                      
                      column === 'Price' ? `₹${item?.price}` :
                      column === 'Booking Status' ? `Cancelled` :
-                     item[column.toLowerCase()]}
+                     item[column.toLowerCase()] || ""}
                   </td>
                 ))}
               </tr>
