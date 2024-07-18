@@ -39,6 +39,13 @@ const HostDashboard = () => {
       }
       fetchReservationData()
     },[])
+    useEffect(() => {
+      setLoading(true)
+      const timer = setTimeout(() => {
+        setLoading(false)
+      }, 1500)
+      return () => clearTimeout(timer)
+    }, [])
     if (loading) {
       return (
         <div className="m-10 w-full h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-2">
