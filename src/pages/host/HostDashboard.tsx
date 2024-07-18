@@ -11,6 +11,7 @@ const HostDashboard = () => {
     const [totalReservations, setTotalReservations] = useState(0)
     const [totalEarnings, setTotalEarnings] = useState(0)
     const [totalProperties, setTotalProperties] = useState(0)
+    const [loading , setLoading] = useState(false)
     console.log("🚀 ~ HostDashboard ~ hostProperties:", hostProperties)
     useEffect(() => {
       propertyApiInstance.get(`/get-host-properties/${user?._id}`)
@@ -38,6 +39,15 @@ const HostDashboard = () => {
       }
       fetchReservationData()
     },[])
+    if (loading) {
+      return (
+        <div className="m-10 w-full h-screen grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-2">
+          {Array.from({ length: 1 }).map((_, index) => (
+            <div key={index} className="skeleton h-56 w-full"></div>
+          ))}
+        </div>
+      );
+    }
   return (
     <div className="p-6 bg-gray-100 min-h-screen w-full">
       <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-lg">
