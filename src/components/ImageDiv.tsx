@@ -33,7 +33,8 @@ const ImageDiv: FC<ImageDivProps> = ({ width, image }) => {
     
     setImageDeletingLoading(true)
     const response = await propertyApiInstance.delete(`/delete-photo?propertyId=${propertyId}&image=${image}`)
-    if (response.statusText === "OK") {
+    console.log("🚀 ~ handleClickConfirmDeletePhoto ~ response:", response)
+    if (response.status === 200) {
       console.log("🚀 ~ handleClickDeletePhoto ~ response:", response)
       setHostProperty(response.data.updatedProperty)
       toast.success('Photos deleted')

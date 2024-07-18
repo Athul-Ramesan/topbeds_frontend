@@ -25,6 +25,7 @@ const ShowPhotosHostProperty = () => {
   }
   
   const handleCloseModal = ()=>{
+    setImageUploadingLoading(false)
     setLoading(false)
     setOpenModal(false)
   }
