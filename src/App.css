@@ -11,3 +11,7 @@
 body.modal-open {
     overflow: hidden;
   }
+
+.lazy-load-image-background{
+    display: block !important;
+}
