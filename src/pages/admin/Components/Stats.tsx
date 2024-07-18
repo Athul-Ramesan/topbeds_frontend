@@ -13,7 +13,7 @@ const Stats = () => {
         const fetchConsolidatedData = async()=>{
             const response = await bookingApiInstance.get('/dashboard/consolidated-data')
             console.log("🚀 ~ fetchConsolidatedData ~ response:", response)
-            if(response.statusText==="OK"){
+            if(response.status===200){
                 const consolidatedData = response.data
                 setActiveBookings(consolidatedData.activeBookings)
                 setTotalRevenue(consolidatedData.totalRevenue)
