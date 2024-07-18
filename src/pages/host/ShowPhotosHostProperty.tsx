@@ -25,6 +25,7 @@ const ShowPhotosHostProperty = () => {
   }
   
   const handleCloseModal = ()=>{
+    setLoading(false)
     setOpenModal(false)
   }
   const handleAddPhotoSubmit= async(imageUrls:string[]) => {
@@ -36,7 +37,7 @@ const ShowPhotosHostProperty = () => {
       const response = await propertyApiInstance.post(`/upload-images/${hostProperty._id}`,{imageUrls},config)
       
       console.log("🚀 ~ handleAddPhotoSubmit ~ response:", response)
-      if(response.statusText==="OK"){
+      if(response.status===200){
         setHostProperty(response.data.updatedProperty)
         setImageUploadingLoading(false)
         toast.success('Photos added')

@@ -144,7 +144,7 @@ const AddProperty = () => {
             const formValues = { ...values, images: imageUrls, location: selectedLocation };
             setFormdata(values);
             const response = await propertyApiInstance.post('/add-property', formValues, config);
-            if (response.statusText === "OK") {
+            if (response.status === 200) {
                 toast.success("Property added successfully");
                 navigate('/host');
             }
