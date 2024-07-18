@@ -43,6 +43,7 @@ const ImageDiv: FC<ImageDivProps> = ({ width, image }) => {
     }
   }
   const handleConfirmationModalClose = () => {
+    setImageDeletingLoading(false)
     setIsConfirmationModalOpen(false)
   }
   return (
