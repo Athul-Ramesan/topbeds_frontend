@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PropertyList from "./PropertyList";
 import { HostPropertiesContext } from "../../context/HostPropertiesContext";
 import { useNavigate } from "react-router-dom";
@@ -10,25 +10,42 @@ import EmptyItemMessage from "./EmptyItemMessage";
 // c
 
 const ManageListing = () => {
-  
+
   const { hostProperties } = useContext(HostPropertiesContext)
-  const [showAddToolTip,setShowAddToolTip] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [showAddToolTip, setShowAddToolTip] = useState(false)
 
   const navigate = useNavigate()
   console.log("🚀 ~ ManageListing ~ hostProperties:", hostProperties)
 
 
-  const handleClickAddIcon =()=>{
+  const handleClickAddIcon = () => {
     navigate('/host/add-property')
   }
 
-  if(!hostProperties || hostProperties.length===0){
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 1500)
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (!hostProperties || hostProperties.length === 0) {
     return (
       <>
-      <div className="flex justify-center items-center w-full m-20">
-      <EmptyItemMessage/>
-      </div>
+        <div className="flex justify-center items-center w-full m-20">
+          <EmptyItemMessage />
+        </div>
       </>
+    )
+  }
+  if (loading) {
+    return (
+      Array.from({ length: 8 }).map((_, index) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">>
+          <div key={index} className="skeleton h-32 w-32"></div>
+        </div>
+      })
     )
   }
   return (
@@ -42,7 +59,7 @@ const ManageListing = () => {
         /> */}
         <div className="flex space-x-2">
           {/* <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Filter</button> */}
-         {/* <div className="relative">
+          {/* <div className="relative">
          <BiFilter
          size={40}
           onMouseEnter={()=>{
@@ -60,25 +77,25 @@ const ManageListing = () => {
          </div> */}
 
 
-         <div className="relative">
-         <MdAdd 
-         size={40}
-          onMouseEnter={()=>{
-            setShowAddToolTip(true)
-          }}
-          onMouseLeave={()=>{
-            setShowAddToolTip(false)
-          }}
-          onClick={handleClickAddIcon}
-          />
-          <ToolTipAtBottom
-          toolTipText="add"
-          showToolTip={showAddToolTip}
-          />
-         </div>
+          <div className="relative">
+            <MdAdd
+              size={40}
+              onMouseEnter={() => {
+                setShowAddToolTip(true)
+              }}
+              onMouseLeave={() => {
+                setShowAddToolTip(false)
+              }}
+              onClick={handleClickAddIcon}
+            />
+            <ToolTipAtBottom
+              toolTipText="add"
+              showToolTip={showAddToolTip}
+            />
+          </div>
 
 
-          
+
 
         </div>
       </div>
