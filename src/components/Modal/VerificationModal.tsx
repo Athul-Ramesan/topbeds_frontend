@@ -68,6 +68,7 @@ const VerificationModal: FC<Props> = ({ isOpen, onClose, user, onSubmit }: Props
   };
 
   const handleResendOtp = () => {
+    onSubmit(user)
     setCanResend(false);
     setTimer(60);
     onSubmit(null);

@@ -125,7 +125,7 @@ const RegisterPage = () => {
             }/>
             </div>
             <div className="mt-4 grow flex flex-col items-center justify-around">
-                <VerificationModal isOpen={isModalOpen} onClose={hanldeCloseModal} onSubmit={onSubmit} user={formValues} />
+                <VerificationModal  isOpen={isModalOpen} onClose={hanldeCloseModal} onSubmit={onSubmit} user={formValues} />
 
                 <div className="mb-8">
                   
