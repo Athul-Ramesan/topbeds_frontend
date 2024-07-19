@@ -7,6 +7,7 @@ import CancellationPolicy from './CancellationPolicy';
 import { AlertOctagonIcon } from 'lucide-react';
 import RefundMessage from './RefundMessage';
 import MessageModal from '../../../components/Modal/MessageModal';
+import LoadingSpinner from '../../LoadingSpinner';
 
 const BookingDetails: React.FC = () => {
     const { bookingId } = useParams<{ bookingId: string }>();
@@ -58,7 +59,11 @@ const BookingDetails: React.FC = () => {
         setOpenMessageModal(true)
     }
     //   if (!booking) return <div>Loading...</div>;
-
+    if(initialLoading){
+        return(
+            <LoadingSpinner/>
+        )
+    }
     return (
         <div className='flex mt-10' >
             
