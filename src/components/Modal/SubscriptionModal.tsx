@@ -207,7 +207,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  Subscribe
+                  {loading ? 'Loading...' : 'Subscribe'}
                 </motion.button>
               </div>
             </div>
