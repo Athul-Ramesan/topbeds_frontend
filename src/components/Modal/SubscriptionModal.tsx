@@ -119,6 +119,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
         const resultFromStripe =  await stripe?.redirectToCheckout({
           sessionId:response.data
         })
+        setLoading(false)
         console.log(resultFromStripe)
        } catch (error) {
         setLoading(false)

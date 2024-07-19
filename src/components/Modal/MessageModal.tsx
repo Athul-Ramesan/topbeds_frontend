@@ -18,6 +18,7 @@ const MessageModal:FC<messageModalProps>= ({isOpen,onClose,hostId}) => {
     console.log("🚀 ~ onlineUsers:", onlineUsers)
     console.log("🚀 ~ isConnected:", isConnected)
     const {user} = useAppSelector(state=>state.user)
+    const [loading, setLoading] = useState(false)
     
     const [message, setMessage] = useState('')
     if(!isOpen) return null
@@ -26,6 +27,7 @@ const MessageModal:FC<messageModalProps>= ({isOpen,onClose,hostId}) => {
         console.log(message,'messsageee')
     }
     const handleSendMessage =async()=>{
+      setLoading(true)
       const messageData = {
         receiverId: hostId,
         content: message,
@@ -39,9 +41,11 @@ const MessageModal:FC<messageModalProps>= ({isOpen,onClose,hostId}) => {
             setMessage('')
             toast.success('message sent ! check your profile')
             onClose()
+            setLoading(false)
             socket?.emit('new_message', messageData)
         }
         console.log(message,'message' )
+       
     }
   return (
     <AnimatePresence>

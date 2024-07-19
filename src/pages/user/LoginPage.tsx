@@ -16,8 +16,8 @@ interface FormValues {
 };
 
 const initialValues: FormValues = {
-  email: "athulrameshankv.ar@gmail.com",
-  password: "Athul@98"
+  email: "",
+  password: ""
 }
 
 const LoginPage = () => {

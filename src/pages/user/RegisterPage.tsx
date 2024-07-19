@@ -21,11 +21,11 @@ interface FormValues {
     email: string;
 };
 const initialValues = {
-    firstName: "Athul",
-    lastName: "Rameshan",
-    email: "athulrameshankv.ar@gmail.com",
-    password: "Asdfgh@34",
-    confPassword: "Asdfgh@34",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confPassword: "",
 }
 
 const validationSchema = Yup.object({
