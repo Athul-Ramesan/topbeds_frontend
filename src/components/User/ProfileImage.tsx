@@ -7,7 +7,7 @@ import { ClipLoader } from 'react-spinners';
 const ProfileImage = () => {
   const { user,loading } = useAppSelector(state => state.user)
   const [modalOpen, setModalOpen] = useState(false);
-  const [croppedImage, setCroppedImage] = useState<string>('')
+  const [croppedImage, setCroppedImage] = useState<string | null>("")
   
   useEffect(() => {
     setCroppedImage(user?.profileImage!)
