@@ -80,6 +80,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   console.log("🚀 ~ selectedPlan:", selectedPlan)
   const [plans, setPlans] = useState<IPlan[]>([])
   console.log("🚀 ~ plans:", plans)
+  const [loading, setLoading] = useState(false)
   const {user} = useAppSelector(state=>state.user)
   React.useEffect(() => {
     if (isOpen) {
@@ -101,7 +102,8 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
       setPlans(response.data)
   }
   const handleSubscribeClick =async ()=>{
-       
+        setLoading(true)
+       try {
         const stripe =await loadStripe
         (stripeApiKey)
         const body = {
@@ -118,6 +120,11 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           sessionId:response.data
         })
         console.log(resultFromStripe)
+       } catch (error) {
+        setLoading(false)
+        console.log("🚀 ~ handleSubscribeClick ~ error:", error)
+        
+       }
 
   }
   return (
@@ -143,7 +150,11 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                 <h3 className="text-2xl font-semibold text-white">Choose Your Plan</h3>
                 <button
                   className="p-1 ml-auto bg-transparent border-0 text-white float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                  onClick={onClose}
+                  onClick={()=>{
+                    setLoading(false)
+                    onClose()
+                  }
+                  }
                 >
                   <span className="text-white h-6 w-6 text-3xl block outline-none focus:outline-none">×</span>
                 </button>
