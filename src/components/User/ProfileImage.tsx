@@ -11,7 +11,7 @@ const ProfileImage = () => {
   console.log("🚀 ~ ProfileImage ~ croppedImage:", croppedImage)
   
   useEffect(() => {
-    setCroppedImage(user?.profileImage!)
+    setCroppedImage(String(user?.profileImage))
   }, [])
   return (
     <div className=" items-center">
