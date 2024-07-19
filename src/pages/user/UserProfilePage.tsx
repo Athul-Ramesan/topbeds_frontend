@@ -59,7 +59,7 @@ const UserProfilePage: React.FC = () => {
                                 {/* <UserInfo /> */}
                                 {/* <Listings /> */}
                                 <UserContacts />
-                                <SecuritySection />
+                                {user?.isGoogle ? '' :<SecuritySection />}
                             </div>
                             <div className="w-full lg:w-1/4 p-4">
                                 <SubscriptionOption />
