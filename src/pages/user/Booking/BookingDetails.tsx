@@ -34,6 +34,7 @@ const BookingDetails: React.FC = () => {
             setLoading(true)
         const response = await bookingApiInstance.post(`/cancel/${bookingId}`,{refundPercentage:50})
         const refundAmount = response.data.refundAmount
+        console.log("🚀 ~ handleCancelBooking ~ response:", response)
         if(refundAmount){
             setRefundAmount(String(refundAmount))
             setIsCancelled(true)
