@@ -25,6 +25,7 @@ export interface ApiError {
     message : string,
     errors: any
 }
+export const stripeApiKey = "pk_test_51PTPcK05vcABQvkG6AA0NInegpeZvuF47iI14eA7Fctgdrm3pQ73du4OV8MqhmS7lENU1Emxt6pKju2S1F9r3uL100QZ2UQkR2"
 export const handleError = (
     error: AxiosError<ApiError>,
     rejectWithValue: (value: string | unknown) => string | unknown

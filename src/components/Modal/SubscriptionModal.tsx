@@ -5,6 +5,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { useAppSelector } from '../../redux/store';
 import axios from 'axios';
 import { bookingApiInstance } from '../../config/instances';
+import { stripeApiKey } from '../../config/config';
 
 interface Plan {
   id: number;
@@ -102,7 +103,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   const handleSubscribeClick =async ()=>{
        
         const stripe =await loadStripe
-        ("pk_test_51PTPcK05vcABQvkG6AA0NInegpeZvuF47iI14eA7Fctgdrm3pQ73du4OV8MqhmS7lENU1Emxt6pKju2S1F9r3uL100QZ2UQkR2")
+        (stripeApiKey)
         const body = {
           name:selectedPlan.name,
           amount:selectedPlan.amount
@@ -110,7 +111,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
         localStorage.setItem('planId', selectedPlan._id)
         localStorage.setItem('userId',String(user?._id))
 
-        const response = await axios.post("http://topbeds.smasher.shop/api/booking/subscription/make-payment-session", body)
+        const response = await bookingApiInstance.post("/subscription/make-payment-session", body)
         console.log("🚀 ~ handleSubscribeClick ~ response:", response)
         
         const resultFromStripe =  await stripe?.redirectToCheckout({
