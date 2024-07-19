@@ -34,7 +34,7 @@ const Subscription: React.FC = () => {
   }, [])
   const fetchAllPlans = async () => {
     try {
-      const response = await bookingApiInstance.get('/subscription')
+      const response = await bookingApiInstance.get('/subscription/get')
       setPlans(response.data)
       console.log("🚀 ~ fetchAllPlans ~ response:", response)
 
