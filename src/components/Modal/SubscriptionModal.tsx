@@ -110,7 +110,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
         localStorage.setItem('planId', selectedPlan._id)
         localStorage.setItem('userId',String(user?._id))
 
-        const response = await axios.post("http://localhost:3003/subscription/make-payment-session", body)
+        const response = await axios.post("http://topbeds.smasher.shop/api/booking/subscription/make-payment-session", body)
         console.log("🚀 ~ handleSubscribeClick ~ response:", response)
         
         const resultFromStripe =  await stripe?.redirectToCheckout({
