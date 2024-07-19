@@ -14,7 +14,7 @@ const ProfileImage = () => {
     setCroppedImage(String(user?.profileImage))
   }, [])
   return (
-    <div className=" items-center">
+    <div className=" items-center rounded-full">
       <div className="relative">
         {!loading ? 
         (<img
