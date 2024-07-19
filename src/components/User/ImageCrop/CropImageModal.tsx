@@ -1,13 +1,14 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import CloseIcon from "./CloseIcon";
 import ImageCropper from "./ImageCropper";
 // import ImageCropper from "./ImageCropper";
 
-interface CropImageModalProps{
-  setCroppedImage:(croppedImage:string)=>void
-  closeModal: ()=>void
+interface CropImageModalProps {
+  setCroppedImage: (croppedImage: string) => void
+  closeModal: () => void
 }
-const CropImageModal:FC<CropImageModalProps> = ({ setCroppedImage, closeModal }) => {
+const CropImageModal: FC<CropImageModalProps> = ({ setCroppedImage, closeModal }) => {
+  const [cropLoading, setCropLoading] = useState(false)
 
   return (
     <div
@@ -24,12 +25,19 @@ const CropImageModal:FC<CropImageModalProps> = ({ setCroppedImage, closeModal })
               <button
                 type="button"
                 className="rounded-md p-1 inline-flex items-center justify-center text-gray-400 hover:bg-gray-700 focus:outline-none absolute top-2 right-2"
-                onClick={closeModal}
+                onClick={
+                  ()=>{
+                    setCropLoading(false)
+                    closeModal()
+                  }
+                }
               >
                 <span className="sr-only">Close menu</span>
                 <CloseIcon />
               </button>
               <ImageCropper
+              cropLoading={cropLoading}
+                setCropLoading={setCropLoading}
                 setCroppedImage={setCroppedImage}
                 closeModal={closeModal}
               />

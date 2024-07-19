@@ -15,9 +15,11 @@ const MIN_DIMENSION = 150;
 interface ImageCropperProps {
     closeModal: () => void;
     setCroppedImage: (croppedImage: string) => void;
+    setCropLoading : (state:boolean)=>void
+    cropLoading: boolean
 }
 
-const ImageCropper: FC<ImageCropperProps> = ({ closeModal, setCroppedImage }) => {
+const ImageCropper: FC<ImageCropperProps> = ({ closeModal, setCroppedImage ,setCropLoading ,cropLoading}) => {
   const imgRef = useRef<HTMLImageElement | null>(null);
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const [imgSrc, setImgSrc] = useState<string>("");
@@ -25,6 +27,7 @@ const ImageCropper: FC<ImageCropperProps> = ({ closeModal, setCroppedImage }) =>
   const [error, setError] = useState<string>("");
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(state => state.user);
+  
 
   const onSelectFile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -99,6 +102,7 @@ const ImageCropper: FC<ImageCropperProps> = ({ closeModal, setCroppedImage }) =>
           <button
             className="text-white font-mono text-xs py-2 px-4 rounded-2xl mt-4 bg-sky-500 hover:bg-sky-600"
             onClick={async () => {
+              setCropLoading(true)
               if (!imgRef.current || !previewCanvasRef.current || !crop) return;
 
               setCanvasPreview(
@@ -114,14 +118,16 @@ const ImageCropper: FC<ImageCropperProps> = ({ closeModal, setCroppedImage }) =>
               if (response.type === "user/update-profile-image/fulfilled") {
                 console.log('inside response fulfilled crop modal');
                 setCroppedImage(response.payload.data.profileImage);
+                setCropLoading(false)
                 closeModal();
               } else {
                 setError(response.payload);
+                setCropLoading(false)
               }
               console.log("🚀 ~ onClick={async ~ response:", response);
             }}
           >
-            Crop Image
+            {cropLoading ? 'Uploading...' : 'Upload Image'}
           </button>
         </div>
       )}
