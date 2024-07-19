@@ -8,6 +8,7 @@ const ProfileImage = () => {
   const { user,loading } = useAppSelector(state => state.user)
   const [modalOpen, setModalOpen] = useState(false);
   const [croppedImage, setCroppedImage] = useState<string | null>("")
+  console.log("🚀 ~ ProfileImage ~ croppedImage:", croppedImage)
   
   useEffect(() => {
     setCroppedImage(user?.profileImage!)

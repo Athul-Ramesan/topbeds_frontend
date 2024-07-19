@@ -6,7 +6,7 @@
   
 //   setCroppedImage:(croppedImage:string)=>void
 //   closeModal: ()=>void
-// }
+// }  
 // const CropImageModal:FC<CropImageModalProps> = ({ setCroppedImage, closeModal }) => {
 
 //   return (
