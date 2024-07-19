@@ -95,7 +95,7 @@ const SubscriptionModal: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
      fetchPlans()
   },[])
   const fetchPlans=async()=>{
-      const response = await    bookingApiInstance.get('/subscription')
+      const response = await    bookingApiInstance.get('/subscription/get')
       console.log("🚀 ~ fetchPlans ~ response:", response)
       setPlans(response.data)
   }
