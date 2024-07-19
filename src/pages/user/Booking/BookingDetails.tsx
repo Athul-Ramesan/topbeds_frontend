@@ -16,11 +16,11 @@ const BookingDetails: React.FC = () => {
     const [refundAmount, setRefundAmount] = useState('')
     const [loading, setLoading] = useState(false)
     const [openMessageModal, setOpenMessageModal] = useState(false)
-    const [initialLoading, setInitialLoading] = useState(false)
+    const [initialLoading, setInitialLoading] = useState(true)
     useEffect(()=>{
-        setLoading(true)
+
         const timer = setTimeout(() => {
-            setLoading(false)
+            setInitialLoading(false)
         }, 1000);
         return () => clearTimeout(timer);
     },[])
