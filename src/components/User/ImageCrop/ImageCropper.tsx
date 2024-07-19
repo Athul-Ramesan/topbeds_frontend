@@ -15,7 +15,7 @@ const MIN_DIMENSION = 150;
 interface ImageCropperProps {
     closeModal: () => void;
     setCroppedImage: (croppedImage: string) => void;
-    setCropLoading : (state:boolean)=>void
+    setCropLoading : (state:boolean)=>void;
     cropLoading: boolean
 }
 
@@ -117,7 +117,7 @@ const ImageCropper: FC<ImageCropperProps> = ({ closeModal, setCroppedImage ,setC
 
               if (response.type === "user/update-profile-image/fulfilled") {
                 console.log('inside response fulfilled crop modal');
-                setCroppedImage(response.payload.data.profileImage);
+                setCroppedImage(response.payload?.data?.profileImage);
                 setCropLoading(false)
                 closeModal();
               } else {
