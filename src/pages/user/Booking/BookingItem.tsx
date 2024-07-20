@@ -33,14 +33,24 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
       setReviewModalOpen(false)
     }
     useEffect(()=>{
+
       const fetchReviewDetails= async()=>{
+        
+      try {
+        
         const response = await bookingApiInstance.get(`/review/booking/${booking._id}`)
         console.log("🚀 ~ fetchReviewDetails ~ response:", response)
-        if(response.status===200){
-          const review = response.data
-          if(review){
-            setReviewDone(true)
+        if (response.status === 200) {
+          const review = response.data;
+          if (review && review !== '') {
+            setReviewDone(true);
+          } else {
+            setReviewDone(false);
           }
+        }
+      } catch (error:any) {
+        console.log("🚀 ~ fetchReviewDetails ~ error:", error)
+        
         }
       }
       fetchReviewDetails()
