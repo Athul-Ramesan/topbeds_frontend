@@ -5,12 +5,12 @@ import MessageModal from '../../../components/Modal/MessageModal';
 
 const HostInfo: React.FC = () => {
   const [isSubsciption, setIsSubscription] = useState(false)
-  // const { user } = useAppSelector(state => state.user)
+  const { user } = useAppSelector(state => state.user)
   const [openMessageModal, setOpenMessageModal] = useState(false)
 
   const { singleProperty } = useContext(SinglePropertyDetailsContext)
   useEffect(() => {
-    if (singleProperty?.hostId?.subscriptions) setIsSubscription(true)
+    if (user?.subscriptions?.length! >0) setIsSubscription(true)
   }, [])
   const handleMessageHostClick=()=>{
     setOpenMessageModal(true)
