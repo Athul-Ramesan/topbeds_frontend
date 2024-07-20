@@ -43,6 +43,8 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
         if (response.status === 200) {
           const review = response.data;
           if (review && review !== '') {
+            console.log('inside review & review not e ');
+            
             setReviewDone(true);
           } else {
             setReviewDone(false);
