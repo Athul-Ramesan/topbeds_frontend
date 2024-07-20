@@ -94,7 +94,7 @@ const AllProperties = () => {
 
           <CategoryBar />
         </div> */}
-        {/* <div className="w-full mt-4" >
+        <div className="w-full mt-4" >
           <SearchInterface
             setSortOption={setSortOption}
             setCategory={setCategory}
@@ -106,7 +106,7 @@ const AllProperties = () => {
         </div>
         <div className="my-4 px-6">
           <PublicSearchBar setSearchQuery={setSearchQuery}/>
-        </div> */}
+        </div>
         <ImageCard properties={currentProperties}/>
       </div>
       <div className="flex justify-center m-8">
