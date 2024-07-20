@@ -35,7 +35,7 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
     useEffect(()=>{
       const fetchReviewDetails= async()=>{
         const response = await bookingApiInstance.get(`/review/booking/${booking._id}`)
-        if(response.statusText==="OK"){
+        if(response.status===200){
           const review = response.data
           if(review){
             setReviewDone(true)

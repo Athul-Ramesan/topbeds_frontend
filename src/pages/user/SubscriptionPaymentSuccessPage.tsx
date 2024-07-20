@@ -42,7 +42,7 @@ const SubscriptionPaymentSuccessPage: FC = () => {
             const saveResponse = await bookingApiInstance.post('/subscription/confirm', { session_id, planId, userId });
             console.log("🚀 ~ savePaymentDetails ~ saveResponse:", saveResponse)
             console.log('after api call');
-          if (saveResponse.statusText==='Created') {
+          if (saveResponse.status===200) {
             localStorage.removeItem('planId');
             localStorage.removeItem('userId');
             setPaymentStatus('Payment successful and enjoy your subscription !');
