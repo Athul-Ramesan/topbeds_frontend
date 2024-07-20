@@ -78,7 +78,7 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
           ) : (
             location.pathname !== '/host/reservations' ? (
               <>
-              {reviewDone && (
+              {!reviewDone && (
                 <button 
                 onClick={handleLeaveReviewClick}
                 className="mt-2 btn btn-success btn-outline text-white px-4 py-2 rounded">
