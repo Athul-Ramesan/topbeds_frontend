@@ -37,15 +37,15 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
       const fetchReviewDetails= async()=>{
         
       try {
-        
         const response = await bookingApiInstance.get(`/review/booking/${booking._id}`)
         console.log("🚀 ~ fetchReviewDetails ~ response:", response)
         if (response.status === 200) {
           const review = response.data;
           if (review && review !== '') {
-            console.log('inside review & review not e ');
+            console.log('inside review & review not e done');
             setReviewDone(true);
           } else {
+            console.log('inside reviewDone false ');
             setReviewDone(false);
           }
         }
