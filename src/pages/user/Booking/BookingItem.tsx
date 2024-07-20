@@ -33,7 +33,7 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
       setReviewModalOpen(false)
     }
     useEffect(()=>{
-
+      console.log(reviewDone,'😮‍💨😮‍💨😮‍💨😮‍💨😮‍💨😮‍💨')
       const fetchReviewDetails= async()=>{
         
       try {
@@ -44,7 +44,6 @@ const BookingItem: React.FC<BookingItemProps> = ({ booking, isUpcoming }) => {
           const review = response.data;
           if (review && review !== '') {
             console.log('inside review & review not e ');
-            
             setReviewDone(true);
           } else {
             setReviewDone(false);
