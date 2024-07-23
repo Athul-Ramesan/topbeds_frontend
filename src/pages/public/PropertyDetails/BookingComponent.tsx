@@ -7,7 +7,7 @@ import { config } from '../../../config/config';
 import toast from 'react-hot-toast';
 import PropertyCalendar from './components/PropertyCalendar';
 import { useAppSelector } from '../../../redux/store';
-import LoginModal from '../../../components/Modal/LoginModal';
+import LoginModal from '../../../components/modal/LoginModal';
 
 // interface BookingComponentProps {
 //   price: number;

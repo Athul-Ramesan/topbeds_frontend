@@ -5,8 +5,8 @@ import { validatePrice } from "../../utils/validationSchema/validatePrice"
 import toast from "react-hot-toast"
 import { config } from "../../config/config"
 import { axiosInstance, propertyApiInstance } from "../../config/instances"
-import CancelButton from "../../components/Buttons/CancelButton"
-import SaveButton from "../../components/Buttons/SaveButton"
+import CancelButton from "../../components/buttons/CancelButton"
+import SaveButton from "../../components/buttons/SaveButton"
 import { validateMaxGuests } from "../../utils/validationSchema/validateMaxGuest"
 
 const ShowMaxGuestsHostProperty = () => {

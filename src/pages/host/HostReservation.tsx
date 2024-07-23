@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import HostCalendar from './Components/HostCalender';
+import HostCalendar from './components/HostCalender';
 import { useAppSelector } from '../../redux/store';
 
 // interface HostReservationProps {

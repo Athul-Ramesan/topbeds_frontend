@@ -3,7 +3,7 @@ import React, { FC, Suspense, lazy, useContext, useState } from 'react';
 import SinglePropertyDetailsProvider, { SinglePropertyDetailsContext } from '../../context/SinglePropertyDetails';
 import { IProperty } from '../../interface/IProperty';
 import { Link, useNavigate } from 'react-router-dom';
-import PropertyLoadingSkelton from '../Skeltons/PropertyLoadingSkelton';
+import PropertyLoadingSkelton from '../skeltons/PropertyLoadingSkelton';
 
 const SinglePropertyCard = lazy(() => import('./SinglePropertyCard'))
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import AddFacilityModalPage from '../../components/Modal/AddFacilityModalPage'
+import AddFacilityModalPage from '../../components/modal/AddFacilityModalPage'
 import {  propertyApiInstance } from '../../config/instances'
 import toast from 'react-hot-toast'
 import { Trash } from 'lucide-react'
-import ConfirmationModalNew from '../../components/Modal/ConfirmationModalNew'
+import ConfirmationModalNew from '../../components/modal/ConfirmationModalNew'
 
 
 export interface IFacility {

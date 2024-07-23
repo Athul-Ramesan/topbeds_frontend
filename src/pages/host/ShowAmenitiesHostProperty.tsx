@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useState } from "react"
 import { FaLightbulb } from "react-icons/fa6"
-import CancelButton from "../../components/Buttons/CancelButton"
-import SaveButton from "../../components/Buttons/SaveButton"
+import CancelButton from "../../components/buttons/CancelButton"
+import SaveButton from "../../components/buttons/SaveButton"
 import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
 
 const ShowAmenitiesHostProperty = () => {

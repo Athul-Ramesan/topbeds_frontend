@@ -1,6 +1,6 @@
 import { PencilIcon } from 'lucide-react';
 import { useEffect, useState } from 'react'
-import CropImageModal from './ImageCrop/CropImageModal';
+import CropImageModal from './imageCrop/CropImageModal';
 import { useAppSelector } from '../../redux/store';
 import { ClipLoader } from 'react-spinners';
 

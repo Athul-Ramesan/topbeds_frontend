@@ -5,7 +5,7 @@ import TopbedsLogo from "./TopbedsLogo";
 import { useAppSelector } from "../redux/store";
 import BecomeHostModal from "./host/BecomeHostModal";
 import { Globe } from "lucide-react";
-import InformationModal from "./Modal/InformationModal";
+import InformationModal from "./modal/InformationModal";
 import SearchSortFilterCombined from "./public/SearchSortFilterCombined";
 
 const Header = () => {

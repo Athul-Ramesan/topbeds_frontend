@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import ChatListComponent from "../Components/ChatListComponent"
-import ChatWindowComponent from "../Components/ChatWindowComponent"
+import ChatListComponent from "../components/ChatListComponent"
+import ChatWindowComponent from "../components/ChatWindowComponent"
 import { chatApiInstance } from "../../../../config/instances"
 import { useAppSelector } from "../../../../redux/store"
 import toast from "react-hot-toast"
 import { useSocket } from "../../../../context/SocketContext"
-import { IChat, IMessage } from "../../../../interface/chatInterfaces"
+import { IChat, IMessage } from "../../../../interface/IChatInterfaces"
 import { useNavigate } from "react-router-dom"
 
 const ChatsPage = () => {

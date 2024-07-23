@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import UserProfileHeader from '../../components/User/UserProfileHeader';
-import UserContacts from '../../components/User/UserContacts';
-import SecuritySection from '../../components/User/SecuritySection';
-import SubscriptionOption from '../../components/User/SubscriptionOption';
+import UserProfileHeader from '../../components/user/UserProfileHeader';
+import UserContacts from '../../components/user/UserContacts';
+import SecuritySection from '../../components/user/SecuritySection';
+import SubscriptionOption from '../../components/user/SubscriptionOption';
 import { BookingResponse } from '../../interface/IBooking';
 import { bookingApiInstance } from '../../config/instances';
 import { useAppSelector } from '../../redux/store';
-import VerticalTabs from '../../components/Tabs/VerticalTabs';
-import UserReviews from '../../components/User/Review/UserReviews';
+import VerticalTabs from '../../components/tabs/VerticalTabs';
+import UserReviews from '../../components/user/review/UserReviews';
 
 
 const UserProfilePage: React.FC = () => {

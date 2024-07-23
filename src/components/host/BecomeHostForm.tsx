@@ -5,10 +5,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Form, Formik } from 'formik';
 import * as Yup from "yup";
-import BecomeHostFormInput from '../Forms/BecomeHostFormInput';
+import BecomeHostFormInput from '../forms/BecomeHostFormInput';
 
 import { becomeHostAction } from '../../redux/actions/userAction/becomeHost';
-import InformationModal from '../Modal/InformationModal';
+import InformationModal from '../modal/InformationModal';
 import { useAppDispatch } from '../../redux/store';
 
 interface FormValues {

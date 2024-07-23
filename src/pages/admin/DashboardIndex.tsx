@@ -1,6 +1,6 @@
-import GraphComponent from './Components/GraphComponent'
-import RecentActivitiesTable from './Components/RecentActivitiesTable'
-import Stats from './Components/Stats'
+import GraphComponent from './components/GraphComponent'
+import RecentActivitiesTable from './components/RecentActivitiesTable'
+import Stats from './components/Stats'
 
 const DashboardIndex = () => {
   return (

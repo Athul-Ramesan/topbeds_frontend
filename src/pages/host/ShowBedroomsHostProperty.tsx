@@ -5,8 +5,8 @@ import { config } from "../../config/config"
 import { axiosInstance, propertyApiInstance } from "../../config/instances"
 import { validateBedrooms } from "../../utils/validationSchema/validateBedrooms"
 import { HostPropertySingleContext } from "../../context/HostPropertySingleContext"
-import SaveButton from "../../components/Buttons/SaveButton"
-import CancelButton from "../../components/Buttons/CancelButton"
+import SaveButton from "../../components/buttons/SaveButton"
+import CancelButton from "../../components/buttons/CancelButton"
 
 const ShowbedroomsHostProperty = () => {
   const { hostProperty } = useContext(HostPropertySingleContext)

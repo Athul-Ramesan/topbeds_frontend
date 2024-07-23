@@ -1,7 +1,7 @@
 // HostProfile.tsx
 import React, { useEffect, useState } from 'react';
 import { BookingResponse } from '../../../interface/IBooking';
-import BookingList from '../../user/Booking/BookingList';
+import BookingList from '../../user/booking/BookingList';
 import { bookingApiInstance } from '../../../config/instances';
 import { useAppSelector } from '../../../redux/store';
 

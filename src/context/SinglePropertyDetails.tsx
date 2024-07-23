@@ -1,6 +1,6 @@
 import React, { FC, createContext } from 'react';
 import { IProperty } from '../interface/IProperty';
-import useLocalStorage from '../hooks/useLocalStorage';
+import useLocalStorage from '../hooks/UseLocalStorage';
 // import { IProperty } from '../interface/IProperty';
 
 // Defining the type for the context

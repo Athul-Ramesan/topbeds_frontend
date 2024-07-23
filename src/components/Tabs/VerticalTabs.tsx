@@ -3,7 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import BookingList from '../../pages/user/Booking/BookingList';
+import BookingList from '../../pages/user/booking/BookingList';
 import { IBooking } from '../../interface/IBooking';
 
 interface TabPanelProps {

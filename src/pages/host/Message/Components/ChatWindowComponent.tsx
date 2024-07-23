@@ -2,7 +2,7 @@
 import  { FC, useState, useEffect, useRef } from 'react';
 import { Send } from 'lucide-react';
 import { useSocket } from '../../../../context/SocketContext';
-import { IChat, IMessage } from '../../../../interface/chatInterfaces';
+import { IChat, IMessage } from '../../../../interface/IChatInterfaces';
 import { useAppSelector } from '../../../../redux/store';
 import { IUserSignupData } from '../../../../interface/IUserSignup';
 import CallButton from '../../../user/videoCall/CallButton';

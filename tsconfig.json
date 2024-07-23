@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/pages/public/PropertyDetails/AmenityIcons.tsx"],
+  "include": ["src", "src/pages/public/propertyDetails/AmenityIcons.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }],
 
 }

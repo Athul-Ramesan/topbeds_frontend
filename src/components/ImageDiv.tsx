@@ -2,7 +2,7 @@ import { FC, useContext, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { propertyApiInstance } from "../config/instances";
 import { useParams } from "react-router-dom";
-import ConfirmationModal from "./Modal/ConfirmationModal";
+import ConfirmationModal from "./modal/ConfirmationModal";
 import { HostPropertySingleContext } from "../context/HostPropertySingleContext";
 import toast from "react-hot-toast";
 

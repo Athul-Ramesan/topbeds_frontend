@@ -6,7 +6,7 @@ import { bookingApiInstance } from '../../../config/instances';
 import CancellationPolicy from './CancellationPolicy';
 import { AlertOctagonIcon } from 'lucide-react';
 import RefundMessage from './RefundMessage';
-import MessageModal from '../../../components/Modal/MessageModal';
+import MessageModal from '../../../components/modal/MessageModal';
 import LoadingSpinner from '../../LoadingSpinner';
 
 const BookingDetails: React.FC = () => {

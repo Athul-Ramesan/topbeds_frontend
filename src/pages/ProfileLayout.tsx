@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom"
-import SidebarIndex from "../components/SideBar/SidebarIndex"
+import SidebarIndex from "../components/sideBar/SidebarIndex"
 
 
 const ProfileLayout = () => {

@@ -1,5 +1,5 @@
 import  {useEffect, useState } from 'react'
-import SubscriptionModal from '../Modal/SubscriptionModal'
+import SubscriptionModal from '../modal/SubscriptionModal'
 import SubscriptionDetails from './SubscriptionDetails'
 import { useAppSelector } from '../../redux/store'
 

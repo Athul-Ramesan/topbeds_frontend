@@ -4,11 +4,11 @@ import { TiCancel } from "react-icons/ti";
 import { userApiInstance } from '../../config/instances';
 import { config } from '../../config/config';
 import { IUserSignupData } from '../../interface/IUserSignup';
-import ConfirmationModal from '../../components/Modal/ConfirmationModal';
+import ConfirmationModal from '../../components/modal/ConfirmationModal';
 import LoadingSpinner from '../LoadingSpinner';
-import HostsTable from './Components/HostsTable';
-import HostsRequestTable from './Components/HostsRequestTable';
-import HostsRejectedTable from './Components/HostsRejectedTable';
+import HostsTable from './components/HostsTable';
+import HostsRequestTable from './components/HostsRequestTable';
+import HostsRejectedTable from './components/HostsRejectedTable';
 
 const Hosts: React.FC = () => {
   const [hosts, setHosts] = useState<IUserSignupData[]>([]);

@@ -5,8 +5,8 @@ import { validateDescription } from "../../utils/validationSchema/validateDescri
 import toast from "react-hot-toast"
 import { axiosInstance, propertyApiInstance } from "../../config/instances"
 import { config } from "../../config/config"
-import CancelButton from "../../components/Buttons/CancelButton"
-import SaveButton from "../../components/Buttons/SaveButton"
+import CancelButton from "../../components/buttons/CancelButton"
+import SaveButton from "../../components/buttons/SaveButton"
 
 
 const ShowDescriptionHostProperty = () => {

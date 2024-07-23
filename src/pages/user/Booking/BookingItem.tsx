@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { IBooking } from '../../../interface/IBooking';
 import { Link, useLocation } from 'react-router-dom';
 import {format} from 'date-fns'
-import ReviewFormModal from '../../../components/Modal/ReviewFormModal';
+import ReviewFormModal from '../../../components/modal/ReviewFormModal';
 import { bookingApiInstance } from '../../../config/instances';
 
 

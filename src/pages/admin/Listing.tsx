@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {  propertyApiInstance } from '../../config/instances';
 import LoadingSpinner from '../LoadingSpinner';
-import Card from './Components/Card';
+import Card from './components/Card';
 import { IProperty } from '../../interface/IProperty';
 
 const Listing = () => {

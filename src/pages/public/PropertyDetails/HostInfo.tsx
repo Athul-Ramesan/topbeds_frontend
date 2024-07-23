@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
 import { useAppSelector } from '../../../redux/store';
-import MessageModal from '../../../components/Modal/MessageModal';
+import MessageModal from '../../../components/modal/MessageModal';
 
 const HostInfo: React.FC = () => {
   const [isSubsciption, setIsSubscription] = useState(false)

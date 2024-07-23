@@ -2,11 +2,11 @@
 
 import { FC, useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
-import { IChat, IMessage } from '../../../../interface/chatInterfaces';
+import { IChat, IMessage } from '../../../../interface/IChatInterfaces';
 import { useSocket } from '../../../../context/SocketContext';
 import { useAppSelector } from '../../../../redux/store';
 import { IUserSignupData } from '../../../../interface/IUserSignup';
-import { ChatListSkeleton } from '../../../../components/Skeltons/ChatListSkelton';
+import { ChatListSkeleton } from '../../../../components/skeltons/ChatListSkelton';
 
 interface ChatListComponentProps {
     chatList: IChat[];

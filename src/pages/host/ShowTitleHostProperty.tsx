@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useContext, useState } from 'react'
 import { HostPropertySingleContext } from '../../context/HostPropertySingleContext'
 import { FaLightbulb } from "react-icons/fa";
-import SaveButton from '../../components/Buttons/SaveButton';
-import CancelButton from '../../components/Buttons/CancelButton';
+import SaveButton from '../../components/buttons/SaveButton';
+import CancelButton from '../../components/buttons/CancelButton';
 import {  propertyApiInstance } from '../../config/instances';
 import { config } from '../../config/config';
 import toast from 'react-hot-toast';

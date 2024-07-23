@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/store";
-import SmallDeviceNavbar from "./Components/SmallDeviceNavbar";
-import SideNavbar from "./Components/SideNavbar";
+import SmallDeviceNavbar from "./components/SmallDeviceNavbar";
+import SideNavbar from "./components/SideNavbar";
 
 const Dashboard = () => {
   const { user } = useAppSelector((state) => state.user);
