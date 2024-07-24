@@ -2,7 +2,6 @@ import { AiOutlineClose } from "react-icons/ai";
 
 import { ErrorMessage, Field, Form, Formik } from "formik"
 import { ChangeEvent, useEffect, useState } from "react"
-import { addPropertyInitialValues } from "../../utils/InititialValues/AddPropertyForm"
 import { addPropertyValidationSchema } from "../../utils/validationSchema/addPropertyValidationSchema"
 import FieldWithHead from "../../components/forms/FieldWithHead"
 import FieldHeadOnly from "../../components/forms/FieldHeadOnly"
@@ -14,6 +13,7 @@ import CustomFileInput from "../../components/host/CustomFileInput";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../LoadingSpinner";
 import getCityByCountry from "../../utils/locationAPI/getCityByCountry";
+import { addPropertyInitialValues } from "../../utils/inititialValues/AddPropertyForm";
 
 interface IProperty {
     address: string;
