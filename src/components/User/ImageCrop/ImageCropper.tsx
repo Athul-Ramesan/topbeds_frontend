@@ -5,9 +5,9 @@ import ReactCrop, {
   convertToPixelCrop,
   makeAspectCrop,
 } from "react-image-crop";
-import setCanvasPreview from "./setCanvasPreview";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { updateProfileImage } from "../../../redux/actions/userAction/updateProfileImage";
+import setCanvasPreview from "./setCanvasPreview";
 
 const ASPECT_RATIO = 1;
 const MIN_DIMENSION = 150;

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import BookingComponent from './BookingComponent';
 import { SinglePropertyDetailsContext } from '../../../context/SinglePropertyDetails';
 import AmenityIcon from './AmenityIcons';
+import BookingComponent from './BookingComponent';
 
 const PropertyInfo: React.FC = () => {
   const {singleProperty} = useContext(SinglePropertyDetailsContext)

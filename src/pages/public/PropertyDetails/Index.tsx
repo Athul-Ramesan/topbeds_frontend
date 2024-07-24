@@ -1,5 +1,5 @@
-
 import PropertyDetails from "./PropertyDetails";
+
 
 const Index = () => {
 

@@ -20,7 +20,6 @@ import ManageListing from "./components/host/ManageListing";
 import LoadingSpinner from "./pages/LoadingSpinner";
 import ShowDescriptionHostProperty from "./pages/host/ShowDescriptionHostProperty";
 import ShowPriceHostProperty from "./pages/host/ShowPriceHostProperty";
-import Index from "./pages/public/propertyDetails/Index";
 
 import ForgotPasswordNewPage from "./pages/auth/ForgotPasswordNewPage";
 import ResetPassword from "./pages/auth/ResetPassword";
@@ -47,6 +46,7 @@ import ChatsPage from "./pages/host/message/pages/ChatsPage";
 import VideoCallPage from "./pages/user/chat/VideoCallPage";
 import HostReservation from "./pages/host/HostReservation";
 import SearchResult from "./pages/public/SearchResult";
+import Index from "./pages/public/propertyDetails/Index";
 
 interface IRoles {
   [key: string]: string

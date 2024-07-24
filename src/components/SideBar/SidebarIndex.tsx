@@ -1,6 +1,6 @@
+import {LayoutDashboard} from "lucide-react"
 import ProfileSideBar from "./ProfileSideBar"
 import SidebarItem from "./SidebarItem"
-import {UserCircle,LifeBuoy,Receipt,LayoutDashboard} from "lucide-react"
 const SidebarIndex = () => {
   return (
     <div className="w-1/5">

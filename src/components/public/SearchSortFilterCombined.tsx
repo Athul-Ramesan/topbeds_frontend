@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, FormEvent, MouseEventHandler, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, FC, FormEvent,  useCallback, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import getCityByCountry from '../../utils/locationAPI/getCityByCountry';
 import { ICitiesWithId } from '../searchBar/SearchInterface';
-import { debounce, filter } from 'lodash'
+import { debounce } from 'lodash'
 import {  propertyApiInstance } from '../../config/instances';
 import { IProperty } from '../../interface/IProperty';
 import { useNavigate } from 'react-router-dom';

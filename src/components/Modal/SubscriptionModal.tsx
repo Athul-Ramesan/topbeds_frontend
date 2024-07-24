@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FaCheck, FaCrown, FaTv, FaMobile, FaTablet } from 'react-icons/fa';
+import {  FaCrown } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import { loadStripe } from '@stripe/stripe-js';
 import { useAppSelector } from '../../redux/store';
-import axios from 'axios';
 import { bookingApiInstance } from '../../config/instances';
 import { stripeApiKey } from '../../config/config';
 
