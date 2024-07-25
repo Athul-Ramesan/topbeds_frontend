@@ -54,7 +54,7 @@ const Header = () => {
           </button>
         </div>
         </div>
-        {user && user.role==="user" ? (
+        {user && user.role==="user" && !user?.isBlocked ? (
           <>
         {user.hostStatus==='requested' ? (
           <p className="cursor-pointer hover:text-primaryColor "
