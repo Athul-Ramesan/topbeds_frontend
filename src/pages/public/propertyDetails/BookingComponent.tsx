@@ -54,7 +54,7 @@ const BookingComponent = () => {
   }, [date.startDate, date.endDate]) 
 
   const makePayment =async ()=>{
-    if(!user){
+    if(!user || user.isBlocked){
       setLoginModalOpen(true)
       return
     }
