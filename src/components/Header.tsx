@@ -88,7 +88,7 @@ const Header = () => {
         )
       : ""
       }
-      {user && user.role==="host" ? (
+      {user && user.role==="host" && !user?.isBlocked  ? (
           <>
           <Link to={'/host/dashboard'} className="flex gap-2 justify-center items-center">
           <p className="cursor-pointer hover:text-primaryColor "
@@ -110,7 +110,7 @@ const Header = () => {
           </>
         )}
   
-        {user && (
+        {user && !user?.isBlocked && (
           <div onClick={toggleDropDown} className="flex items-center gap-2 border border-gray-500  rounded-full py-2 px-2 shadow-sm shadow-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
