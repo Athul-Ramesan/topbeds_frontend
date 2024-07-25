@@ -64,6 +64,7 @@ const Users: React.FC = () => {
         { isBlocked: isBlocked },
         { withCredentials: true }
       );
+      console.log("🚀 ~ handleBlockUnblock ~ response:", response)
       if (response.status === 200) {
         setCurrentPageUsers((prevUsers) =>
           prevUsers.map((user) =>

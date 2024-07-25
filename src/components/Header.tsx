@@ -101,7 +101,7 @@ const Header = () => {
       : ""
       }
 
-        {!user && (
+        {!user || user?.isBlocked && (
           <>
             <div className="flex gap-4 items-center">
               <Link className="hover:bg-primaryColor rounded-lg duration-200 transition-all  p-1  hover:text-white" to={'/index/about'}>About</Link>
@@ -109,7 +109,7 @@ const Header = () => {
             </div>
           </>
         )}
-
+  
         {user && (
           <div onClick={toggleDropDown} className="flex items-center gap-2 border border-gray-500  rounded-full py-2 px-2 shadow-sm shadow-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

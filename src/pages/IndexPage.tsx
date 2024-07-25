@@ -23,7 +23,7 @@ const IndexPage = () => {
   const particlesLoaded = useCallback(async (container: any | undefined) => {
     return new Promise<void>((resolve) => {
       console.log(container);
-      // Additional initialization logic can go here
+    
       resolve(container);
     });
   }, []);
