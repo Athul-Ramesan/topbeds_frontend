@@ -26,7 +26,10 @@ const Header = () => {
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
   };
- 
+  // const searchFilterOnclick=()=>{
+  //   console.log('clicked anywhere')
+  //   setSearchFilterOpen(true)
+  // }
   return (
     <div className="">
       <SearchSortFilterCombined isOpen={searchFilterOpen}  onClose={()=>setSearchFilterOpen(false)}/>
@@ -51,7 +54,7 @@ const Header = () => {
           </button>
         </div>
         </div>
-        {user && user.role==="user" && !user?.isBlocked ? (
+        {user && user.role==="user" ? (
           <>
         {user.hostStatus==='requested' ? (
           <p className="cursor-pointer hover:text-primaryColor "
@@ -85,7 +88,7 @@ const Header = () => {
         )
       : ""
       }
-      {user && user.role==="host" && !user?.isBlocked  ? (
+      {user && user.role==="host" ? (
           <>
           <Link to={'/host/dashboard'} className="flex gap-2 justify-center items-center">
           <p className="cursor-pointer hover:text-primaryColor "
@@ -98,7 +101,7 @@ const Header = () => {
       : ""
       }
 
-        {!user || user?.isBlocked && (
+        {!user && (
           <>
             <div className="flex gap-4 items-center">
               <Link className="hover:bg-primaryColor rounded-lg duration-200 transition-all  p-1  hover:text-white" to={'/index/about'}>About</Link>
@@ -106,8 +109,8 @@ const Header = () => {
             </div>
           </>
         )}
-  
-        {user && !user?.isBlocked && (
+
+        {user && (
           <div onClick={toggleDropDown} className="flex items-center gap-2 border border-gray-500  rounded-full py-2 px-2 shadow-sm shadow-gray-400">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
