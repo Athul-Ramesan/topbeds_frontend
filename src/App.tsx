@@ -90,7 +90,7 @@ function App() {
 
     console.log("🚀 ~ ProtectHostRoute ~ user:", user)
 
-    return user && user?.role === 'host' ? element : <Navigate to="/index" replace />
+    return user && user?.role === 'host' && !user.isBlocked ? element : <Navigate to="/index" replace />
   }
 
   const ProtectedAdminRoute = ({ element }:any) => {
@@ -107,7 +107,7 @@ function App() {
   const ProtectedRoute = ({ element }:any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
-    return user ? element : <Navigate to="/index" />;
+    return user && !user.isBlocked ? element : <Navigate to="/index" />;
   }
 
  
