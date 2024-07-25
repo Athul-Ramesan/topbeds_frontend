@@ -104,7 +104,11 @@ const userSlice = createSlice({
       //getting user data
       .addCase(getUserData.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.data as IUserSignupData
+        if(action.payload.data.isBlocked){
+          state.user = null;
+        }else{
+          state.user = action.payload.data as IUserSignupData
+        }
       })
       .addCase(getUserData.pending, (state) => {
         state.loading = true
