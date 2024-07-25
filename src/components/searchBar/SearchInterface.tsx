@@ -32,7 +32,7 @@ export interface ICitiesWithId {
 }
 
 
-const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuestCount, setLocation, setPriceRange, setSortOption, searchQuery }) => {
+const SearchInterface: React.FC<SearchInterfaceProps> = ({ setLocation, setSortOption, searchQuery }) => {
     const [isFilter, setIsFilter] = useState(true)
     const [cities,setCities] = useState<string[]>([])
     const [loading, setLoading] = useState(false)
@@ -97,7 +97,7 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuest
                     </select>
                 </div>
             </div>
-            <div className="mb-8">
+            {/* <div className="mb-8">
                 <div className='flex gap-1'>
                     <div
                         onClick={handleFilterClick}
@@ -112,7 +112,7 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuest
                         <span> Categories</span>
                     </div>
                 </div>
-                {/* Add filter options */}
+                
                 <div className=''>
                     {isFilter ? (
 
@@ -158,7 +158,7 @@ const SearchInterface: React.FC<SearchInterfaceProps> = ({ setCategory, setGuest
                         )
                     }
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
