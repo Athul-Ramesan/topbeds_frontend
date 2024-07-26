@@ -3,9 +3,7 @@ import {  propertyApiInstance } from "../../config/instances"
 import ImageCard from "../../components/public/ImageCard"
 import LoadingSpinner from "../LoadingSpinner"
 import Pagination from "../../components/Pagination"
-import PublicSearchBar from "../../components/searchBar/PublicSearchBar"
-import SearchInterface from "../../components/searchBar/SearchInterface"
-
+a
 
 
 const AllProperties = () => {

@@ -90,7 +90,7 @@ function App() {
 
     console.log("🚀 ~ ProtectHostRoute ~ user:", user)
 
-    return user && user?.role === 'host' && !user.isBlocked ? element : <Navigate to="/index" replace />
+    return user && user?.role === 'host' ? element : <Navigate to="/index" replace />
   }
 
   const ProtectedAdminRoute = ({ element }:any) => {
@@ -214,6 +214,7 @@ const UserRoutes: FC = () => {
         </Route>
         <Route path="/message" element={<ChatsPage/>} />
           <Route path="/bookings/:bookingId" element={<BookingDetails />} />
+        <Route path="/paymentSuccess/:session_id" element={<BookingPaymentSuccessful/>} />
         <Route path="/subscription-payment-succes/:session_id" element={<SubscriptionPaymentSuccessPage/>} />
         <Route path='/video-call' element={<VideoCallPage />} />
        
@@ -238,7 +239,6 @@ const PublicRoutes: FC = () => {
         {/* <Route path="/properties/:propertyId/checkout" element={<CheckoutPage />} /> */}
         <Route path="/about" element={<AboutPage />} />
         <Route path="/admin" element={<Dashboard />} />
-        <Route path="/paymentSuccess/:session_id" element={<BookingPaymentSuccessful/>} />
         <Route path="/searchResult" element={<SearchResult/>} />
       </Route>
 
