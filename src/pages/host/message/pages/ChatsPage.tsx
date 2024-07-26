@@ -21,14 +21,13 @@ const ChatsPage = () => {
     const fetchChats = async () => {
         try {
             setChatListFetchingLoading(true);
-            console.log('inside fetch chaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaat');
             
             const response = await chatApiInstance.get(`/get-chats/${user?._id}`);
             
             console.log("🚀 ~ fetchChats ~ response:", response)
             if (response.status === 200) {
                 console.log("🚀 ~ fetchChats ~ response when reloading:", response)
-                setChatList(response.data);
+                setChatList(response.data.reverse());
             } else {
                 toast.error("Couldn't fetch your chats now, please try again later");
             }
