@@ -60,7 +60,7 @@ function App() {
   const dispatch = useAppDispatch()
   const { user } = useAppSelector(state => state.user)
   const [loading, setLoading] = useState(true);
-  const {hostProperty} = useContext(HostPropertySingleContext)
+  const { hostProperty } = useContext(HostPropertySingleContext)
   console.log("🚀 ~ App ~ user:", user)
   useEffect(() => {
     const fetchUserData = async () => {
@@ -85,7 +85,7 @@ function App() {
   if (loading) {
     return <LoadingSpinner />
   }
-  const ProtectHostRoute = ({ element }:any) => {
+  const ProtectHostRoute = ({ element }: any) => {
     console.log("🚀 ~ ProtectHostRoute ~ element:", element)
 
     console.log("🚀 ~ ProtectHostRoute ~ user:", user)
@@ -93,18 +93,18 @@ function App() {
     return user && user?.role === 'host' ? element : <Navigate to="/index" replace />
   }
 
-  const ProtectedAdminRoute = ({ element }:any) => {
+  const ProtectedAdminRoute = ({ element }: any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
-    return user && user?.role==='admin' ? element : <Navigate to="/index" />;
+    return user && user?.role === 'admin' ? element : <Navigate to="/index" />;
   }
-  const isAdminRoute = ({ element }:any) => {
+  const isAdminRoute = ({ element }: any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
-    return user && user?.role==='admin' ? element : <Navigate to="/index" />;
+    return user && user?.role === 'admin' ? element : <Navigate to="/index" />;
   }
-  
-  const ProtectedRoute = ({ element }:any) => {
+
+  const ProtectedRoute = ({ element }: any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
     if (user && !user.isBlocked) {
@@ -114,7 +114,7 @@ function App() {
     }
   }
 
- 
+
   return (
     <Router >
       <Routes>
@@ -125,7 +125,7 @@ function App() {
             }}
               user={user} />}
         />
-          <Route path="/admin/*" element={<ProtectedAdminRoute element={<AdminRoutes />} />} />
+        <Route path="/admin/*" element={<ProtectedAdminRoute element={<AdminRoutes />} />} />
         {/* </Route> */}
 
         {/* Auth pages */}
@@ -154,15 +154,15 @@ const AdminRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} >
-        <Route index element={<Navigate to={'/admin/dashboard'}/>} />
-        <Route path="dashboard" element={<DashboardIndex/>} />
-        <Route path="hosts" element={<Hosts/>} />
+        <Route index element={<Navigate to={'/admin/dashboard'} />} />
+        <Route path="dashboard" element={<DashboardIndex />} />
+        <Route path="hosts" element={<Hosts />} />
         <Route path="users" element={<Users />} />
         <Route path="listing" element={<Listing />} />
-        <Route path="listing/preview" element ={<PreviewPropertyAdmin/>} />
-        <Route path="subscription" element={<Subscription/>} />
-        <Route path="property" element={<Property/>} />
-    
+        <Route path="listing/preview" element={<PreviewPropertyAdmin />} />
+        <Route path="subscription" element={<Subscription />} />
+        <Route path="property" element={<Property />} />
+
 
       </Route>
     </Routes>
@@ -177,27 +177,27 @@ const HostRoutes: FC = () => {
         <Route index element={<Navigate to="/host/dashboard" />} />
         <Route path="/add-property" element={<AddProperty />} />
         <Route path="/dashboard" element={<HostDashboard />} />
-        
+
 
         <Route path="/manage-listing" element={<ManageListing />} />
         <Route path="/manage-listing/:propertyId" element={<SinglePropertyDetailedLayout />}>
           <Route index element={<Navigate to="photos" />} />
           <Route path="photos" element={<ShowPhotosHostProperty />} />
           <Route path="title" element={<ShowTitleHostProperty />} />
-          <Route path="description" element={<ShowDescriptionHostProperty />}/>
+          <Route path="description" element={<ShowDescriptionHostProperty />} />
           <Route path="price" element={<ShowPriceHostProperty />} />
           {/* <Route path="amenities" element={<ShowAmenitiesHostProperty />} /> */}
-          <Route path="bathrooms" element={<ShowbathroomsHostProperty/>} />
+          <Route path="bathrooms" element={<ShowbathroomsHostProperty />} />
           <Route path="bedrooms" element={<ShowbedroomsHostProperty />} />
-          <Route path="max-guests" element={<ShowMaxGuestsHostProperty/>} />
+          <Route path="max-guests" element={<ShowMaxGuestsHostProperty />} />
           <Route path="house-rules" element={""} />
 
           {/* <Route path="details" element={<HostPropertyDetail />} >
           </Route> */}
-      
+
         </Route>
-        <Route path="/reservations" element={<HostReservation/>} />
-        
+        <Route path="/reservations" element={<HostReservation />} />
+
         <Route path="/reviews" element={""} />
         <Route path="/earnings" element={""} />
         <Route path="/Account" element={""} />
@@ -210,22 +210,22 @@ const UserRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<UserLayout />} >
-        <Route path="/profile" element={<UserProfilePage/>}>
+        <Route path="/profile" element={<UserProfilePage />}>
         </Route>
-        <Route path="/message" element={<ChatsPage/>} />
-          <Route path="/bookings/:bookingId" element={<BookingDetails />} />
-        <Route path="/paymentSuccess/:session_id" element={<BookingPaymentSuccessful/>} />
-        <Route path="/subscription-payment-succes/:session_id" element={<SubscriptionPaymentSuccessPage/>} />
+        <Route path="/message" element={<ChatsPage />} />
+        <Route path="/bookings/:bookingId" element={<BookingDetails />} />
+        <Route path="/paymentSuccess/:session_id" element={<BookingPaymentSuccessful />} />
+        <Route path="/subscription-payment-succes/:session_id" element={<SubscriptionPaymentSuccessPage />} />
         <Route path='/video-call' element={<VideoCallPage />} />
-       
+
       </Route>
     </Routes>
   )
 }
 
 const PublicRoutes: FC = () => {
-  const {user} = useAppSelector(state=> state.user)
-  if(user?.role==='admin'){
+  const { user } = useAppSelector(state => state.user)
+  if (user?.role === 'admin') {
     return <Navigate to={'/admin'} />
   }
   return (
@@ -235,11 +235,11 @@ const PublicRoutes: FC = () => {
         <Route path="/home" element={<IndexPage />} />
         <Route path="/properties" element={<AllProperties />} />
         <Route path="/properties/:propertyId" element={<Index />} />
-      
+
         {/* <Route path="/properties/:propertyId/checkout" element={<CheckoutPage />} /> */}
         <Route path="/about" element={<AboutPage />} />
         <Route path="/admin" element={<Dashboard />} />
-        <Route path="/searchResult" element={<SearchResult/>} />
+        <Route path="/searchResult" element={<SearchResult />} />
       </Route>
 
     </Routes>
@@ -249,13 +249,13 @@ const PublicRoutes: FC = () => {
 const AuthRoutes: FC = () => {
   return (
     <Routes>
-        <Route path="/" element={<AuthLayout />} >
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordNewPage />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/verify-account" element={<EmailVerification />} />
-        </Route>
+      <Route path="/" element={<AuthLayout />} >
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordNewPage />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/verify-account" element={<EmailVerification />} />
+      </Route>
     </Routes>
   )
 }
