@@ -3,7 +3,7 @@ import {  propertyApiInstance } from "../../config/instances"
 import ImageCard from "../../components/public/ImageCard"
 import LoadingSpinner from "../LoadingSpinner"
 import Pagination from "../../components/Pagination"
-a
+
 
 
 const AllProperties = () => {
