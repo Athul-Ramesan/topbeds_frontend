@@ -107,11 +107,7 @@ function App() {
   const ProtectedRoute = ({ element }: any) => {
     console.log('inside protect routes🥶🥶')
     const { user } = useAppSelector((state) => state.user)
-    if (user && !user.isBlocked) {
-      return element;
-    } else {
-      return <Navigate to="/index" />;
-    }
+    return user ? element : <Navigate to="/index" />;
   }
 
 
