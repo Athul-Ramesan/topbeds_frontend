@@ -19,7 +19,7 @@ export const UserBaseUrl : string = "https://topbeds.smasher.shop/api/user"
 export const PropertyBaseUrl : string = "https://topbeds.smasher.shop/api/property"
 export const BookingBaseUrl: string = "https://topbeds.smasher.shop/api/booking"
 export const ChatBaseUrl : string = "https://topbeds.smasher.shop/api/chat"
-export const SocketUrl :string = "https://topbeds.smasher.shop/api"
+export const SocketUrl :string = "https://topbeds.smasher.shop"
 
 export interface ApiError {
     message : string,
