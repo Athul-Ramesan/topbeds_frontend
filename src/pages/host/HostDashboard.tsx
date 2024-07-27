@@ -31,9 +31,9 @@ const HostDashboard = () => {
           const hostsWithTotalData = response.data
           const currentHostTotalData = hostsWithTotalData.find((host:any)=> host._id ===user?._id)
            console.log("🚀 ~ fetchReservationData ~ currentHostTotalData:", currentHostTotalData)
-           setTotalReservations(currentHostTotalData.totalReservations)
-           setTotalEarnings(currentHostTotalData.totalEarnings)
-          setTotalProperties(currentHostTotalData.totalProperties)
+           setTotalReservations(currentHostTotalData?.totalReservations)
+           setTotalEarnings(currentHostTotalData?.totalEarnings)
+          setTotalProperties(currentHostTotalData?.totalProperties)
             console.log("🚀 ~ fetchReservationData ~ response.data:", response.data)
           }
       }
