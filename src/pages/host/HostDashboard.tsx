@@ -27,7 +27,7 @@ const HostDashboard = () => {
       const fetchReservationData =async()=>{
         const response = await bookingApiInstance.get('/dashboard/host-reservations')
         console.log("🚀 ~ fetchReservationData ~ response:", response)
-        if(response.statusText==="OK"){
+        if(response.status===200){
           const hostsWithTotalData = response.data
           const currentHostTotalData = hostsWithTotalData.find((host:any)=> host._id ===user?._id)
            console.log("🚀 ~ fetchReservationData ~ currentHostTotalData:", currentHostTotalData)
