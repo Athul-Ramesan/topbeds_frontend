@@ -14,12 +14,12 @@ export const multiplefileConfig= {
 }
 export const ApiBaseUrl: string = "http://localhost:5000"
 
-export const AuthBaseUrl: string = "https://topbeds.smasher.shop/api/auth"
-export const UserBaseUrl : string = "https://topbeds.smasher.shop/api/user"
-export const PropertyBaseUrl : string = "https://topbeds.smasher.shop/api/property"
-export const BookingBaseUrl: string = "https://topbeds.smasher.shop/api/booking"
-export const ChatBaseUrl : string = "https://topbeds.smasher.shop/api/chat"
-export const SocketUrl :string = "https://topbeds.smasher.shop"
+export const AuthBaseUrl: string = "https://api-gateway-pllg.onrender.com/api/auth"
+export const UserBaseUrl : string = "https://api-gateway-pllg.onrender.com/api/user"
+export const PropertyBaseUrl : string = "https://api-gateway-pllg.onrender.com/api/property"
+export const BookingBaseUrl: string = "https://api-gateway-pllg.onrender.com/api/booking"
+export const ChatBaseUrl : string = "https://api-gateway-pllg.onrender.com/api/chat"
+export const SocketUrl :string = "https://api-gateway-pllg.onrender.com"
 
 export interface ApiError {
     message : string,
